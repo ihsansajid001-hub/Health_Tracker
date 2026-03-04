@@ -1,0 +1,171 @@
+'use client';
+
+import { useState } from 'react';
+import DashboardLayout from '@/components/dashboard/DashboardLayout';
+import { Brain } from 'lucide-react';
+import { supabase } from '@/lib/supabase/client';
+import { formatDate } from '@/lib/utils/calculations';
+
+export default function MindPage() {
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    date: formatDate(new Date()),
+    mood_score: 7,
+    stress_level: 5,
+    energy_level: 7,
+    notes: '',
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setSuccess(false);
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      const { error } = await supabase.from('mood_logs').upsert({
+        user_id: user.id,
+        ...formData,
+      });
+
+      if (error) throw error;
+
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 3000);
+    } catch (error) {
+      console.error('Failed to log mood:', error);
+      alert('Failed to log mood. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getMoodEmoji = (score: number) => {
+    if (score >= 9) return '😄';
+    if (score >= 7) return '😊';
+    if (score >= 5) return '😐';
+    if (score >= 3) return '😔';
+    return '😢';
+  };
+
+  return (
+    <DashboardLayout>
+      <div className="max-w-2xl mx-auto">
+        <div className="flex items-center space-x-3 mb-6">
+          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center">
+            <Brain size={24} className="text-white" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Mind & Mood
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400">
+              Track your mental wellness
+            </p>
+          </div>
+        </div>
+
+        {success && (
+          <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg animate-fade-in">
+            <p className="text-green-700 dark:text-green-400">✅ Mood logged successfully!</p>
+          </div>
+        )}
+
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Date
+              </label>
+              <input
+                type="date"
+                value={formData.date}
+                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Mood: {getMoodEmoji(formData.mood_score)} {formData.mood_score}/10
+              </label>
+              <input
+                type="range"
+                min="1"
+                max="10"
+                value={formData.mood_score}
+                onChange={(e) => setFormData({ ...formData, mood_score: parseInt(e.target.value) })}
+                className="w-full"
+              />
+              <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mt-1">
+                <span>Very Bad</span>
+                <span>Excellent</span>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Stress Level: {formData.stress_level}/10
+              </label>
+              <input
+                type="range"
+                min="1"
+                max="10"
+                value={formData.stress_level}
+                onChange={(e) => setFormData({ ...formData, stress_level: parseInt(e.target.value) })}
+                className="w-full"
+              />
+              <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mt-1">
+                <span>Very Calm</span>
+                <span>Very Stressed</span>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Energy Level: {formData.energy_level}/10
+              </label>
+              <input
+                type="range"
+                min="1"
+                max="10"
+                value={formData.energy_level}
+                onChange={(e) => setFormData({ ...formData, energy_level: parseInt(e.target.value) })}
+                className="w-full"
+              />
+              <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mt-1">
+                <span>Exhausted</span>
+                <span>Energized</span>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Notes (Optional)
+              </label>
+              <textarea
+                value={formData.notes}
+                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                rows={3}
+                placeholder="How are you feeling today?"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-[1.02] transition-all disabled:opacity-50"
+            >
+              {loading ? 'Logging...' : 'Log Mood'}
+            </button>
+          </form>
+        </div>
+      </div>
+    </DashboardLayout>
+  );
+}
