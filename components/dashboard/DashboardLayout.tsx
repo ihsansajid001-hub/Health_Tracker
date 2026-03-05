@@ -67,7 +67,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold text-xl">P</span>
               </div>
-              <span className="text-xl font-bold gradient-text">PeaceHub</span>
+              <span className="text-xl font-bold gradient-text">LifeScore</span>
             </Link>
             <button
               onClick={() => setSidebarOpen(false)}

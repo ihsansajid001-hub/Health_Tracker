@@ -44,7 +44,7 @@ export default function LoginPage() {
           <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center">
             <span className="text-white font-bold text-2xl">P</span>
           </div>
-          <span className="text-3xl font-bold gradient-text">PeaceHub</span>
+          <span className="text-3xl font-bold gradient-text">LifeScore</span>
         </Link>
 
         {/* Login Card */}

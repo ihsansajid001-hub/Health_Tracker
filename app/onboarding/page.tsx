@@ -81,7 +81,7 @@ export default function OnboardingPage() {
             </span>
           </div>
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-            Welcome to <span className="gradient-text">PeaceHub</span>
+            Welcome to <span className="gradient-text">LifeScore</span>
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
             Tell us about yourself to personalize your experience

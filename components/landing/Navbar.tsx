@@ -17,17 +17,20 @@ export default function Navbar() {
 
           {/* Desktop Navigation - Center */}
           <div className="hidden md:flex items-center gap-12">
-            <Link href="/" className="text-white hover:text-white/80 font-medium transition-colors">
+            <Link href="/" className="text-white hover:text-white/80 font-medium transition-all duration-300 hover:scale-110">
               Home
             </Link>
-            <Link href="#features" className="text-white hover:text-white/80 font-medium transition-colors">
-              Features
+            <Link href="/articles" className="text-white hover:text-white/80 font-medium transition-all duration-300 hover:scale-110">
+              Articles
             </Link>
-            <Link href="#how-it-works" className="text-white hover:text-white/80 font-medium transition-colors">
-              How It Works
+            <Link href="/plans" className="text-white hover:text-white/80 font-medium transition-all duration-300 hover:scale-110">
+              Plans
             </Link>
-            <Link href="/dashboard" className="text-white hover:text-white/80 font-medium transition-colors">
-              Dashboard
+            <Link href="/community" className="text-white hover:text-white/80 font-medium transition-all duration-300 hover:scale-110">
+              Community
+            </Link>
+            <Link href="/about" className="text-white hover:text-white/80 font-medium transition-all duration-300 hover:scale-110">
+              About Us
             </Link>
           </div>
 
@@ -67,14 +70,17 @@ export default function Navbar() {
             <Link href="/" className="block py-2 text-gray-700 font-medium">
               Home
             </Link>
-            <Link href="#features" className="block py-2 text-gray-700 font-medium">
-              Features
+            <Link href="/articles" className="block py-2 text-gray-700 font-medium">
+              Articles
             </Link>
-            <Link href="#how-it-works" className="block py-2 text-gray-700 font-medium">
-              How It Works
+            <Link href="/plans" className="block py-2 text-gray-700 font-medium">
+              Plans
             </Link>
-            <Link href="/dashboard" className="block py-2 text-gray-700 font-medium">
-              Dashboard
+            <Link href="/community" className="block py-2 text-gray-700 font-medium">
+              Community
+            </Link>
+            <Link href="/about" className="block py-2 text-gray-700 font-medium">
+              About Us
             </Link>
             <Link
               href="/signup"
