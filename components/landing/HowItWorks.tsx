@@ -1,80 +1,66 @@
 'use client';
 
-import { UserPlus, Target, BarChart3, Sparkles } from 'lucide-react';
-
-const steps = [
-  {
-    icon: UserPlus,
-    title: 'Create Your Profile',
-    description: 'Tell us about yourself, your goals, and your current lifestyle habits.',
-    step: '01',
-  },
-  {
-    icon: Target,
-    title: 'Track Daily Habits',
-    description: 'Log your sleep, workouts, meals, mood, and hydration effortlessly.',
-    step: '02',
-  },
-  {
-    icon: BarChart3,
-    title: 'View Your Score',
-    description: 'See your Life Performance Score and detailed analytics in real-time.',
-    step: '03',
-  },
-  {
-    icon: Sparkles,
-    title: 'Get AI Insights',
-    description: 'Receive personalized recommendations to optimize your wellness journey.',
-    step: '04',
-  },
-];
-
 export default function HowItWorks() {
+  const steps = [
+    {
+      number: '1',
+      title: 'Create Your Profile',
+      description: 'Sign up and complete your wellness profile. Tell us about your goals, current habits, and what areas you want to improve.'
+    },
+    {
+      number: '2',
+      title: 'Track Daily Activities',
+      description: 'Log your mental health check-ins, workouts, meals, sleep, and hydration. Our intuitive interface makes tracking effortless.'
+    },
+    {
+      number: '3',
+      title: 'Get AI Insights',
+      description: 'Receive personalized recommendations and insights based on your data. Watch your Life Score improve as you build healthier habits.'
+    }
+  ];
+
   return (
-    <section id="how-it-works" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-calm-blue to-white dark:from-gray-800 dark:to-gray-900">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            How It <span className="gradient-text">Works</span>
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Four simple steps to transform your lifestyle and achieve your wellness goals.
-          </p>
-        </div>
+    <section id="how-it-works" className="py-20 lg:py-32 px-8 sm:px-12 lg:px-16 bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 rounded-[32px] md:rounded-[48px] shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
+      {/* Large decorative number background */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+        <span className="text-[40rem] font-bold text-gray-900">3</span>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {steps.map((step, index) => (
-            <div
-              key={index}
-              className="relative animate-slide-up"
-              style={{ animationDelay: `${index * 150}ms` }}
-            >
-              {/* Connector Line */}
-              {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-16 left-full w-full h-0.5 bg-gradient-to-r from-primary-300 to-primary-500 dark:from-primary-700 dark:to-primary-500 -z-10" />
-              )}
-
-              <div className="text-center">
-                {/* Step Number */}
-                <div className="text-6xl font-bold text-primary-200 dark:text-primary-900 mb-4">
-                  {step.step}
-                </div>
-
-                {/* Icon */}
-                <div className="w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-                  <step.icon size={32} className="text-white" />
-                </div>
-
-                {/* Content */}
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                  {step.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  {step.description}
-                </p>
-              </div>
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left Side - Title */}
+          <div>
+            <div className="inline-flex items-center gap-2 px-5 py-2 bg-gray-900 text-white rounded-full text-sm font-semibold mb-8">
+              <span># How it Works</span>
             </div>
-          ))}
+
+            <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight">
+              Your Path
+              <br />
+              to Better Health
+            </h2>
+          </div>
+
+          {/* Right Side - Steps */}
+          <div className="space-y-8">
+            {steps.map((step, index) => (
+              <div key={index} className="flex gap-6">
+                <div className="flex-shrink-0">
+                  <div className={`w-14 h-14 ${index === 2 ? 'bg-blue-600' : 'bg-gray-900'} text-white rounded-full flex items-center justify-center font-bold text-xl shadow-lg`}>
+                    {step.number}
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {step.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

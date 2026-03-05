@@ -1,98 +1,80 @@
 'use client';
 
-import { Star } from 'lucide-react';
+import { useState } from 'react';
 
 const testimonials = [
   {
-    name: 'Sarah Johnson',
-    role: 'Marketing Manager',
-    image: '👩‍💼',
-    rating: 5,
-    text: 'PeaceHub gave me the strength to overcome my anxiety. The compassionate insights provided unwavering support, and I\'ve found a renewed sense of purpose and tranquility in my life.',
+    quote: "LifeScore transformed how I approach my wellness. The AI insights helped me identify patterns I never noticed, and my overall life score has improved by 40% in just 3 months!",
+    name: "Sarah M.",
+    role: "Software Engineer",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&q=80"
   },
   {
-    name: 'Michael Chen',
-    role: 'Software Engineer',
-    image: '👨‍💻',
-    rating: 5,
-    text: 'PeaceHub has been a true lifeline for me during some of my darkest moments. As someone who has battled stress and burnout for years, finding a platform like PeaceHub has been a game-changer.',
-  },
-  {
-    name: 'Emily Rodriguez',
-    role: 'Fitness Instructor',
-    image: '👩‍🏫',
-    rating: 5,
-    text: 'The supportive community on PeaceHub has been an invaluable source of comfort. Knowing that I\'m not alone and I can connect with others who truly understand has transformed my wellness journey.',
-  },
-  {
-    name: 'David Thompson',
-    role: 'Entrepreneur',
-    image: '👨‍💼',
-    rating: 5,
-    text: 'The AI insights are incredibly accurate and helpful. PeaceHub helped me optimize my sleep and productivity, leading to better business decisions and overall life satisfaction.',
-  },
-  {
-    name: 'Lisa Park',
-    role: 'Teacher',
-    image: '👩‍🏫',
-    rating: 5,
-    text: 'I love how easy it is to track everything in one place. The Life Score gives me a clear picture of my wellness, and the recommendations are always spot-on and actionable.',
-  },
-  {
-    name: 'James Wilson',
-    role: 'Student',
-    image: '👨‍🎓',
-    rating: 5,
-    text: 'As a busy student, PeaceHub helps me balance my studies, fitness, and mental health. The streak system keeps me motivated, and I\'ve never felt better!',
+    quote: "Finally, a platform that tracks everything in one place. The streak feature keeps me motivated, and the personalized recommendations actually work!",
+    name: "James K.",
+    role: "Fitness Enthusiast",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&q=80"
   },
 ];
 
 export default function Testimonials() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   return (
-    <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            What Our <span className="gradient-text">Community</span> Says
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Join thousands of people who have transformed their lives with PeaceHub.
-          </p>
+    <section className="py-20 lg:py-32 px-8 sm:px-12 lg:px-16 bg-gradient-to-br from-blue-50 to-purple-50 rounded-[32px] md:rounded-[48px] shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
+      {/* Decorative background */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,rgba(147,197,253,0.3),transparent_50%)]"></div>
+        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_70%_80%,rgba(196,181,253,0.3),transparent_50%)]"></div>
+      </div>
+
+      <div className="max-w-5xl mx-auto relative z-10">
+        {/* Section Badge */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-5 py-2 bg-gray-900 text-white rounded-full text-sm font-semibold mb-8">
+            <span># Testimonials</span>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="p-6 bg-gray-50 dark:bg-gray-800 rounded-2xl hover:shadow-xl transition-all duration-300 animate-slide-up"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              {/* Rating */}
-              <div className="flex space-x-1 mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} size={16} className="fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
+        {/* Testimonial Card */}
+        <div className="bg-white rounded-3xl p-12 shadow-xl">
+          <div className="text-center mb-8">
+            <p className="text-2xl lg:text-3xl text-gray-900 leading-relaxed font-medium mb-8">
+              "{testimonials[currentIndex].quote}"
+            </p>
+          </div>
 
-              {/* Testimonial Text */}
-              <p className="text-gray-700 dark:text-gray-300 mb-6 italic">
-                "{testimonial.text}"
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center space-x-3">
-                <div className="text-4xl">{testimonial.image}</div>
-                <div>
-                  <div className="font-semibold text-gray-900 dark:text-white">
-                    {testimonial.name}
-                  </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
-                    {testimonial.role}
-                  </div>
-                </div>
-              </div>
+          {/* Author Info */}
+          <div className="flex items-center justify-center gap-4">
+            <div 
+              className="w-16 h-16 rounded-full bg-cover bg-center"
+              style={{ backgroundImage: `url(${testimonials[currentIndex].avatar})` }}
+            ></div>
+            <div className="text-left">
+              <div className="font-bold text-gray-900">{testimonials[currentIndex].name}</div>
+              <div className="text-sm text-gray-600">{testimonials[currentIndex].role}</div>
             </div>
-          ))}
+          </div>
+
+          {/* Navigation Arrows */}
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <button
+              onClick={() => setCurrentIndex(prev => prev === 0 ? testimonials.length - 1 : prev - 1)}
+              className="w-12 h-12 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+            >
+              <svg className="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={() => setCurrentIndex(prev => prev === testimonials.length - 1 ? 0 : prev + 1)}
+              className="w-12 h-12 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+            >
+              <svg className="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>

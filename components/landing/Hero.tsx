@@ -1,69 +1,103 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import Image from 'next/image';
+import Navbar from './Navbar';
 
 export default function Hero() {
   return (
-    <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center animate-fade-in">
-          {/* Badge */}
-          <div className="inline-flex items-center space-x-2 bg-primary-100 dark:bg-primary-900/30 px-4 py-2 rounded-full mb-8">
-            <Sparkles size={16} className="text-primary-600 dark:text-primary-400" />
-            <span className="text-sm font-medium text-primary-700 dark:text-primary-300">
-              AI-Powered Wellness Platform
-            </span>
-          </div>
+    <section className="relative min-h-[600px] md:min-h-[700px] lg:min-h-[800px] flex items-center overflow-hidden rounded-[32px] md:rounded-[48px] shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=1920&q=80"
+          alt="Hero Background"
+          fill
+          className="object-cover rounded-[32px] md:rounded-[48px]"
+          priority
+        />
+        {/* Overlay gradient */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-400/60 via-blue-300/40 to-transparent rounded-[32px] md:rounded-[48px]"></div>
+      </div>
 
-          {/* Main Heading */}
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-            Your Journey to
-            <br />
-            <span className="gradient-text">Mental Wellness</span>
-          </h1>
+      {/* Navbar inside */}
+      <Navbar />
 
-          {/* Subheading */}
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-3xl mx-auto">
-            Optimize your lifestyle with personalized insights for sleep, fitness, nutrition, and mental health.
-            Track your progress and unlock your full potential.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-            <Link
-              href="/signup"
-              className="group px-8 py-4 bg-gradient-to-r from-primary-500 to-primary-700 text-white rounded-full font-semibold hover:shadow-xl transform hover:scale-105 transition-all flex items-center space-x-2"
-            >
-              <span>Start Your Journey</span>
-              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link
-              href="#how-it-works"
-              className="px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-full font-semibold border-2 border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 transition-all"
-            >
-              Learn More
-            </Link>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-            {[
-              { value: '10K+', label: 'Active Users' },
-              { value: '95%', label: 'Satisfaction Rate' },
-              { value: '50K+', label: 'Goals Achieved' },
-              { value: '24/7', label: 'AI Support' },
-            ].map((stat, index) => (
-              <div key={index} className="animate-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
-                <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">
-                  {stat.value}
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-8 lg:px-16 py-16 flex items-center">
+        <div className="grid lg:grid-cols-2 gap-12 items-start w-full pt-24">
+          {/* Left Side */}
+          <div className="space-y-8 pt-12">
+            {/* Community Badge */}
+            <div className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-md px-5 py-3 rounded-3xl border border-white/30 shadow-lg max-w-xs">
+              <div className="flex -space-x-2">
+                <div className="w-9 h-9 rounded-full bg-gray-300 border-2 border-white"></div>
+                <div className="w-9 h-9 rounded-full bg-gray-300 border-2 border-white"></div>
+                <div className="w-9 h-9 rounded-full bg-gray-300 border-2 border-white"></div>
+                <div className="w-9 h-9 rounded-full bg-blue-600 border-2 border-white flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">1K+</span>
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</div>
               </div>
-            ))}
+              <div className="text-white">
+                <div className="text-sm font-semibold leading-tight">Join our wellness community</div>
+                <div className="text-xs opacity-90">Track your life score today</div>
+              </div>
+            </div>
+
+            {/* Main Heading in White Card */}
+            <div className="bg-white rounded-[32px] p-10 lg:p-12 shadow-2xl max-w-lg">
+              <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                Your Complete Wellness Journey
+              </h1>
+            </div>
+
+            {/* More Info Button */}
+            <div>
+              <Link
+                href="/signup"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-base font-semibold rounded-2xl transition-all shadow-lg hover:shadow-xl"
+              >
+                <span>Start Tracking</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Side - Info Card */}
+          <div className="flex justify-end items-start pt-32 lg:pt-48">
+            <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl max-w-sm">
+              <p className="text-gray-700 text-base leading-relaxed mb-6">
+                Track your mental health, fitness, nutrition, sleep, and hydration all in one place with AI-powered insights.
+              </p>
+              <div className="space-y-3">
+                <Link
+                  href="/dashboard"
+                  className="w-full px-6 py-3 bg-gray-900 text-white rounded-xl font-semibold hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                  View Dashboard
+                </Link>
+                <Link
+                  href="/onboarding"
+                  className="w-full px-6 py-3 bg-white border-2 border-gray-900 text-gray-900 rounded-xl font-semibold hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  Get Started Free
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Decorative circles on the image */}
+      <div className="absolute top-1/3 left-1/2 w-16 h-16 bg-white/30 rounded-full blur-sm z-5"></div>
+      <div className="absolute top-2/3 left-1/2 w-12 h-12 bg-white/40 rounded-full blur-sm z-5"></div>
     </section>
   );
 }
