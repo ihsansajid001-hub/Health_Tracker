@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
@@ -18,6 +18,7 @@ import {
   X,
   Sun,
   Moon as ThemeIcon,
+  User,
 } from 'lucide-react';
 import { useTheme } from '@/components/providers/ThemeProvider';
 import { supabase } from '@/lib/supabase/client';
@@ -38,6 +39,27 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const router = useRouter();
   const { theme, toggleTheme } = useTheme();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState<any>(null);
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, []);
+
+  const fetchUserProfile = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const { data: profile } = await supabase
+        .from('user_profiles')
+        .select('username')
+        .eq('user_id', user.id)
+        .single();
+      
+      setUserProfile({
+        username: profile?.username || user.email?.split('@')[0] || 'User',
+        email: user.email,
+      });
+    }
+  };
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -140,11 +162,28 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </button>
             <div className="flex-1" />
             <div className="flex items-center space-x-4">
-              <button className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+              <button className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 relative">
                 <span className="text-2xl">🔔</span>
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold">U</span>
+              
+              {/* User Profile Display */}
+              <div className="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">
+                    {userProfile?.username?.charAt(0).toUpperCase() || 'U'}
+                  </span>
+                </div>
+                {userProfile && (
+                  <div className="hidden md:block text-left">
+                    <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                      {userProfile.username}
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      {userProfile.email}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

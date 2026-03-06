@@ -1,10 +1,60 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from './Navbar';
+import { supabase } from '@/lib/supabase/client';
 
 export default function Hero() {
+  const [user, setUser] = useState<any>(null);
+  const [username, setUsername] = useState<string>('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Check if user is logged in
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setUser(user);
+        // Fetch username from profile
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('username')
+          .eq('user_id', user.id)
+          .single();
+        
+        if (profile?.username) {
+          setUsername(profile.username);
+        }
+      }
+      setLoading(false);
+    };
+
+    checkUser();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUser(session.user);
+        // Fetch username
+        supabase
+          .from('user_profiles')
+          .select('username')
+          .eq('user_id', session.user.id)
+          .single()
+          .then(({ data }) => {
+            if (data?.username) setUsername(data.username);
+          });
+      } else {
+        setUser(null);
+        setUsername('');
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   return (
     <section className="relative min-h-[600px] md:min-h-[700px] lg:min-h-[800px] flex items-center overflow-hidden rounded-[32px] md:rounded-[48px] shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
       {/* Background Image */}
@@ -45,22 +95,44 @@ export default function Hero() {
 
             {/* Main Heading in White Card */}
             <div className="bg-white rounded-[32px] p-10 lg:p-12 shadow-2xl max-w-lg">
-              <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                Your Complete Wellness Journey
-              </h1>
+              {user && username ? (
+                <>
+                  <div className="text-sm font-medium text-blue-600 mb-2">Welcome back!</div>
+                  <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                    @{username}
+                  </h1>
+                  <p className="text-gray-600 mt-4">Continue your wellness journey</p>
+                </>
+              ) : (
+                <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                  Your Complete Wellness Journey
+                </h1>
+              )}
             </div>
 
-            {/* More Info Button */}
+            {/* Action Button */}
             <div>
-              <Link
-                href="/signup"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-base font-semibold rounded-2xl transition-all shadow-lg hover:shadow-xl"
-              >
-                <span>Start Tracking</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
+              {user ? (
+                <Link
+                  href="/dashboard"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-base font-semibold rounded-2xl transition-all shadow-lg hover:shadow-xl"
+                >
+                  <span>Go to Dashboard</span>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              ) : (
+                <Link
+                  href="/signup"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-base font-semibold rounded-2xl transition-all shadow-lg hover:shadow-xl"
+                >
+                  <span>Get Started</span>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              )}
             </div>
           </div>
 

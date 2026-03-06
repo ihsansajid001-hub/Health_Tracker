@@ -8,6 +8,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE user_profiles (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE UNIQUE NOT NULL,
+  username VARCHAR(30) UNIQUE NOT NULL,
   age INTEGER NOT NULL,
   gender VARCHAR(10) NOT NULL CHECK (gender IN ('male', 'female', 'other')),
   height DECIMAL(5,2) NOT NULL, -- cm

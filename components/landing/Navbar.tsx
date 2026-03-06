@@ -1,10 +1,56 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { supabase } from '@/lib/supabase/client';
+import { User } from 'lucide-react';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [username, setUsername] = useState<string>('');
+
+  useEffect(() => {
+    // Check if user is logged in
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setUser(user);
+        // Fetch username from profile
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('username')
+          .eq('user_id', user.id)
+          .single();
+        
+        if (profile?.username) {
+          setUsername(profile.username);
+        }
+      }
+    };
+
+    checkUser();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUser(session.user);
+        supabase
+          .from('user_profiles')
+          .select('username')
+          .eq('user_id', session.user.id)
+          .single()
+          .then(({ data }) => {
+            if (data?.username) setUsername(data.username);
+          });
+      } else {
+        setUser(null);
+        setUsername('');
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   return (
     <nav className="absolute top-0 left-0 right-0 z-50">
@@ -34,16 +80,28 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Contact Button - Right */}
-          <Link
-            href="/signup"
-            className="hidden md:inline-flex px-8 py-3 bg-gray-900 text-white rounded-xl font-semibold hover:bg-gray-800 transition-all"
-          >
-            <span>Get Started</span>
-            <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
+          {/* Contact Button / User Info - Right */}
+          {user && username ? (
+            <div className="hidden md:flex items-center gap-3">
+              <Link
+                href="/dashboard"
+                className="flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-xl font-semibold hover:bg-white/30 transition-all"
+              >
+                <User size={18} />
+                <span>@{username}</span>
+              </Link>
+            </div>
+          ) : (
+            <Link
+              href="/signup"
+              className="hidden md:inline-flex px-8 py-3 bg-gray-900 text-white rounded-xl font-semibold hover:bg-gray-800 transition-all"
+            >
+              <span>Get Started</span>
+              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          )}
 
           {/* Mobile Menu Button */}
           <button
@@ -82,12 +140,21 @@ export default function Navbar() {
             <Link href="/about" className="block py-2 text-gray-700 font-medium">
               About Us
             </Link>
-            <Link
-              href="/signup"
-              className="block text-center px-6 py-3 bg-gray-900 text-white rounded-xl font-semibold"
-            >
-              Get Started
-            </Link>
+            {user && username ? (
+              <Link
+                href="/dashboard"
+                className="block text-center px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold"
+              >
+                @{username} - Dashboard
+              </Link>
+            ) : (
+              <Link
+                href="/signup"
+                className="block text-center px-6 py-3 bg-gray-900 text-white rounded-xl font-semibold"
+              >
+                Get Started
+              </Link>
+            )}
           </div>
         </div>
       )}

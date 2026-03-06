@@ -17,23 +17,37 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [lifeScore, setLifeScore] = useState<LifeScore | null>(null);
   const [user, setUser] = useState<any>(null);
+  const [profile, setProfile] = useState<any>(null);
 
   useEffect(() => {
-    checkAuth();
-    fetchDashboardData();
+    initializeDashboard();
   }, []);
 
-  const checkAuth = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      router.push('/login');
-    } else {
-      setUser(user);
-    }
-  };
-
-  const fetchDashboardData = async () => {
+  const initializeDashboard = async () => {
     try {
+      // Check authentication
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        router.push('/login');
+        return;
+      }
+      setUser(user);
+
+      // Fetch user profile
+      const { data: userProfile, error: profileError } = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      if (profileError || !userProfile) {
+        // No profile found, redirect to onboarding
+        router.push('/onboarding');
+        return;
+      }
+
+      setProfile(userProfile);
+
       // Fetch life score from API
       const response = await fetch('/api/score/current');
       if (response.ok) {
@@ -41,7 +55,7 @@ export default function DashboardPage() {
         setLifeScore(data.lifeScore);
       }
     } catch (error) {
-      console.error('Failed to fetch dashboard data:', error);
+      console.error('Failed to initialize dashboard:', error);
     } finally {
       setLoading(false);
     }
@@ -60,14 +74,29 @@ export default function DashboardPage() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        {/* Welcome Header */}
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Welcome back! 👋
+        {/* Welcome Header - Personalized */}
+        <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl p-6 text-white shadow-lg">
+          <h1 className="text-3xl font-bold">
+            Welcome back, {profile?.username || user?.email?.split('@')[0]}! 👋
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">
-            Here's your wellness overview for today
+          <p className="mt-2 text-blue-100">
+            {profile?.primary_goal && (
+              <>Your goal: {profile.primary_goal.replace('_', ' ').charAt(0).toUpperCase() + profile.primary_goal.replace('_', ' ').slice(1)}</>
+            )}
           </p>
+          {profile && (
+            <div className="mt-4 flex flex-wrap gap-4 text-sm">
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2">
+                <span className="opacity-90">BMI:</span> <span className="font-semibold">{profile.bmi}</span>
+              </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2">
+                <span className="opacity-90">Daily Calories:</span> <span className="font-semibold">{profile.maintenance_calories}</span>
+              </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2">
+                <span className="opacity-90">Activity:</span> <span className="font-semibold capitalize">{profile.activity_level?.replace('_', ' ')}</span>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Top Row - Life Score & Streak */}
