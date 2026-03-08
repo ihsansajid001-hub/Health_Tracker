@@ -1,0 +1,158 @@
+{
+  "categories": [
+    {
+      "id": "stress_relief",
+      "name": "Stress Relief",
+      "icon": "😌",
+      "sessions": [
+        {
+          "id": "quick_calm",
+          "name": "Quick Calm",
+          "duration": 5,
+          "difficulty": "beginner",
+          "description": "5-minute stress relief for busy moments",
+          "benefits": ["Reduces stress", "Calms mind", "Lowers anxiety"]
+        },
+        {
+          "id": "deep_relaxation",
+          "name": "Deep Relaxation",
+          "duration": 15,
+          "difficulty": "beginner",
+          "description": "Full body relaxation and stress release",
+          "benefits": ["Deep relaxation", "Tension release", "Mental clarity"]
+        },
+        {
+          "id": "stress_management",
+          "name": "Stress Management",
+          "duration": 20,
+          "difficulty": "intermediate",
+          "description": "Learn techniques to manage daily stress",
+          "benefits": ["Stress coping", "Emotional balance", "Resilience"]
+        }
+      ]
+    },
+    {
+      "id": "sleep",
+      "name": "Sleep Meditation",
+      "icon": "😴",
+      "sessions": [
+        {
+          "id": "bedtime_relaxation",
+          "name": "Bedtime Relaxation",
+          "duration": 10,
+          "difficulty": "beginner",
+          "description": "Gentle meditation to prepare for sleep",
+          "benefits": ["Better sleep", "Relaxation", "Calm mind"]
+        },
+        {
+          "id": "deep_sleep",
+          "name": "Deep Sleep Journey",
+          "duration": 20,
+          "difficulty": "beginner",
+          "description": "Guided journey into deep, restful sleep",
+          "benefits": ["Deep sleep", "Sleep quality", "Dream recall"]
+        },
+        {
+          "id": "insomnia_relief",
+          "name": "Insomnia Relief",
+          "duration": 30,
+          "difficulty": "intermediate",
+          "description": "Specialized meditation for sleep difficulties",
+          "benefits": ["Fall asleep faster", "Stay asleep", "Sleep anxiety relief"]
+        }
+      ]
+    },
+    {
+      "id": "anxiety",
+      "name": "Anxiety Relief",
+      "icon": "🌊",
+      "sessions": [
+        {
+          "id": "calm_anxiety",
+          "name": "Calm Anxiety",
+          "duration": 10,
+          "difficulty": "beginner",
+          "description": "Quick relief from anxious thoughts",
+          "benefits": ["Reduces anxiety", "Calms nerves", "Mental peace"]
+        },
+        {
+          "id": "anxiety_management",
+          "name": "Anxiety Management",
+          "duration": 15,
+          "difficulty": "intermediate",
+          "description": "Tools to manage anxiety long-term",
+          "benefits": ["Anxiety control", "Confidence", "Emotional stability"]
+        }
+      ]
+    },
+    {
+      "id": "focus",
+      "name": "Focus & Concentration",
+      "icon": "🎯",
+      "sessions": [
+        {
+          "id": "mental_clarity",
+          "name": "Mental Clarity",
+          "duration": 10,
+          "difficulty": "beginner",
+          "description": "Clear your mind for better focus",
+          "benefits": ["Mental clarity", "Focus", "Productivity"]
+        },
+        {
+          "id": "deep_focus",
+          "name": "Deep Focus",
+          "duration": 15,
+          "difficulty": "intermediate",
+          "description": "Enter state of deep concentration",
+          "benefits": ["Deep focus", "Flow state", "Peak performance"]
+        }
+      ]
+    },
+    {
+      "id": "self_love",
+      "name": "Self-Love & Confidence",
+      "icon": "💖",
+      "sessions": [
+        {
+          "id": "self_compassion",
+          "name": "Self-Compassion",
+          "duration": 10,
+          "difficulty": "beginner",
+          "description": "Practice kindness toward yourself",
+          "benefits": ["Self-love", "Compassion", "Acceptance"]
+        },
+        {
+          "id": "confidence_boost",
+          "name": "Confidence Boost",
+          "duration": 15,
+          "difficulty": "beginner",
+          "description": "Build inner confidence and self-worth",
+          "benefits": ["Confidence", "Self-esteem", "Inner strength"]
+        }
+      ]
+    },
+    {
+      "id": "mindfulness",
+      "name": "Mindfulness",
+      "icon": "🧘",
+      "sessions": [
+        {
+          "id": "present_moment",
+          "name": "Present Moment",
+          "duration": 10,
+          "difficulty": "beginner",
+          "description": "Practice being fully present",
+          "benefits": ["Mindfulness", "Awareness", "Presence"]
+        },
+        {
+          "id": "body_scan",
+          "name": "Body Scan",
+          "duration": 20,
+          "difficulty": "beginner",
+          "description": "Full body awareness meditation",
+          "benefits": ["Body awareness", "Relaxation", "Grounding"]
+        }
+      ]
+    }
+  ]
+}

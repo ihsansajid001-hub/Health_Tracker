@@ -9,6 +9,8 @@ import TrendChart from '@/components/charts/TrendChart';
 import QuickActions from '@/components/dashboard/QuickActions';
 import RecentInsights from '@/components/dashboard/RecentInsights';
 import StreakCard from '@/components/dashboard/StreakCard';
+import MedicalDisclaimer from '@/components/safety/MedicalDisclaimer';
+import EmergencyButton from '@/components/safety/EmergencyButton';
 import { supabase } from '@/lib/supabase/client';
 import { LifeScore } from '@/types';
 
@@ -18,8 +20,14 @@ export default function DashboardPage() {
   const [lifeScore, setLifeScore] = useState<LifeScore | null>(null);
   const [user, setUser] = useState<any>(null);
   const [profile, setProfile] = useState<any>(null);
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
 
   useEffect(() => {
+    // Check if user has accepted medical disclaimer
+    const accepted = localStorage.getItem('medical_disclaimer_accepted');
+    if (!accepted) {
+      setShowDisclaimer(true);
+    }
     initializeDashboard();
   }, []);
 
@@ -28,7 +36,8 @@ export default function DashboardPage() {
       // Check authentication
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        router.push('/login');
+        console.log('Not authenticated, redirecting to login');
+        window.location.replace('/login');
         return;
       }
       setUser(user);
@@ -42,14 +51,15 @@ export default function DashboardPage() {
 
       if (profileError || !userProfile) {
         // No profile found, redirect to onboarding
-        router.push('/onboarding');
+        console.log('No profile found, redirecting to onboarding');
+        window.location.replace('/onboarding');
         return;
       }
 
       setProfile(userProfile);
 
       // Fetch life score from API
-      const response = await fetch('/api/score/current');
+      const response = await fetch(`/api/score/current?userId=${user.id}`);
       if (response.ok) {
         const data = await response.json();
         setLifeScore(data.lifeScore);
@@ -71,9 +81,28 @@ export default function DashboardPage() {
     );
   }
 
+  const handleDisclaimerAccept = () => {
+    setShowDisclaimer(false);
+  };
+
+  const handleDisclaimerDecline = () => {
+    // Redirect to home page if user declines
+    window.location.href = '/';
+  };
+
   return (
-    <DashboardLayout>
-      <div className="space-y-6">
+    <>
+      {showDisclaimer && (
+        <MedicalDisclaimer
+          onAccept={handleDisclaimerAccept}
+          onDecline={handleDisclaimerDecline}
+        />
+      )}
+      
+      <EmergencyButton />
+      
+      <DashboardLayout>
+        <div className="space-y-6">
         {/* Welcome Header - Personalized */}
         <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl p-6 text-white shadow-lg">
           <h1 className="text-3xl font-bold">
@@ -120,7 +149,8 @@ export default function DashboardPage() {
           <QuickActions />
           <RecentInsights />
         </div>
-      </div>
-    </DashboardLayout>
+        </div>
+      </DashboardLayout>
+    </>
   );
 }

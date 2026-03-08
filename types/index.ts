@@ -89,8 +89,8 @@ export interface LifeScore {
   nutrition: number;
   mind: number;
   hydration: number;
-  consistency: number;
-  timestamp: string;
+  trend: 'up' | 'down' | 'stable';
+  insights: string[];
 }
 
 export interface WeeklyReport {

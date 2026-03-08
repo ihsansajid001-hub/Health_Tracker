@@ -1,0 +1,287 @@
+{
+  "categories": [
+    {
+      "id": "abs",
+      "name": "Abs",
+      "icon": "💪",
+      "exercises": [
+        {
+          "id": "crunches",
+          "name": "Crunches",
+          "difficulty": "beginner",
+          "reps": "15-20",
+          "sets": "3",
+          "duration": 30,
+          "calories": 5,
+          "instructions": "Lie on back, knees bent, hands behind head. Lift shoulders off ground.",
+          "contraindications": ["herniated_disc", "neck_injury", "osteoporosis"],
+          "targetMuscles": ["rectus_abdominis"]
+        },
+        {
+          "id": "plank",
+          "name": "Plank",
+          "difficulty": "beginner",
+          "duration": 60,
+          "sets": "3",
+          "calories": 8,
+          "instructions": "Hold body straight in push-up position on forearms.",
+          "contraindications": ["shoulder_injury", "wrist_injury"],
+          "targetMuscles": ["core", "shoulders"]
+        },
+        {
+          "id": "bicycle_crunches",
+          "name": "Bicycle Crunches",
+          "difficulty": "intermediate",
+          "reps": "20-30",
+          "sets": "3",
+          "duration": 45,
+          "calories": 7,
+          "instructions": "Alternate bringing opposite elbow to knee in cycling motion.",
+          "contraindications": ["herniated_disc", "neck_injury"],
+          "targetMuscles": ["obliques", "rectus_abdominis"]
+        },
+        {
+          "id": "leg_raises",
+          "name": "Leg Raises",
+          "difficulty": "intermediate",
+          "reps": "12-15",
+          "sets": "3",
+          "duration": 40,
+          "calories": 6,
+          "instructions": "Lie flat, raise legs to 90 degrees, lower slowly.",
+          "contraindications": ["herniated_disc", "lower_back_pain"],
+          "targetMuscles": ["lower_abs"]
+        },
+        {
+          "id": "mountain_climbers",
+          "name": "Mountain Climbers",
+          "difficulty": "intermediate",
+          "reps": "20-30",
+          "sets": "3",
+          "duration": 45,
+          "calories": 10,
+          "instructions": "In plank position, alternate bringing knees to chest quickly.",
+          "contraindications": ["wrist_injury", "shoulder_injury", "knee_injury"],
+          "targetMuscles": ["core", "cardio"]
+        },
+        {
+          "id": "russian_twists",
+          "name": "Russian Twists",
+          "difficulty": "intermediate",
+          "reps": "20-30",
+          "sets": "3",
+          "duration": 45,
+          "calories": 7,
+          "instructions": "Sit with knees bent, lean back, twist torso side to side.",
+          "contraindications": ["herniated_disc", "lower_back_pain"],
+          "targetMuscles": ["obliques"]
+        }
+      ]
+    },
+    {
+      "id": "chest",
+      "name": "Chest",
+      "icon": "💪",
+      "exercises": [
+        {
+          "id": "push_ups",
+          "name": "Push-Ups",
+          "difficulty": "beginner",
+          "reps": "10-15",
+          "sets": "3",
+          "duration": 40,
+          "calories": 8,
+          "instructions": "Lower body until chest nearly touches floor, push back up.",
+          "contraindications": ["shoulder_injury", "wrist_injury"],
+          "targetMuscles": ["chest", "triceps", "shoulders"]
+        },
+        {
+          "id": "wide_push_ups",
+          "name": "Wide Push-Ups",
+          "difficulty": "intermediate",
+          "reps": "10-15",
+          "sets": "3",
+          "duration": 40,
+          "calories": 9,
+          "instructions": "Push-ups with hands wider than shoulder-width.",
+          "contraindications": ["shoulder_injury", "wrist_injury"],
+          "targetMuscles": ["chest"]
+        },
+        {
+          "id": "diamond_push_ups",
+          "name": "Diamond Push-Ups",
+          "difficulty": "advanced",
+          "reps": "8-12",
+          "sets": "3",
+          "duration": 35,
+          "calories": 10,
+          "instructions": "Push-ups with hands forming diamond shape.",
+          "contraindications": ["shoulder_injury", "wrist_injury", "elbow_injury"],
+          "targetMuscles": ["triceps", "chest"]
+        },
+        {
+          "id": "decline_push_ups",
+          "name": "Decline Push-Ups",
+          "difficulty": "advanced",
+          "reps": "10-15",
+          "sets": "3",
+          "duration": 40,
+          "calories": 11,
+          "instructions": "Push-ups with feet elevated on surface.",
+          "contraindications": ["shoulder_injury", "wrist_injury", "hypertension"],
+          "targetMuscles": ["upper_chest", "shoulders"]
+        }
+      ]
+    },
+    {
+      "id": "legs",
+      "name": "Legs",
+      "icon": "🦵",
+      "exercises": [
+        {
+          "id": "squats",
+          "name": "Squats",
+          "difficulty": "beginner",
+          "reps": "15-20",
+          "sets": "3",
+          "duration": 50,
+          "calories": 10,
+          "instructions": "Lower hips until thighs parallel to ground, stand back up.",
+          "contraindications": ["knee_injury"],
+          "targetMuscles": ["quads", "glutes", "hamstrings"]
+        },
+        {
+          "id": "lunges",
+          "name": "Lunges",
+          "difficulty": "beginner",
+          "reps": "12-15 each leg",
+          "sets": "3",
+          "duration": 60,
+          "calories": 9,
+          "instructions": "Step forward, lower back knee toward ground, return to start.",
+          "contraindications": ["knee_injury"],
+          "targetMuscles": ["quads", "glutes"]
+        },
+        {
+          "id": "jump_squats",
+          "name": "Jump Squats",
+          "difficulty": "advanced",
+          "reps": "12-15",
+          "sets": "3",
+          "duration": 45,
+          "calories": 15,
+          "instructions": "Squat down, explode up into jump, land softly.",
+          "contraindications": ["knee_injury", "ankle_injury", "osteoporosis"],
+          "targetMuscles": ["quads", "glutes", "calves"]
+        },
+        {
+          "id": "wall_sit",
+          "name": "Wall Sit",
+          "difficulty": "beginner",
+          "duration": 60,
+          "sets": "3",
+          "calories": 7,
+          "instructions": "Sit against wall with thighs parallel to ground, hold position.",
+          "contraindications": ["knee_injury"],
+          "targetMuscles": ["quads"]
+        },
+        {
+          "id": "calf_raises",
+          "name": "Calf Raises",
+          "difficulty": "beginner",
+          "reps": "20-30",
+          "sets": "3",
+          "duration": 40,
+          "calories": 5,
+          "instructions": "Rise up on toes, lower back down slowly.",
+          "contraindications": ["ankle_injury"],
+          "targetMuscles": ["calves"]
+        }
+      ]
+    },
+    {
+      "id": "arms",
+      "name": "Arms",
+      "icon": "💪",
+      "exercises": [
+        {
+          "id": "tricep_dips",
+          "name": "Tricep Dips",
+          "difficulty": "beginner",
+          "reps": "10-15",
+          "sets": "3",
+          "duration": 40,
+          "calories": 7,
+          "instructions": "Using chair or bench, lower body by bending elbows, push back up.",
+          "contraindications": ["shoulder_injury", "elbow_injury"],
+          "targetMuscles": ["triceps"]
+        },
+        {
+          "id": "arm_circles",
+          "name": "Arm Circles",
+          "difficulty": "beginner",
+          "duration": 60,
+          "sets": "3",
+          "calories": 4,
+          "instructions": "Extend arms, make small circles, gradually increase size.",
+          "contraindications": ["shoulder_injury"],
+          "targetMuscles": ["shoulders", "arms"]
+        },
+        {
+          "id": "plank_to_down_dog",
+          "name": "Plank to Down Dog",
+          "difficulty": "intermediate",
+          "reps": "10-15",
+          "sets": "3",
+          "duration": 45,
+          "calories": 8,
+          "instructions": "From plank, push hips up into inverted V, return to plank.",
+          "contraindications": ["shoulder_injury", "wrist_injury"],
+          "targetMuscles": ["shoulders", "core"]
+        }
+      ]
+    },
+    {
+      "id": "full_body",
+      "name": "Full Body",
+      "icon": "🔥",
+      "exercises": [
+        {
+          "id": "burpees",
+          "name": "Burpees",
+          "difficulty": "advanced",
+          "reps": "10-15",
+          "sets": "3",
+          "duration": 60,
+          "calories": 15,
+          "instructions": "Squat, kick feet back to plank, push-up, jump feet forward, jump up.",
+          "contraindications": ["knee_injury", "shoulder_injury", "wrist_injury", "pregnancy", "heart_disease"],
+          "targetMuscles": ["full_body", "cardio"]
+        },
+        {
+          "id": "jumping_jacks",
+          "name": "Jumping Jacks",
+          "difficulty": "beginner",
+          "reps": "30-50",
+          "sets": "3",
+          "duration": 60,
+          "calories": 10,
+          "instructions": "Jump while spreading legs and raising arms overhead.",
+          "contraindications": ["knee_injury", "ankle_injury"],
+          "targetMuscles": ["full_body", "cardio"]
+        },
+        {
+          "id": "high_knees",
+          "name": "High Knees",
+          "difficulty": "intermediate",
+          "duration": 60,
+          "sets": "3",
+          "calories": 12,
+          "instructions": "Run in place, bringing knees up to hip level.",
+          "contraindications": ["knee_injury", "hip_injury"],
+          "targetMuscles": ["legs", "cardio"]
+        }
+      ]
+    }
+  ]
+}

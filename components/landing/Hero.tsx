@@ -95,19 +95,9 @@ export default function Hero() {
 
             {/* Main Heading in White Card */}
             <div className="bg-white rounded-[32px] p-10 lg:p-12 shadow-2xl max-w-lg">
-              {user && username ? (
-                <>
-                  <div className="text-sm font-medium text-blue-600 mb-2">Welcome back!</div>
-                  <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                    @{username}
-                  </h1>
-                  <p className="text-gray-600 mt-4">Continue your wellness journey</p>
-                </>
-              ) : (
-                <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                  Your Complete Wellness Journey
-                </h1>
-              )}
+              <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                Your Complete Wellness Journey
+              </h1>
             </div>
 
             {/* Action Button */}

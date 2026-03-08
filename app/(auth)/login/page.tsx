@@ -34,6 +34,9 @@ export default function LoginPage() {
       if (data.user) {
         console.log('User logged in:', data.user.id);
         
+        // Wait a bit for session to be established
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
         // Check if user has completed onboarding (has a profile)
         const { data: profile, error: profileError } = await supabase
           .from('user_profiles')
@@ -43,13 +46,13 @@ export default function LoginPage() {
 
         console.log('Profile check:', profile, profileError);
 
-        // Redirect to onboarding if no profile exists, otherwise to dashboard
+        // Redirect based on profile existence
         if (!profile || profileError) {
           console.log('No profile found, redirecting to onboarding');
-          window.location.href = '/onboarding';
+          window.location.replace('/onboarding');
         } else {
-          console.log('Profile found, redirecting to dashboard');
-          window.location.href = '/dashboard';
+          console.log('Profile found, redirecting to home page');
+          window.location.replace('/');
         }
       }
     } catch (err: any) {

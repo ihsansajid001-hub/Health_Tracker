@@ -19,6 +19,7 @@ import {
   Sun,
   Moon as ThemeIcon,
   User,
+  Home,
 } from 'lucide-react';
 import { useTheme } from '@/components/providers/ThemeProvider';
 import { supabase } from '@/lib/supabase/client';
@@ -37,9 +38,21 @@ const navigation = [
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { theme, toggleTheme } = useTheme();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userProfile, setUserProfile] = useState<any>(null);
+  
+  // Safe theme hook usage
+  let theme = 'light';
+  let toggleTheme = () => {};
+  
+  try {
+    const themeContext = useTheme();
+    theme = themeContext.theme;
+    toggleTheme = themeContext.toggleTheme;
+  } catch (error) {
+    // ThemeProvider not available, use defaults
+    console.log('ThemeProvider not available, using defaults');
+  }
 
   useEffect(() => {
     fetchUserProfile();
@@ -85,7 +98,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-            <Link href="/dashboard" className="flex items-center space-x-2">
+            <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
               <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold text-xl">P</span>
               </div>
@@ -122,6 +135,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
           {/* Bottom Actions */}
           <div className="p-4 border-t border-gray-200 dark:border-gray-700 space-y-1">
+            <Link
+              href="/"
+              className="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            >
+              <Home size={20} />
+              <span className="font-medium">Back to Home</span>
+            </Link>
             <button
               onClick={toggleTheme}
               className="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full transition-colors"
@@ -168,7 +188,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               </button>
               
               {/* User Profile Display */}
-              <div className="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors">
+              <Link
+                href="/profile"
+                className="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors"
+              >
                 <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
                   <span className="text-white font-bold text-sm">
                     {userProfile?.username?.charAt(0).toUpperCase() || 'U'}
@@ -184,7 +207,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     </p>
                   </div>
                 )}
-              </div>
+              </Link>
             </div>
           </div>
         </header>

@@ -1,7 +1,6 @@
 'use client';
 
 import { LifeScore } from '@/types';
-import { LifeScoreEngine } from '@/services/lifeScoreEngine';
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 
 interface Props {
@@ -18,7 +17,15 @@ export default function LifeScoreCard({ score, previousScore }: Props) {
     );
   }
 
-  const { level, color, message } = LifeScoreEngine.getScoreLevel(score.overall);
+  const getScoreLevel = (score: number) => {
+    if (score >= 90) return { level: 'Exceptional', color: 'green', message: 'Outstanding performance!' };
+    if (score >= 80) return { level: 'Excellent', color: 'blue', message: 'Great job!' };
+    if (score >= 70) return { level: 'Good', color: 'yellow', message: 'Keep it up!' };
+    if (score >= 60) return { level: 'Fair', color: 'orange', message: 'Room for improvement' };
+    return { level: 'Needs Work', color: 'red', message: 'Focus on building habits' };
+  };
+
+  const { level, color, message } = getScoreLevel(score.overall);
   const change = previousScore ? score.overall - previousScore : 0;
 
   const getColorClasses = (colorName: string) => {
@@ -104,7 +111,6 @@ export default function LifeScoreCard({ score, previousScore }: Props) {
           { label: 'Nutrition', value: score.nutrition, icon: '🥗' },
           { label: 'Mind', value: score.mind, icon: '🧘' },
           { label: 'Hydration', value: score.hydration, icon: '💧' },
-          { label: 'Consistency', value: score.consistency, icon: '🎯' },
         ].map((category) => (
           <div key={category.label} className="text-center">
             <div className="text-2xl mb-1">{category.icon}</div>

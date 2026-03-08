@@ -1,0 +1,94 @@
+{
+  "exercises": [
+    {
+      "id": "box_breathing",
+      "name": "Box Breathing",
+      "duration": 3,
+      "difficulty": "beginner",
+      "description": "4-4-4-4 breathing pattern used by Navy SEALs",
+      "pattern": {
+        "inhale": 4,
+        "hold1": 4,
+        "exhale": 4,
+        "hold2": 4
+      },
+      "benefits": ["Reduces stress", "Improves focus", "Calms nervous system"],
+      "useCases": ["Before important meetings", "During anxiety", "To improve focus"]
+    },
+    {
+      "id": "4_7_8",
+      "name": "4-7-8 Breathing",
+      "duration": 3,
+      "difficulty": "beginner",
+      "description": "Dr. Weil's relaxation breath",
+      "pattern": {
+        "inhale": 4,
+        "hold1": 7,
+        "exhale": 8,
+        "hold2": 0
+      },
+      "benefits": ["Promotes sleep", "Reduces anxiety", "Lowers blood pressure"],
+      "useCases": ["Before bed", "During panic", "To calm down"]
+    },
+    {
+      "id": "diaphragmatic",
+      "name": "Diaphragmatic Breathing",
+      "duration": 5,
+      "difficulty": "beginner",
+      "description": "Deep belly breathing for full oxygen exchange",
+      "pattern": {
+        "inhale": 4,
+        "hold1": 2,
+        "exhale": 6,
+        "hold2": 0
+      },
+      "benefits": ["Improves oxygen flow", "Reduces stress", "Strengthens diaphragm"],
+      "useCases": ["Daily practice", "During stress", "For relaxation"]
+    },
+    {
+      "id": "alternate_nostril",
+      "name": "Alternate Nostril",
+      "duration": 5,
+      "difficulty": "intermediate",
+      "description": "Yogic breathing technique for balance",
+      "pattern": {
+        "inhale": 4,
+        "hold1": 4,
+        "exhale": 4,
+        "hold2": 0
+      },
+      "benefits": ["Balances energy", "Calms mind", "Improves focus"],
+      "useCases": ["Morning routine", "Before meditation", "To balance emotions"]
+    },
+    {
+      "id": "coherent_breathing",
+      "name": "Coherent Breathing",
+      "duration": 5,
+      "difficulty": "beginner",
+      "description": "5-5 breathing for heart-brain coherence",
+      "pattern": {
+        "inhale": 5,
+        "hold1": 0,
+        "exhale": 5,
+        "hold2": 0
+      },
+      "benefits": ["Heart rate variability", "Emotional balance", "Stress resilience"],
+      "useCases": ["Daily practice", "Stress management", "Emotional regulation"]
+    },
+    {
+      "id": "energizing_breath",
+      "name": "Energizing Breath",
+      "duration": 3,
+      "difficulty": "intermediate",
+      "description": "Quick breathing to boost energy",
+      "pattern": {
+        "inhale": 2,
+        "hold1": 0,
+        "exhale": 2,
+        "hold2": 0
+      },
+      "benefits": ["Increases energy", "Improves alertness", "Boosts mood"],
+      "useCases": ["Morning wake-up", "Afternoon slump", "Before workout"]
+    }
+  ]
+}

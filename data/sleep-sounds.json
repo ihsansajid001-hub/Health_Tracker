@@ -1,0 +1,54 @@
+{
+  "categories": [
+    {
+      "id": "nature",
+      "name": "Nature Sounds",
+      "icon": "🌿",
+      "sounds": [
+        { "id": "rain", "name": "Rain", "duration": "continuous", "url": "/sounds/rain.mp3" },
+        { "id": "ocean", "name": "Ocean Waves", "duration": "continuous", "url": "/sounds/ocean.mp3" },
+        { "id": "thunder", "name": "Thunder Storm", "duration": "continuous", "url": "/sounds/thunder.mp3" },
+        { "id": "forest", "name": "Forest Ambiance", "duration": "continuous", "url": "/sounds/forest.mp3" },
+        { "id": "birds", "name": "Birds Chirping", "duration": "continuous", "url": "/sounds/birds.mp3" },
+        { "id": "wind", "name": "Wind", "duration": "continuous", "url": "/sounds/wind.mp3" },
+        { "id": "campfire", "name": "Campfire", "duration": "continuous", "url": "/sounds/campfire.mp3" },
+        { "id": "waterfall", "name": "Waterfall", "duration": "continuous", "url": "/sounds/waterfall.mp3" },
+        { "id": "creek", "name": "Creek Stream", "duration": "continuous", "url": "/sounds/creek.mp3" }
+      ]
+    },
+    {
+      "id": "white_noise",
+      "name": "White Noise",
+      "icon": "📻",
+      "sounds": [
+        { "id": "white_noise", "name": "White Noise", "duration": "continuous", "url": "/sounds/white-noise.mp3" },
+        { "id": "brown_noise", "name": "Brown Noise", "duration": "continuous", "url": "/sounds/brown-noise.mp3" },
+        { "id": "pink_noise", "name": "Pink Noise", "duration": "continuous", "url": "/sounds/pink-noise.mp3" },
+        { "id": "green_noise", "name": "Green Noise", "duration": "continuous", "url": "/sounds/green-noise.mp3" },
+        { "id": "fan", "name": "Fan Sound", "duration": "continuous", "url": "/sounds/fan.mp3" },
+        { "id": "air_conditioner", "name": "Air Conditioner", "duration": "continuous", "url": "/sounds/ac.mp3" }
+      ]
+    },
+    {
+      "id": "ambient",
+      "name": "Ambient",
+      "icon": "🎵",
+      "sounds": [
+        { "id": "clock_ticking", "name": "Clock Ticking", "duration": "continuous", "url": "/sounds/clock.mp3" },
+        { "id": "train", "name": "Train Journey", "duration": "continuous", "url": "/sounds/train.mp3" },
+        { "id": "cafe", "name": "Coffee Shop", "duration": "continuous", "url": "/sounds/cafe.mp3" },
+        { "id": "library", "name": "Library", "duration": "continuous", "url": "/sounds/library.mp3" }
+      ]
+    },
+    {
+      "id": "asmr",
+      "name": "ASMR",
+      "icon": "🎧",
+      "sounds": [
+        { "id": "whisper", "name": "Soft Whisper", "duration": "30min", "url": "/sounds/whisper.mp3" },
+        { "id": "tapping", "name": "Gentle Tapping", "duration": "30min", "url": "/sounds/tapping.mp3" },
+        { "id": "brushing", "name": "Brushing Sounds", "duration": "30min", "url": "/sounds/brushing.mp3" }
+      ]
+    }
+  ]
+}
