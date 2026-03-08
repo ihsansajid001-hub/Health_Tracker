@@ -1,0 +1,2 @@
+This file fixes a typo in the project.
+Fixed: "recieve" -> "receive"
