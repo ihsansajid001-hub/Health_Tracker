@@ -4,216 +4,139 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
-  LayoutDashboard,
-  Moon as SleepIcon,
-  Dumbbell,
-  Apple,
-  Brain,
-  Droplet,
-  BarChart3,
-  Users,
-  Settings,
-  LogOut,
-  Menu,
-  X,
-  Sun,
-  Moon as ThemeIcon,
-  User,
-  Home,
+  LayoutDashboard, Moon as SleepIcon, Dumbbell, Apple, Brain,
+  Droplet, BarChart3, Menu, X, Home, Search, Bell,
 } from 'lucide-react';
-import { useTheme } from '@/components/providers/ThemeProvider';
 import { supabase } from '@/lib/supabase/client';
 
-const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Sleep', href: '/dashboard/sleep', icon: SleepIcon },
-  { name: 'Fitness', href: '/dashboard/fitness', icon: Dumbbell },
-  { name: 'Nutrition', href: '/dashboard/nutrition', icon: Apple },
-  { name: 'Mind', href: '/dashboard/mind', icon: Brain },
-  { name: 'Hydration', href: '/dashboard/hydration', icon: Droplet },
-  { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
-  { name: 'Community', href: '/dashboard/community', icon: Users },
+const NAV = [
+  { name: 'Dashboard',  href: '/dashboard',            icon: LayoutDashboard },
+  { name: 'Sleep',      href: '/dashboard/sleep',       icon: SleepIcon },
+  { name: 'Fitness',    href: '/dashboard/fitness',     icon: Dumbbell },
+  { name: 'Nutrition',  href: '/dashboard/nutrition',   icon: Apple },
+  { name: 'Mind',       href: '/dashboard/mind',        icon: Brain },
+  { name: 'Hydration',  href: '/dashboard/hydration',   icon: Droplet },
+  { name: 'Analytics',  href: '/dashboard/analytics',   icon: BarChart3 },
+  { name: 'Home',       href: '/',                      icon: Home },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  const router = useRouter();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [userProfile, setUserProfile] = useState<any>(null);
-  
-  // Safe theme hook usage
-  let theme = 'light';
-  let toggleTheme = () => {};
-  
-  try {
-    const themeContext = useTheme();
-    theme = themeContext.theme;
-    toggleTheme = themeContext.toggleTheme;
-  } catch (error) {
-    // ThemeProvider not available, use defaults
-    console.log('ThemeProvider not available, using defaults');
-  }
+  const pathname  = usePathname();
+  const [open, setOpen]       = useState(false);
+  const [profile, setProfile] = useState<any>(null);
 
   useEffect(() => {
-    fetchUserProfile();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!user) return;
+      supabase.from('user_profiles').select('username').eq('user_id', user.id).single()
+        .then(({ data }) => setProfile({
+          username: data?.username || user.email?.split('@')[0] || 'User',
+          email: user.email,
+        }));
+    });
   }, []);
 
-  const fetchUserProfile = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      const { data: profile } = await supabase
-        .from('user_profiles')
-        .select('username')
-        .eq('user_id', user.id)
-        .single();
-      
-      setUserProfile({
-        username: profile?.username || user.email?.split('@')[0] || 'User',
-        email: user.email,
-      });
-    }
-  };
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    router.push('/');
-  };
-
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Mobile Sidebar Overlay */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
+    <div className="min-h-screen flex bg-[#F5F5F0]">
+      {/* Mobile overlay */}
+      {open && <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setOpen(false)} />}
 
-      {/* Sidebar */}
-      <aside
-        className={`fixed top-0 left-0 z-50 h-full w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transform transition-transform duration-300 lg:translate-x-0 ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
-        <div className="flex flex-col h-full">
-          {/* Logo */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-            <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-xl">P</span>
-              </div>
-              <span className="text-xl font-bold gradient-text">LifeScore</span>
-            </Link>
-            <button
-              onClick={() => setSidebarOpen(false)}
-              className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              <X size={20} />
-            </button>
-          </div>
+      {/* ── Sidebar ── */}
+      <aside className={`fixed top-0 left-0 z-50 h-full w-56 bg-[#1A1A1A] flex flex-col transition-transform duration-300 lg:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`}>
 
-          {/* Navigation */}
-          <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-            {navigation.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
-                    isActive
-                      ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-400'
-                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  <item.icon size={20} />
-                  <span className="font-medium">{item.name}</span>
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* Bottom Actions */}
-          <div className="p-4 border-t border-gray-200 dark:border-gray-700 space-y-1">
-            <Link
-              href="/"
-              className="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-            >
-              <Home size={20} />
-              <span className="font-medium">Back to Home</span>
-            </Link>
-            <button
-              onClick={toggleTheme}
-              className="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full transition-colors"
-            >
-              {theme === 'dark' ? <Sun size={20} /> : <ThemeIcon size={20} />}
-              <span className="font-medium">
-                {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-              </span>
-            </button>
-            <Link
-              href="/dashboard/settings"
-              className="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-            >
-              <Settings size={20} />
-              <span className="font-medium">Settings</span>
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="flex items-center space-x-3 px-4 py-3 rounded-lg text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 w-full transition-colors"
-            >
-              <LogOut size={20} />
-              <span className="font-medium">Logout</span>
-            </button>
-          </div>
+        {/* Logo */}
+        <div className="flex items-center justify-between px-5 pt-6 pb-5">
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="w-8 h-8 bg-[#C8F135] rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
+              <span className="text-black font-black text-sm">L</span>
+            </div>
+            <span className="text-lg font-black text-white tracking-tight">LifeScore</span>
+          </Link>
+          <button onClick={() => setOpen(false)} className="lg:hidden text-gray-500 hover:text-white">
+            <X size={16} />
+          </button>
         </div>
+
+        {/* Nav — all items in one continuous list, no separators */}
+        <nav className="flex-1 px-3 space-y-0.5 overflow-y-auto pb-6">
+          {NAV.map(item => {
+            const active = pathname === item.href;
+            return (
+              <Link key={item.name} href={item.href}
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-sm font-semibold ${
+                  active
+                    ? 'bg-white text-black font-black'
+                    : 'text-gray-400 hover:bg-white/8 hover:text-white'
+                }`}>
+                <item.icon size={16} className={active ? 'text-black' : ''} />
+                {item.name}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* User card at bottom */}
+        {profile && (
+          <Link href="/profile"
+            className="mx-3 mb-4 flex items-center gap-3 p-3 bg-white/8 rounded-2xl hover:bg-white/12 transition-colors">
+            <div className="w-9 h-9 bg-[#C8F135] rounded-xl flex items-center justify-center flex-shrink-0">
+              <span className="text-black font-black text-sm">{profile.username?.charAt(0).toUpperCase()}</span>
+            </div>
+            <div className="min-w-0">
+              <p className="text-sm font-black text-white truncate">{profile.username}</p>
+              <p className="text-xs text-gray-500 truncate">{profile.email}</p>
+            </div>
+          </Link>
+        )}
       </aside>
 
-      {/* Main Content */}
-      <div className="lg:pl-64">
-        {/* Top Bar */}
-        <header className="sticky top-0 z-30 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-4">
-          <div className="flex items-center justify-between">
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              <Menu size={24} />
+      {/* ── Main area ── */}
+      <div className="flex-1 lg:ml-56 flex flex-col min-h-screen">
+
+        {/* Top bar */}
+        <header className="sticky top-0 z-30 bg-[#F5F5F0]/90 backdrop-blur-md px-6 py-4">
+          <div className="flex items-center justify-between gap-4">
+
+            <button onClick={() => setOpen(true)} className="lg:hidden p-2 rounded-xl bg-white text-gray-600 shadow-sm">
+              <Menu size={18} />
             </button>
-            <div className="flex-1" />
-            <div className="flex items-center space-x-4">
-              <button className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 relative">
-                <span className="text-2xl">🔔</span>
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              </button>
-              
-              {/* User Profile Display */}
-              <Link
-                href="/profile"
-                className="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors"
-              >
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">
-                    {userProfile?.username?.charAt(0).toUpperCase() || 'U'}
-                  </span>
-                </div>
-                {userProfile && (
-                  <div className="hidden md:block text-left">
-                    <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                      {userProfile.username}
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      {userProfile.email}
-                    </p>
-                  </div>
-                )}
-              </Link>
+
+            {/* User info */}
+            <Link href="/profile" className="hidden md:flex items-center gap-3 bg-white rounded-2xl px-4 py-2.5 shadow-sm hover:shadow-md transition-shadow">
+              <div className="w-9 h-9 bg-[#C8F135] rounded-xl flex items-center justify-center flex-shrink-0">
+                <span className="text-black font-black text-sm">{profile?.username?.charAt(0).toUpperCase() || 'U'}</span>
+              </div>
+              <div className="text-left">
+                <p className="text-sm font-black text-gray-900 leading-tight">{profile?.username || 'User'}</p>
+                <p className="text-xs text-gray-400 truncate max-w-[140px]">{profile?.email}</p>
+              </div>
+              <svg className="w-4 h-4 text-gray-400 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </Link>
+
+            {/* Search */}
+            <div className="flex-1 max-w-xs hidden md:block">
+              <div className="relative">
+                <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="w-full pl-9 pr-4 py-2.5 bg-white rounded-2xl text-sm text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#C8F135] font-medium"
+                />
+              </div>
             </div>
+
+            {/* Notification */}
+            <button className="relative w-10 h-10 bg-white rounded-2xl flex items-center justify-center shadow-sm hover:shadow-md transition-shadow text-gray-600">
+              <Bell size={18} />
+              <span className="absolute top-2 right-2 w-4 h-4 bg-[#C8F135] rounded-full text-[9px] font-black text-black flex items-center justify-center">2</span>
+            </button>
           </div>
         </header>
 
-        {/* Page Content */}
-        <main className="p-6">{children}</main>
+        {/* Page content */}
+        <main className="flex-1 px-6 pb-8">{children}</main>
       </div>
     </div>
   );

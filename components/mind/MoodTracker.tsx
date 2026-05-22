@@ -1,211 +1,367 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Calendar, TrendingUp, Heart, Brain, Zap, Smile } from 'lucide-react';
 import { supabase } from '@/lib/supabase/client';
-import { formatDate } from '@/lib/utils/calculations';
-import { Smile, Meh, Frown, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+
+interface MoodEntry {
+  id?: string;
+  date: string;
+  mood_score: number;
+  energy_level: number;
+  stress_level: number;
+  anxiety_level: number;
+  notes?: string;
+  emotions: string[];
+}
+
+const MOODS = [
+  { value: 1, emoji: '😢', label: 'Very Sad', color: 'text-red-500' },
+  { value: 2, emoji: '😔', label: 'Sad', color: 'text-red-400' },
+  { value: 3, emoji: '😐', label: 'Neutral', color: 'text-gray-500' },
+  { value: 4, emoji: '🙂', label: 'Good', color: 'text-green-400' },
+  { value: 5, emoji: '😊', label: 'Great', color: 'text-green-500' },
+  { value: 6, emoji: '😄', label: 'Amazing', color: 'text-green-600' },
+];
+
+const EMOTIONS = [
+  { value: 'happy', emoji: '😊', label: 'Happy' },
+  { value: 'excited', emoji: '🤩', label: 'Excited' },
+  { value: 'calm', emoji: '😌', label: 'Calm' },
+  { value: 'grateful', emoji: '🙏', label: 'Grateful' },
+  { value: 'confident', emoji: '💪', label: 'Confident' },
+  { value: 'loved', emoji: '🥰', label: 'Loved' },
+  { value: 'anxious', emoji: '😰', label: 'Anxious' },
+  { value: 'stressed', emoji: '😤', label: 'Stressed' },
+  { value: 'frustrated', emoji: '😠', label: 'Frustrated' },
+  { value: 'lonely', emoji: '😞', label: 'Lonely' },
+  { value: 'tired', emoji: '😴', label: 'Tired' },
+  { value: 'overwhelmed', emoji: '🤯', label: 'Overwhelmed' },
+];
 
 export default function MoodTracker() {
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [formData, setFormData] = useState({
-    date: formatDate(new Date()),
-    mood_score: 7,
-    stress_level: 5,
-    anxiety_level: 5,
-    energy_level: 7,
+  const [currentEntry, setCurrentEntry] = useState<MoodEntry>({
+    date: new Date().toISOString().split('T')[0],
+    mood_score: 3,
+    energy_level: 3,
+    stress_level: 3,
+    anxiety_level: 3,
+    emotions: [],
     notes: '',
   });
+  
+  const [recentEntries, setRecentEntries] = useState<MoodEntry[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [hasEntryToday, setHasEntryToday] = useState(false);
 
-  const moods = [
-    { value: 1, emoji: '😢', label: 'Terrible', color: 'text-red-500' },
-    { value: 3, emoji: '😟', label: 'Bad', color: 'text-orange-500' },
-    { value: 5, emoji: '😐', label: 'Okay', color: 'text-yellow-500' },
-    { value: 7, emoji: '🙂', label: 'Good', color: 'text-lime-500' },
-    { value: 9, emoji: '😄', label: 'Great', color: 'text-green-500' },
-    { value: 10, emoji: '🤩', label: 'Amazing', color: 'text-emerald-500' },
-  ];
+  useEffect(() => {
+    loadRecentEntries();
+    checkTodayEntry();
+  }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const loadRecentEntries = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from('mood_logs')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('date', { ascending: false })
+        .limit(7);
+
+      if (error) throw error;
+      setRecentEntries(data || []);
+    } catch (error) {
+      console.error('Error loading mood entries:', error);
+    }
+  };
+
+  const checkTodayEntry = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const today = new Date().toISOString().split('T')[0];
+      const { data, error } = await supabase
+        .from('mood_logs')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('date', today)
+        .single();
+
+      if (data) {
+        setCurrentEntry(data);
+        setHasEntryToday(true);
+      }
+    } catch (error) {
+      // No entry today, which is fine
+      setHasEntryToday(false);
+    }
+  };
+
+  const handleEmotionToggle = (emotion: string) => {
+    const newEmotions = currentEntry.emotions.includes(emotion)
+      ? currentEntry.emotions.filter(e => e !== emotion)
+      : [...currentEntry.emotions, emotion];
+    
+    setCurrentEntry({ ...currentEntry, emotions: newEmotions });
+  };
+
+  const saveMoodEntry = async () => {
     setLoading(true);
-    setSuccess(false);
-
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { error } = await supabase.from('mood_logs').upsert({
+      const entryData = {
         user_id: user.id,
-        ...formData,
-      });
+        date: currentEntry.date,
+        mood_score: currentEntry.mood_score,
+        energy_level: currentEntry.energy_level,
+        stress_level: currentEntry.stress_level,
+        anxiety_level: currentEntry.anxiety_level,
+        emotions: currentEntry.emotions,
+        notes: currentEntry.notes || null,
+      };
 
-      if (error) throw error;
+      if (hasEntryToday && currentEntry.id) {
+        // Update existing entry
+        const { error } = await supabase
+          .from('mood_logs')
+          .update(entryData)
+          .eq('id', currentEntry.id);
+        
+        if (error) throw error;
+      } else {
+        // Create new entry
+        const { error } = await supabase
+          .from('mood_logs')
+          .insert(entryData);
+        
+        if (error) throw error;
+        setHasEntryToday(true);
+      }
 
-      setSuccess(true);
-      setTimeout(() => setSuccess(false), 3000);
+      await loadRecentEntries();
     } catch (error) {
-      console.error('Failed to log mood:', error);
-      alert('Failed to log mood. Please try again.');
+      console.error('Error saving mood entry:', error);
+      alert('Failed to save mood entry. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
+  const getMoodEmoji = (score: number) => {
+    const mood = MOODS.find(m => m.value === score);
+    return mood ? mood.emoji : '😐';
+  };
+
+  const getMoodColor = (score: number) => {
+    const mood = MOODS.find(m => m.value === score);
+    return mood ? mood.color : 'text-gray-500';
+  };
+
+  const getAverageScore = () => {
+    if (recentEntries.length === 0) return 0;
+    const sum = recentEntries.reduce((acc, entry) => acc + entry.mood_score, 0);
+    return Math.round((sum / recentEntries.length) * 10) / 10;
+  };
+
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          How are you feeling today?
-        </h2>
-        <p className="text-gray-600 dark:text-gray-400">
-          Track your mood, stress, anxiety, and energy levels
-        </p>
-      </div>
-
-      {success && (
-        <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-          <p className="text-green-700 dark:text-green-400">✅ Mood logged successfully!</p>
+      {/* Today's Mood Entry */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            How are you feeling today?
+          </h3>
+          <div className="text-sm text-gray-500 dark:text-gray-400">
+            {new Date().toLocaleDateString()}
+          </div>
         </div>
-      )}
 
-      <form onSubmit={handleSubmit} className="space-y-8">
-        {/* Mood Selection */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">
+        {/* Mood Scale */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
             Overall Mood
           </label>
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
-            {moods.map((mood) => (
+          <div className="grid grid-cols-6 gap-2">
+            {MOODS.map((mood) => (
               <button
                 key={mood.value}
-                type="button"
-                onClick={() => setFormData({ ...formData, mood_score: mood.value })}
-                className={`p-4 border-2 rounded-lg transition-all ${
-                  formData.mood_score === mood.value
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 scale-110'
-                    : 'border-gray-300 dark:border-gray-600 hover:border-blue-300'
+                onClick={() => setCurrentEntry({ ...currentEntry, mood_score: mood.value })}
+                className={`p-3 rounded-lg border-2 transition-colors text-center ${
+                  currentEntry.mood_score === mood.value
+                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                    : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
                 }`}
               >
-                <div className="text-4xl mb-2">{mood.emoji}</div>
-                <div className={`text-xs font-semibold ${mood.color}`}>{mood.label}</div>
+                <div className="text-2xl mb-1">{mood.emoji}</div>
+                <div className="text-xs text-gray-600 dark:text-gray-400">
+                  {mood.label}
+                </div>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Stress Level */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Stress Level: {formData.stress_level}/10
-          </label>
-          <input
-            type="range"
-            min="1"
-            max="10"
-            value={formData.stress_level}
-            onChange={(e) => setFormData({ ...formData, stress_level: parseInt(e.target.value) })}
-            className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-          />
-          <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mt-1">
-            <span>😌 Relaxed</span>
-            <span>😰 Very Stressed</span>
+        {/* Energy, Stress, Anxiety Levels */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <Zap className="w-4 h-4 inline mr-1" />
+              Energy Level: {currentEntry.energy_level}/5
+            </label>
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value={currentEntry.energy_level}
+              onChange={(e) => setCurrentEntry({ ...currentEntry, energy_level: parseInt(e.target.value) })}
+              className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer"
+            />
+            <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <span>Low</span>
+              <span>High</span>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <Brain className="w-4 h-4 inline mr-1" />
+              Stress Level: {currentEntry.stress_level}/5
+            </label>
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value={currentEntry.stress_level}
+              onChange={(e) => setCurrentEntry({ ...currentEntry, stress_level: parseInt(e.target.value) })}
+              className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer"
+            />
+            <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <span>Calm</span>
+              <span>Stressed</span>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <Heart className="w-4 h-4 inline mr-1" />
+              Anxiety Level: {currentEntry.anxiety_level}/5
+            </label>
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value={currentEntry.anxiety_level}
+              onChange={(e) => setCurrentEntry({ ...currentEntry, anxiety_level: parseInt(e.target.value) })}
+              className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer"
+            />
+            <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <span>Relaxed</span>
+              <span>Anxious</span>
+            </div>
           </div>
         </div>
 
-        {/* Anxiety Level */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Anxiety Level: {formData.anxiety_level}/10
+        {/* Emotions */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+            What emotions are you experiencing? (Select all that apply)
           </label>
-          <input
-            type="range"
-            min="1"
-            max="10"
-            value={formData.anxiety_level}
-            onChange={(e) => setFormData({ ...formData, anxiety_level: parseInt(e.target.value) })}
-            className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-          />
-          <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mt-1">
-            <span>😊 Calm</span>
-            <span>😨 Very Anxious</span>
-          </div>
-        </div>
-
-        {/* Energy Level */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Energy Level: {formData.energy_level}/10
-          </label>
-          <input
-            type="range"
-            min="1"
-            max="10"
-            value={formData.energy_level}
-            onChange={(e) => setFormData({ ...formData, energy_level: parseInt(e.target.value) })}
-            className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-          />
-          <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mt-1">
-            <span>😴 Exhausted</span>
-            <span>⚡ Energized</span>
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+            {EMOTIONS.map((emotion) => (
+              <button
+                key={emotion.value}
+                onClick={() => handleEmotionToggle(emotion.value)}
+                className={`p-2 rounded-lg border-2 transition-colors text-center ${
+                  currentEntry.emotions.includes(emotion.value)
+                    ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20'
+                    : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
+                }`}
+              >
+                <div className="text-lg mb-1">{emotion.emoji}</div>
+                <div className="text-xs text-gray-600 dark:text-gray-400">
+                  {emotion.label}
+                </div>
+              </button>
+            ))}
           </div>
         </div>
 
         {/* Notes */}
-        <div>
+        <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Notes (Optional)
           </label>
           <textarea
-            value={formData.notes}
-            onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-            rows={4}
-            placeholder="What's on your mind? Any specific thoughts or feelings?"
+            value={currentEntry.notes}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, notes: e.target.value })}
+            placeholder="What's on your mind? Any thoughts about your day..."
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
+            rows={3}
           />
         </div>
 
-        {/* Date */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Date
-          </label>
-          <input
-            type="date"
-            value={formData.date}
-            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-            required
-          />
-        </div>
-
+        {/* Save Button */}
         <button
-          type="submit"
+          onClick={saveMoodEntry}
           disabled={loading}
-          className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-[1.02] transition-all disabled:opacity-50"
+          className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg font-semibold transition-colors flex items-center justify-center"
         >
-          {loading ? 'Logging...' : 'Log Mood'}
+          {loading ? (
+            <>
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+              Saving...
+            </>
+          ) : hasEntryToday ? (
+            'Update Entry'
+          ) : (
+            'Save Entry'
+          )}
         </button>
-      </form>
-
-      {/* Quick Stats */}
-      <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">
-        <div className="text-center">
-          <div className="text-3xl mb-1">😊</div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Mood</div>
-          <div className="text-xl font-bold text-gray-900 dark:text-white">{formData.mood_score}/10</div>
-        </div>
-        <div className="text-center">
-          <div className="text-3xl mb-1">😰</div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Stress</div>
-          <div className="text-xl font-bold text-gray-900 dark:text-white">{formData.stress_level}/10</div>
-        </div>
-        <div className="text-center">
-          <div className="text-3xl mb-1">⚡</div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Energy</div>
-          <div className="text-xl font-bold text-gray-900 dark:text-white">{formData.energy_level}/10</div>
-        </div>
       </div>
+
+      {/* Recent Entries & Stats */}
+      {recentEntries.length > 0 && (
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              Recent Mood Trends
+            </h3>
+            <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
+              <TrendingUp className="w-4 h-4" />
+              <span>7-day average: {getAverageScore()}</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-7 gap-2">
+            {recentEntries.slice(0, 7).reverse().map((entry, index) => (
+              <div key={entry.id || index} className="text-center">
+                <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+                  {new Date(entry.date).toLocaleDateString('en', { weekday: 'short' })}
+                </div>
+                <div className={`text-2xl ${getMoodColor(entry.mood_score)}`}>
+                  {getMoodEmoji(entry.mood_score)}
+                </div>
+                <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                  {entry.mood_score}/6
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              <Smile className="w-4 h-4 inline mr-1" />
+              Keep tracking your mood daily to identify patterns and improve your mental wellness!
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

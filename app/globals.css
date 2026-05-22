@@ -3,40 +3,75 @@
 @tailwind utilities;
 
 @layer base {
-  * {
-    @apply border-gray-200;
-  }
-  
+  * { @apply border-gray-200 dark:border-gray-700; }
   body {
-    @apply bg-white text-gray-900;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" fill="%234A90E2" opacity="0.3"/><circle cx="12" cy="12" r="5" fill="%234A90E2" opacity="0.5"/><circle cx="12" cy="12" r="2" fill="%234A90E2"/></svg>') 12 12, auto;
-  }
-
-  /* Custom cursor for interactive elements */
-  a, button, [role="button"], input[type="submit"], input[type="button"] {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" fill="%236BB6FF" opacity="0.4"/><circle cx="14" cy="14" r="6" fill="%236BB6FF" opacity="0.6"/><circle cx="14" cy="14" r="3" fill="%236BB6FF"/></svg>') 14 14, pointer;
+    @apply bg-white dark:bg-gray-950 text-gray-900 dark:text-white;
+    font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
+html { scroll-behavior: smooth; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { @apply bg-gray-100 dark:bg-gray-900; }
+::-webkit-scrollbar-thumb { @apply bg-gray-300 dark:bg-gray-700 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-gray-400 dark:bg-gray-600; }
+
+/* ── Section tag  (// Label) ── */
+.section-tag {
+  @apply inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-gray-400;
 }
 
-::-webkit-scrollbar-track {
-  @apply bg-gray-100;
+/* ── Orange pill button ── */
+.btn-orange {
+  @apply inline-flex items-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-full transition-colors shadow-md text-sm;
 }
 
-::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 rounded-full;
+/* ── Dark pill button ── */
+.btn-dark {
+  @apply inline-flex items-center gap-2 px-6 py-3 bg-gray-900 hover:bg-gray-700 text-white font-bold rounded-full transition-colors shadow-md text-sm;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400;
+/* ── Ghost pill button ── */
+.btn-ghost {
+  @apply inline-flex items-center gap-2 px-6 py-3 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-bold rounded-full hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-sm;
 }
 
-/* Smooth scroll */
-html {
-  scroll-behavior: smooth;
+/* ── Card ── */
+.card {
+  @apply bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm;
 }
+
+/* ── Arrow badge ── */
+.arrow-badge {
+  @apply w-9 h-9 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0 shadow-md;
+}
+
+/* ── Sticky scroll-stack ── */
+.sticky-card {
+  transform-origin: top center;
+  will-change: transform;
+  transition: transform 0.06s linear, border-radius 0.06s linear;
+}
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fadeUp 0.5s ease forwards; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.animate-fade-in { animation: fadeIn 0.4s ease forwards; }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up { animation: slideUp 0.4s ease forwards; }
+
+@keyframes spin { to { transform: rotate(360deg); } }

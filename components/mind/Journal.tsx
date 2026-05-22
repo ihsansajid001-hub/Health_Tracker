@@ -1,194 +1,450 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Calendar, Edit3, Save, Plus, BookOpen, Heart, Star, Target } from 'lucide-react';
 import { supabase } from '@/lib/supabase/client';
-import { formatDate } from '@/lib/utils/calculations';
-import { BookOpen, Sparkles } from 'lucide-react';
+
+interface JournalEntry {
+  id?: string;
+  date: string;
+  title: string;
+  content: string;
+  mood_score?: number;
+  gratitude_items?: string[];
+  goals?: string[];
+  created_at?: string;
+}
+
+const JOURNAL_PROMPTS = [
+  {
+    category: 'Gratitude',
+    icon: '🙏',
+    prompts: [
+      'What are three things you\'re grateful for today?',
+      'Who made your day better and how?',
+      'What small moment brought you joy today?',
+      'What challenge are you grateful to have overcome?',
+    ]
+  },
+  {
+    category: 'Reflection',
+    icon: '🤔',
+    prompts: [
+      'What did you learn about yourself today?',
+      'How did you grow or improve today?',
+      'What would you do differently if you could repeat today?',
+      'What emotions did you experience and why?',
+    ]
+  },
+  {
+    category: 'Goals',
+    icon: '🎯',
+    prompts: [
+      'What progress did you make toward your goals today?',
+      'What obstacles did you face and how did you handle them?',
+      'What do you want to accomplish tomorrow?',
+      'How can you improve your daily routine?',
+    ]
+  },
+  {
+    category: 'Wellness',
+    icon: '💚',
+    prompts: [
+      'How did you take care of your mental health today?',
+      'What activities made you feel energized?',
+      'How was your stress level and what affected it?',
+      'What self-care practices did you engage in?',
+    ]
+  }
+];
 
 export default function Journal() {
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [showPrompts, setShowPrompts] = useState(true);
-  const [formData, setFormData] = useState({
-    date: formatDate(new Date()),
+  const [entries, setEntries] = useState<JournalEntry[]>([]);
+  const [currentEntry, setCurrentEntry] = useState<JournalEntry>({
+    date: new Date().toISOString().split('T')[0],
     title: '',
     content: '',
-    tags: [] as string[],
+    gratitude_items: ['', '', ''],
+    goals: [''],
   });
+  const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [selectedPrompt, setSelectedPrompt] = useState<string | null>(null);
+  const [view, setView] = useState<'write' | 'entries'>('write');
 
-  const prompts = [
-    "What are you grateful for today?",
-    "What made you smile today?",
-    "What challenged you today and how did you handle it?",
-    "What's one thing you learned about yourself today?",
-    "Describe a moment when you felt proud of yourself.",
-    "What's worrying you right now? How can you address it?",
-    "What are your top 3 priorities for tomorrow?",
-    "How did you take care of yourself today?",
-    "What would you like to let go of?",
-    "What brings you peace?",
-  ];
+  useEffect(() => {
+    loadEntries();
+    checkTodayEntry();
+  }, []);
 
-  const [selectedPrompt, setSelectedPrompt] = useState(prompts[0]);
+  const loadEntries = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
 
-  const handlePromptSelect = (prompt: string) => {
-    setSelectedPrompt(prompt);
-    setFormData({ ...formData, title: prompt });
-    setShowPrompts(false);
+      const { data, error } = await supabase
+        .from('journal_entries')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('date', { ascending: false })
+        .limit(10);
+
+      if (error) throw error;
+      setEntries(data || []);
+    } catch (error) {
+      console.error('Error loading journal entries:', error);
+    }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setSuccess(false);
+  const checkTodayEntry = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
 
+      const today = new Date().toISOString().split('T')[0];
+      const { data, error } = await supabase
+        .from('journal_entries')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('date', today)
+        .single();
+
+      if (data) {
+        setCurrentEntry({
+          ...data,
+          gratitude_items: data.gratitude_items || ['', '', ''],
+          goals: data.goals || [''],
+        });
+        setIsEditing(true);
+      }
+    } catch (error) {
+      // No entry today, which is fine
+    }
+  };
+
+  const saveEntry = async () => {
+    setLoading(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { error } = await supabase.from('meditation_logs').insert({
+      const entryData = {
         user_id: user.id,
-        date: formData.date,
-        meditation_id: 'journal',
-        duration_minutes: 0,
-        notes: `${formData.title}\n\n${formData.content}`,
-      });
+        date: currentEntry.date,
+        title: currentEntry.title || `Journal Entry - ${new Date(currentEntry.date).toLocaleDateString()}`,
+        content: currentEntry.content,
+        gratitude_items: currentEntry.gratitude_items?.filter(item => item.trim()) || [],
+        goals: currentEntry.goals?.filter(goal => goal.trim()) || [],
+      };
 
-      if (error) throw error;
+      if (isEditing && currentEntry.id) {
+        // Update existing entry
+        const { error } = await supabase
+          .from('journal_entries')
+          .update(entryData)
+          .eq('id', currentEntry.id);
+        
+        if (error) throw error;
+      } else {
+        // Create new entry
+        const { data, error } = await supabase
+          .from('journal_entries')
+          .insert(entryData)
+          .select()
+          .single();
+        
+        if (error) throw error;
+        setCurrentEntry({ ...currentEntry, id: data.id });
+        setIsEditing(true);
+      }
 
-      setSuccess(true);
-      setFormData({ ...formData, title: '', content: '' });
-      setTimeout(() => setSuccess(false), 3000);
+      await loadEntries();
     } catch (error) {
-      console.error('Failed to save journal:', error);
+      console.error('Error saving journal entry:', error);
       alert('Failed to save journal entry. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 flex items-center space-x-2">
-          <BookOpen size={28} />
-          <span>Daily Journal</span>
-        </h2>
-        <p className="text-gray-600 dark:text-gray-400">
-          Reflect on your day, express your thoughts, and track your mental wellness journey
-        </p>
-      </div>
+  const addGratitudeItem = () => {
+    setCurrentEntry({
+      ...currentEntry,
+      gratitude_items: [...(currentEntry.gratitude_items || []), '']
+    });
+  };
 
-      {success && (
-        <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-          <p className="text-green-700 dark:text-green-400">✅ Journal entry saved successfully!</p>
-        </div>
-      )}
+  const updateGratitudeItem = (index: number, value: string) => {
+    const newItems = [...(currentEntry.gratitude_items || [])];
+    newItems[index] = value;
+    setCurrentEntry({ ...currentEntry, gratitude_items: newItems });
+  };
 
-      {showPrompts && (
-        <div className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-lg p-6 border border-purple-200 dark:border-purple-800">
-          <div className="flex items-center space-x-2 mb-4">
-            <Sparkles size={20} className="text-purple-600 dark:text-purple-400" />
-            <h3 className="font-semibold text-gray-900 dark:text-white">
-              Need inspiration? Try these prompts:
-            </h3>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {prompts.slice(0, 6).map((prompt, index) => (
-              <button
-                key={index}
-                type="button"
-                onClick={() => handlePromptSelect(prompt)}
-                className="text-left p-3 bg-white dark:bg-gray-800 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors text-sm text-gray-700 dark:text-gray-300"
-              >
-                💭 {prompt}
-              </button>
-            ))}
-          </div>
+  const addGoal = () => {
+    setCurrentEntry({
+      ...currentEntry,
+      goals: [...(currentEntry.goals || []), '']
+    });
+  };
+
+  const updateGoal = (index: number, value: string) => {
+    const newGoals = [...(currentEntry.goals || [])];
+    newGoals[index] = value;
+    setCurrentEntry({ ...currentEntry, goals: newGoals });
+  };
+
+  const usePrompt = (prompt: string) => {
+    setCurrentEntry({
+      ...currentEntry,
+      content: currentEntry.content + (currentEntry.content ? '\n\n' : '') + prompt + '\n\n'
+    });
+    setSelectedPrompt(null);
+  };
+
+  if (view === 'entries') {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            Journal Entries
+          </h3>
           <button
-            type="button"
-            onClick={() => setShowPrompts(false)}
-            className="mt-4 text-sm text-purple-600 dark:text-purple-400 hover:underline"
+            onClick={() => setView('write')}
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
           >
-            Or write freely without a prompt →
+            Write Entry
           </button>
         </div>
-      )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Date
-          </label>
-          <input
-            type="date"
-            value={formData.date}
-            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-            required
-          />
-        </div>
+        <div className="space-y-4">
+          {entries.map((entry) => (
+            <div
+              key={entry.id}
+              className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-200 dark:border-gray-700"
+            >
+              <div className="flex items-start justify-between mb-2">
+                <h4 className="font-medium text-gray-900 dark:text-white">
+                  {entry.title}
+                </h4>
+                <span className="text-sm text-gray-500 dark:text-gray-400">
+                  {new Date(entry.date).toLocaleDateString()}
+                </span>
+              </div>
+              
+              <p className="text-gray-700 dark:text-gray-300 text-sm mb-3 line-clamp-3">
+                {entry.content}
+              </p>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Title (Optional)
-          </label>
-          <input
-            type="text"
-            value={formData.title}
-            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-            placeholder="Give your entry a title..."
-          />
-        </div>
+              {entry.gratitude_items && entry.gratitude_items.length > 0 && (
+                <div className="mb-2">
+                  <p className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                    Gratitude:
+                  </p>
+                  <div className="flex flex-wrap gap-1">
+                    {entry.gratitude_items.slice(0, 2).map((item, index) => (
+                      <span
+                        key={index}
+                        className="text-xs bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-200 px-2 py-1 rounded"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                    {entry.gratitude_items.length > 2 && (
+                      <span className="text-xs text-gray-500">
+                        +{entry.gratitude_items.length - 2} more
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Your Thoughts
-          </label>
-          <textarea
-            value={formData.content}
-            onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-            rows={12}
-            placeholder="Start writing... Let your thoughts flow freely."
-            required
-          />
-          <div className="flex justify-between items-center mt-2">
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              {formData.content.length} characters
-            </p>
-            {!showPrompts && (
               <button
-                type="button"
-                onClick={() => setShowPrompts(true)}
-                className="text-xs text-purple-600 dark:text-purple-400 hover:underline"
+                onClick={() => {
+                  setCurrentEntry(entry);
+                  setIsEditing(true);
+                  setView('write');
+                }}
+                className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
               >
-                Show prompts
+                Read & Edit
               </button>
-            )}
+            </div>
+          ))}
+
+          {entries.length === 0 && (
+            <div className="text-center py-8">
+              <BookOpen className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+              <p className="text-gray-600 dark:text-gray-400">
+                No journal entries yet
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">
+                Start writing to track your thoughts and feelings
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+          Journal Entry
+        </h3>
+        <div className="flex space-x-2">
+          <button
+            onClick={() => setView('entries')}
+            className="px-3 py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+          >
+            View Entries
+          </button>
+          <div className="text-sm text-gray-500 dark:text-gray-400">
+            {new Date(currentEntry.date).toLocaleDateString()}
           </div>
         </div>
-
-        <button
-          type="submit"
-          disabled={loading || !formData.content}
-          className="w-full py-3 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-[1.02] transition-all disabled:opacity-50"
-        >
-          {loading ? 'Saving...' : 'Save Journal Entry'}
-        </button>
-      </form>
-
-      <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
-        <h4 className="font-semibold text-gray-900 dark:text-white mb-2">💡 Journaling Tips</h4>
-        <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-          <li>• Write without judgment - there's no right or wrong</li>
-          <li>• Be honest with yourself about your feelings</li>
-          <li>• Focus on specific moments and details</li>
-          <li>• Notice patterns in your thoughts and emotions</li>
-          <li>• Celebrate small wins and progress</li>
-        </ul>
       </div>
+
+      {/* Writing Prompts */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-200 dark:border-gray-700">
+        <h4 className="font-medium text-gray-900 dark:text-white mb-3">
+          Need inspiration? Try a writing prompt:
+        </h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {JOURNAL_PROMPTS.map((category) => (
+            <div key={category.category}>
+              <h5 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                {category.icon} {category.category}
+              </h5>
+              <div className="space-y-1">
+                {category.prompts.slice(0, 2).map((prompt, index) => (
+                  <button
+                    key={index}
+                    onClick={() => usePrompt(prompt)}
+                    className="block w-full text-left text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Main Journal Entry */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Title (Optional)
+            </label>
+            <input
+              type="text"
+              value={currentEntry.title}
+              onChange={(e) => setCurrentEntry({ ...currentEntry, title: e.target.value })}
+              placeholder="Give your entry a title..."
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <Edit3 className="w-4 h-4 inline mr-1" />
+              Your Thoughts
+            </label>
+            <textarea
+              value={currentEntry.content}
+              onChange={(e) => setCurrentEntry({ ...currentEntry, content: e.target.value })}
+              placeholder="What's on your mind? How are you feeling? What happened today?"
+              className="w-full px-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
+              rows={8}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Gratitude Section */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between mb-4">
+          <h4 className="font-medium text-gray-900 dark:text-white">
+            <Heart className="w-4 h-4 inline mr-1 text-red-500" />
+            Gratitude List
+          </h4>
+          <button
+            onClick={addGratitudeItem}
+            className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+          >
+            <Plus className="w-4 h-4 inline mr-1" />
+            Add Item
+          </button>
+        </div>
+        <div className="space-y-2">
+          {(currentEntry.gratitude_items || []).map((item, index) => (
+            <div key={index} className="flex items-center space-x-2">
+              <span className="text-yellow-500">⭐</span>
+              <input
+                type="text"
+                value={item}
+                onChange={(e) => updateGratitudeItem(index, e.target.value)}
+                placeholder="What are you grateful for?"
+                className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Goals Section */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between mb-4">
+          <h4 className="font-medium text-gray-900 dark:text-white">
+            <Target className="w-4 h-4 inline mr-1 text-blue-500" />
+            Goals & Intentions
+          </h4>
+          <button
+            onClick={addGoal}
+            className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+          >
+            <Plus className="w-4 h-4 inline mr-1" />
+            Add Goal
+          </button>
+        </div>
+        <div className="space-y-2">
+          {(currentEntry.goals || []).map((goal, index) => (
+            <div key={index} className="flex items-center space-x-2">
+              <span className="text-blue-500">🎯</span>
+              <input
+                type="text"
+                value={goal}
+                onChange={(e) => updateGoal(index, e.target.value)}
+                placeholder="What do you want to accomplish?"
+                className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Save Button */}
+      <button
+        onClick={saveEntry}
+        disabled={loading || (!currentEntry.content.trim() && !currentEntry.gratitude_items?.some(item => item.trim()))}
+        className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg font-semibold transition-colors flex items-center justify-center"
+      >
+        {loading ? (
+          <>
+            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+            Saving...
+          </>
+        ) : (
+          <>
+            <Save className="w-4 h-4 mr-2" />
+            {isEditing ? 'Update Entry' : 'Save Entry'}
+          </>
+        )}
+      </button>
     </div>
   );
 }

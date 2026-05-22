@@ -77,7 +77,7 @@ Category Scores:
 - Nutrition: ${lifeScore.nutrition}/100
 - Mind: ${lifeScore.mind}/100
 - Hydration: ${lifeScore.hydration}/100
-- Consistency: ${lifeScore.consistency}/100
+- Consistency: ${(lifeScore as any).consistency ?? 'N/A'}/100
 
 Tracking Stats:
 - Current streak: ${streakDays} days
@@ -181,7 +181,7 @@ Keep it motivating and actionable. Focus on the weakest areas but celebrate stre
       recommendations.push(`Focus on improving your ${weakest.name.toLowerCase()} - it's your biggest opportunity for growth.`);
     }
 
-    if (lifeScore.consistency < 70) {
+    if ((lifeScore as any).consistency !== undefined && (lifeScore as any).consistency < 70) {
       recommendations.push('Try to track your habits daily for better insights and consistency.');
     }
 

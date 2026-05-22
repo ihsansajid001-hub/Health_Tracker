@@ -9,6 +9,12 @@ import BasicProfileStep from '@/components/onboarding/BasicProfileStep';
 import PhysicalStatsStep from '@/components/onboarding/PhysicalStatsStep';
 import ActivityLevelStep from '@/components/onboarding/ActivityLevelStep';
 import PrimaryGoalStep from '@/components/onboarding/PrimaryGoalStep';
+import SleepBasicsStep from '@/components/onboarding/SleepBasicsStep';
+import FitnessBasicsStep from '@/components/onboarding/FitnessBasicsStep';
+import NutritionBasicsStep from '@/components/onboarding/NutritionBasicsStep';
+import HydrationBasicsStep from '@/components/onboarding/HydrationBasicsStep';
+import MentalWellnessStep from '@/components/onboarding/MentalWellnessStep';
+import MedicalConditionsStep from '@/components/onboarding/MedicalConditionsStep';
 import CompleteStep from '@/components/onboarding/CompleteStep';
 
 type OnboardingStep = 
@@ -45,15 +51,25 @@ interface OnboardingData {
   fitness_level: 'beginner' | 'intermediate' | 'advanced';
   preferred_workout_time: string;
   workout_days_per_week: number;
+  injuries_limitations?: string;
   dietary_restriction: string;
   allergies: string[];
   meals_per_day: number;
+  intermittent_fasting: boolean;
+  fasting_schedule?: string;
   wake_time: string;
   bed_time: string;
   reminder_interval_minutes: number;
+  preferred_container_size: number;
+  daily_water_goal: number;
   mental_health_goals: string[];
   stress_level: number;
+  meditation_experience: string;
+  preferred_session_length: number;
+  preferred_wellness_time: string;
   medical_conditions: string[];
+  current_medications?: string;
+  pregnancy_status?: string;
 }
 
 export default function CompleteOnboarding() {
@@ -71,6 +87,9 @@ export default function CompleteOnboarding() {
     sleep_quality: 7,
     stress_level: 5,
     reminder_interval_minutes: 120,
+    preferred_container_size: 500,
+    preferred_session_length: 10,
+    intermittent_fasting: false,
     allergies: [],
     mental_health_goals: [],
     medical_conditions: [],
@@ -161,6 +180,9 @@ export default function CompleteOnboarding() {
         daily_calorie_goal: Math.round(daily_calorie_goal),
         daily_water_goal: Math.round(daily_water_goal),
         units_system: data.units_system,
+        medical_conditions: data.medical_conditions || [],
+        current_medications: data.current_medications || null,
+        pregnancy_status: data.pregnancy_status || null,
         onboarding_completed: true,
       });
 
@@ -178,6 +200,7 @@ export default function CompleteOnboarding() {
         fitness_level: data.fitness_level || 'beginner',
         preferred_workout_time: data.preferred_workout_time || 'flexible',
         workout_days_per_week: data.workout_days_per_week || 3,
+        injuries_limitations: data.injuries_limitations || null,
       });
 
       await supabase.from('nutrition_settings').insert({
@@ -185,20 +208,26 @@ export default function CompleteOnboarding() {
         dietary_restriction: data.dietary_restriction || 'none',
         allergies: data.allergies || [],
         meals_per_day: data.meals_per_day || 3,
+        intermittent_fasting: data.intermittent_fasting || false,
+        fasting_schedule: data.fasting_schedule || null,
       });
 
       await supabase.from('hydration_settings').insert({
         user_id: user.id,
-        daily_goal_ml: daily_water_goal,
-        reminder_enabled: true,
+        daily_goal_ml: data.daily_water_goal || daily_water_goal,
+        reminder_enabled: (data.reminder_interval_minutes ?? 0) > 0,
         reminder_interval_minutes: data.reminder_interval_minutes || 120,
         reminder_start_time: data.wake_time || '07:00',
         reminder_end_time: data.bed_time || '22:00',
+        preferred_container_size: data.preferred_container_size || 500,
       });
 
       await supabase.from('mental_health_settings').insert({
         user_id: user.id,
         mental_health_goals: data.mental_health_goals || [],
+        meditation_experience: data.meditation_experience || 'beginner',
+        preferred_session_length: data.preferred_session_length || 10,
+        preferred_wellness_time: data.preferred_wellness_time || 'flexible',
       });
 
       router.push('/dashboard');
@@ -237,129 +266,13 @@ export default function CompleteOnboarding() {
           {currentStep === 'primary-goal' && <PrimaryGoalStep data={data} setData={setData} onNext={nextStep} onBack={prevStep} />}
           {currentStep === 'complete' && <CompleteStep data={data} onComplete={handleComplete} loading={loading} />}
           
-          {/* Simplified steps for now - will be fully implemented */}
-          {currentStep === 'sleep-basics' && (
-            <SimpleStep
-              icon="😴"
-              title="Sleep Basics"
-              fields={[
-                { label: 'Bedtime', type: 'time', key: 'target_bedtime', value: data.target_bedtime || '23:00' },
-                { label: 'Wake Time', type: 'time', key: 'target_wake_time', value: data.target_wake_time || '07:00' },
-              ]}
-              data={data}
-              setData={setData}
-              onNext={nextStep}
-              onBack={prevStep}
-            />
-          )}
-          {currentStep === 'fitness-basics' && (
-            <SimpleStep
-              icon="💪"
-              title="Fitness Basics"
-              fields={[
-                { label: 'Fitness Level', type: 'select', key: 'fitness_level', options: ['beginner', 'intermediate', 'advanced'] },
-                { label: 'Workout Days/Week', type: 'number', key: 'workout_days_per_week', value: data.workout_days_per_week || 3 },
-              ]}
-              data={data}
-              setData={setData}
-              onNext={nextStep}
-              onBack={prevStep}
-            />
-          )}
-          {currentStep === 'nutrition-basics' && (
-            <SimpleStep
-              icon="🥗"
-              title="Nutrition Basics"
-              fields={[
-                { label: 'Dietary Preference', type: 'text', key: 'dietary_restriction', value: data.dietary_restriction || 'none' },
-                { label: 'Meals per Day', type: 'number', key: 'meals_per_day', value: data.meals_per_day || 3 },
-              ]}
-              data={data}
-              setData={setData}
-              onNext={nextStep}
-              onBack={prevStep}
-            />
-          )}
-          {currentStep === 'hydration-basics' && (
-            <SimpleStep
-              icon="💧"
-              title="Hydration Basics"
-              fields={[
-                { label: 'Wake Time', type: 'time', key: 'wake_time', value: data.wake_time || '07:00' },
-                { label: 'Bed Time', type: 'time', key: 'bed_time', value: data.bed_time || '22:00' },
-              ]}
-              data={data}
-              setData={setData}
-              onNext={nextStep}
-              onBack={prevStep}
-            />
-          )}
-          {currentStep === 'mental-wellness' && (
-            <SimpleStep
-              icon="🧘"
-              title="Mental Wellness"
-              fields={[
-                { label: 'Stress Level (1-10)', type: 'number', key: 'stress_level', value: data.stress_level || 5 },
-              ]}
-              data={data}
-              setData={setData}
-              onNext={nextStep}
-              onBack={prevStep}
-            />
-          )}
-          {currentStep === 'medical-conditions' && (
-            <SimpleStep
-              icon="🏥"
-              title="Medical Conditions (Optional)"
-              fields={[]}
-              data={data}
-              setData={setData}
-              onNext={nextStep}
-              onBack={prevStep}
-              skipable
-            />
-          )}
+          {currentStep === 'sleep-basics' && <SleepBasicsStep data={data} setData={setData} onNext={nextStep} onBack={prevStep} />}
+          {currentStep === 'fitness-basics' && <FitnessBasicsStep data={data} setData={setData} onNext={nextStep} onBack={prevStep} />}
+          {currentStep === 'nutrition-basics' && <NutritionBasicsStep data={data} setData={setData} onNext={nextStep} onBack={prevStep} />}
+          {currentStep === 'hydration-basics' && <HydrationBasicsStep data={data} setData={setData} onNext={nextStep} onBack={prevStep} />}
+          {currentStep === 'mental-wellness' && <MentalWellnessStep data={data} setData={setData} onNext={nextStep} onBack={prevStep} />}
+          {currentStep === 'medical-conditions' && <MedicalConditionsStep data={data} setData={setData} onNext={nextStep} onBack={prevStep} />}
         </div>
-      </div>
-    </div>
-  );
-}
-
-function SimpleStep({ icon, title, fields, data, setData, onNext, onBack, skipable }: any) {
-  return (
-    <div className="space-y-6">
-      <div className="text-center mb-6">
-        <div className="text-5xl mb-3">{icon}</div>
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{title}</h2>
-      </div>
-      {fields.map((field: any) => (
-        <div key={field.key}>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{field.label}</label>
-          {field.type === 'select' ? (
-            <select
-              value={data[field.key] || field.options[0]}
-              onChange={(e) => setData({ ...data, [field.key]: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-            >
-              {field.options.map((opt: string) => (
-                <option key={opt} value={opt}>{opt}</option>
-              ))}
-            </select>
-          ) : (
-            <input
-              type={field.type}
-              value={data[field.key] || field.value || ''}
-              onChange={(e) => setData({ ...data, [field.key]: field.type === 'number' ? parseInt(e.target.value) : e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-            />
-          )}
-        </div>
-      ))}
-      <div className="flex space-x-3 pt-4">
-        <button onClick={onBack} className="flex-1 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-semibold">← Back</button>
-        <button onClick={onNext} className="flex-1 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold">
-          {skipable ? 'Skip →' : 'Next →'}
-        </button>
       </div>
     </div>
   );

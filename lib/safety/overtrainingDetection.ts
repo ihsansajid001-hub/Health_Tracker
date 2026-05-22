@@ -28,7 +28,7 @@ export function detectOvertraining(
 ): OvertrainingCheck {
   const warnings: string[] = [];
   const recommendations: string[] = [];
-  let riskLevel: 'none' | 'low' | 'moderate' | 'high' | 'severe' = 'none';
+  let riskLevel: OvertrainingCheck['riskLevel'] = 'none';
   let isOvertraining = false;
   let mandatoryRestDays = 0;
 
@@ -74,7 +74,8 @@ export function detectOvertraining(
   if (totalWorkoutsLast14Days >= 13) {
     warnings.push('⚠️ Only 1 rest day in past 2 weeks');
     warnings.push('Insufficient recovery time');
-    if (riskLevel === 'none' || riskLevel === 'low') riskLevel = 'moderate';
+    const levels: string[] = ['none', 'low'];
+    if (levels.includes(riskLevel)) riskLevel = 'moderate';
   }
 
   // RISK FACTOR 3: Excessive duration
@@ -88,7 +89,8 @@ export function detectOvertraining(
   if (highIntensityCount >= 5) {
     warnings.push('⚠️ 5+ high-intensity workouts in past week');
     warnings.push('High-intensity training requires 48-72 hours recovery');
-    if (riskLevel === 'none' || riskLevel === 'low') riskLevel = 'moderate';
+    const lowLevels: string[] = ['none', 'low'];
+    if (lowLevels.includes(riskLevel)) riskLevel = 'moderate';
   }
 
   // RISK FACTOR 5: Elevated resting heart rate
@@ -98,7 +100,8 @@ export function detectOvertraining(
       warnings.push('🚨 Elevated resting heart rate (+10 bpm above baseline)');
       warnings.push('Strong indicator of overtraining syndrome');
       isOvertraining = true;
-      if (riskLevel === 'none' || riskLevel === 'low') riskLevel = 'high';
+      const lowLevels2: string[] = ['none', 'low'];
+      if (lowLevels2.includes(riskLevel)) riskLevel = 'high';
     } else if (hrIncrease >= 5) {
       warnings.push('⚠️ Elevated resting heart rate (+5 bpm above baseline)');
       warnings.push('Possible early sign of overtraining');
@@ -131,7 +134,8 @@ export function detectOvertraining(
     warnings.push('⚠️ Performance decline detected');
     warnings.push('Getting weaker despite training = overtraining');
     isOvertraining = true;
-    if (riskLevel === 'none' || riskLevel === 'low') riskLevel = 'moderate';
+    const lowLevels3: string[] = ['none', 'low'];
+    if (lowLevels3.includes(riskLevel)) riskLevel = 'moderate';
   }
 
   // RECOMMENDATIONS based on risk level

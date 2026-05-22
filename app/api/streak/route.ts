@@ -6,53 +6,40 @@ export async function GET(request: Request) {
   try {
     const authHeader = request.headers.get('authorization');
     if (!authHeader) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ current: 0, longest: 0 });
     }
 
     const token = authHeader.replace('Bearer ', '');
     const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(token);
-    
+
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ current: 0, longest: 0 });
     }
 
-    // Get all tracking dates (any log counts as a tracked day)
     const today = new Date();
+    const ninetyDaysAgo = formatDate(new Date(Date.now() - 90 * 24 * 60 * 60 * 1000));
+
+    // ONE query per table for the full 90-day window — not 90×5 queries
+    const [sleep, workout, nutrition, mood, hydration] = await Promise.all([
+      supabaseAdmin.from('sleep_logs').select('date').eq('user_id', user.id).gte('date', ninetyDaysAgo),
+      supabaseAdmin.from('workout_logs').select('date').eq('user_id', user.id).gte('date', ninetyDaysAgo),
+      supabaseAdmin.from('nutrition_logs').select('date').eq('user_id', user.id).gte('date', ninetyDaysAgo),
+      supabaseAdmin.from('mood_logs').select('date').eq('user_id', user.id).gte('date', ninetyDaysAgo),
+      supabaseAdmin.from('hydration_logs').select('date').eq('user_id', user.id).gte('date', ninetyDaysAgo),
+    ]);
+
+    // Build a set of all dates that have at least one log entry
     const trackedDates = new Set<string>();
+    [sleep, workout, nutrition, mood, hydration].forEach(result => {
+      result.data?.forEach((row: any) => trackedDates.add(row.date));
+    });
 
-    // Check last 90 days for streak calculation
-    for (let i = 0; i < 90; i++) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - i);
-      const dateStr = formatDate(date);
-
-      const [sleep, workout, nutrition, mood, hydration] = await Promise.all([
-        supabaseAdmin.from('sleep_logs').select('id').eq('user_id', user.id).eq('date', dateStr).limit(1),
-        supabaseAdmin.from('workout_logs').select('id').eq('user_id', user.id).eq('date', dateStr).limit(1),
-        supabaseAdmin.from('nutrition_logs').select('id').eq('user_id', user.id).eq('date', dateStr).limit(1),
-        supabaseAdmin.from('mood_logs').select('id').eq('user_id', user.id).eq('date', dateStr).limit(1),
-        supabaseAdmin.from('hydration_logs').select('id').eq('user_id', user.id).eq('date', dateStr).limit(1),
-      ]);
-
-      if (
-        (sleep.data && sleep.data.length > 0) ||
-        (workout.data && workout.data.length > 0) ||
-        (nutrition.data && nutrition.data.length > 0) ||
-        (mood.data && mood.data.length > 0) ||
-        (hydration.data && hydration.data.length > 0)
-      ) {
-        trackedDates.add(dateStr);
-      }
-    }
-
-    // Calculate current streak
+    // Calculate current streak (backwards from today)
     let currentStreak = 0;
     for (let i = 0; i < 90; i++) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - i);
-      const dateStr = formatDate(date);
-
-      if (trackedDates.has(dateStr)) {
+      const d = new Date(today);
+      d.setDate(d.getDate() - i);
+      if (trackedDates.has(formatDate(d))) {
         currentStreak++;
       } else {
         break;
@@ -61,27 +48,21 @@ export async function GET(request: Request) {
 
     // Calculate longest streak
     let longestStreak = 0;
-    let tempStreak = 0;
-    
-    for (let i = 0; i < 90; i++) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - i);
-      const dateStr = formatDate(date);
-
-      if (trackedDates.has(dateStr)) {
-        tempStreak++;
-        longestStreak = Math.max(longestStreak, tempStreak);
+    let temp = 0;
+    for (let i = 89; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(d.getDate() - i);
+      if (trackedDates.has(formatDate(d))) {
+        temp++;
+        longestStreak = Math.max(longestStreak, temp);
       } else {
-        tempStreak = 0;
+        temp = 0;
       }
     }
 
-    return NextResponse.json({
-      current: currentStreak,
-      longest: longestStreak,
-    });
+    return NextResponse.json({ current: currentStreak, longest: longestStreak });
   } catch (error) {
-    console.error('Streak calculation error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('Streak error:', error);
+    return NextResponse.json({ current: 0, longest: 0 });
   }
 }

@@ -3,203 +3,123 @@
 import { useState, useEffect } from 'react';
 import { Play, Pause, RotateCcw, Plus, Minus } from 'lucide-react';
 
+const PRESETS = [30, 60, 90, 120];
+
 export default function RestTimer() {
-  const [restTime, setRestTime] = useState(60); // seconds
+  const [restTime, setRestTime] = useState(60);
   const [timeLeft, setTimeLeft] = useState(60);
-  const [isActive, setIsActive] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
+  const [active, setActive] = useState(false);
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
+    if (!active) return;
+    const id = setInterval(() => {
+      setTimeLeft(t => {
+        if (t <= 1) {
+          setActive(false);
+          setDone(true);
+          new Audio('/sounds/beep.mp3').play().catch(() => {});
+          return 0;
+        }
+        return t - 1;
+      });
+    }, 1000);
+    return () => clearInterval(id);
+  }, [active]);
 
-    if (isActive && timeLeft > 0) {
-      interval = setInterval(() => {
-        setTimeLeft(time => {
-          if (time <= 1) {
-            setIsActive(false);
-            setIsComplete(true);
-            // Play sound notification
-            playNotificationSound();
-            return 0;
-          }
-          return time - 1;
-        });
-      }, 1000);
-    }
-
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isActive, timeLeft]);
-
-  const playNotificationSound = () => {
-    // Play a beep sound
-    const audio = new Audio('/sounds/beep.mp3');
-    audio.play().catch(() => {});
+  const start  = () => { setActive(true); setDone(false); };
+  const pause  = () => setActive(false);
+  const reset  = () => { setActive(false); setTimeLeft(restTime); setDone(false); };
+  const adjust = (n: number) => {
+    const v = Math.max(10, Math.min(300, restTime + n));
+    setRestTime(v);
+    if (!active) setTimeLeft(v);
   };
+  const pick = (s: number) => { setRestTime(s); setTimeLeft(s); setDone(false); setActive(false); };
 
-  const startTimer = () => {
-    setIsActive(true);
-    setIsComplete(false);
-  };
+  const fmt = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+  const pct = ((restTime - timeLeft) / restTime) * 100;
 
-  const pauseTimer = () => {
-    setIsActive(false);
-  };
-
-  const resetTimer = () => {
-    setIsActive(false);
-    setTimeLeft(restTime);
-    setIsComplete(false);
-  };
-
-  const adjustRestTime = (seconds: number) => {
-    const newTime = Math.max(10, Math.min(300, restTime + seconds));
-    setRestTime(newTime);
-    if (!isActive) {
-      setTimeLeft(newTime);
-    }
-  };
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const progress = ((restTime - timeLeft) / restTime) * 100;
+  const R = 88;
+  const circ = 2 * Math.PI * R;
 
   return (
-    <div className="max-w-md mx-auto">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-        {/* Timer Display */}
-        <div className="relative mb-8">
-          {/* Progress Ring */}
-          <svg className="w-64 h-64 mx-auto transform -rotate-90">
-            <circle
-              cx="128"
-              cy="128"
-              r="120"
-              stroke="currentColor"
-              strokeWidth="8"
-              fill="none"
-              className="text-gray-200 dark:text-gray-700"
-            />
-            <circle
-              cx="128"
-              cy="128"
-              r="120"
-              stroke="currentColor"
-              strokeWidth="8"
-              fill="none"
-              strokeDasharray={`${2 * Math.PI * 120}`}
-              strokeDashoffset={`${2 * Math.PI * 120 * (1 - progress / 100)}`}
-              className={`transition-all duration-1000 ${
-                isComplete ? 'text-green-500' : 'text-red-500'
-              }`}
-              strokeLinecap="round"
-            />
-          </svg>
+    <div className="max-w-sm mx-auto space-y-6">
 
-          {/* Time Display */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center">
-              <div className={`text-6xl font-bold ${
-                isComplete ? 'text-green-500' : 'text-gray-900 dark:text-white'
-              }`}>
-                {formatTime(timeLeft)}
-              </div>
-              {isComplete && (
-                <div className="text-green-500 font-semibold mt-2 animate-pulse">
-                  Rest Complete!
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Rest Time Adjustment */}
-        {!isActive && !isComplete && (
-          <div className="mb-6">
-            <p className="text-center text-sm text-gray-600 dark:text-gray-400 mb-3">
-              Adjust Rest Time
-            </p>
-            <div className="flex items-center justify-center space-x-4">
-              <button
-                onClick={() => adjustRestTime(-10)}
-                className="p-3 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-              >
-                <Minus size={20} />
-              </button>
-              <span className="text-2xl font-bold text-gray-900 dark:text-white w-24 text-center">
-                {restTime}s
-              </span>
-              <button
-                onClick={() => adjustRestTime(10)}
-                className="p-3 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-              >
-                <Plus size={20} />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Quick Time Buttons */}
-        {!isActive && !isComplete && (
-          <div className="grid grid-cols-4 gap-2 mb-6">
-            {[30, 60, 90, 120].map(seconds => (
-              <button
-                key={seconds}
-                onClick={() => {
-                  setRestTime(seconds);
-                  setTimeLeft(seconds);
-                }}
-                className={`py-2 rounded-lg font-semibold text-sm transition-colors ${
-                  restTime === seconds
-                    ? 'bg-red-500 text-white'
-                    : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-red-100 dark:hover:bg-red-900/20'
-                }`}
-              >
-                {seconds}s
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* Controls */}
-        <div className="flex items-center justify-center space-x-4">
-          {!isActive ? (
-            <button
-              onClick={startTimer}
-              className="px-8 py-4 bg-gradient-to-r from-green-500 to-green-700 text-white rounded-xl font-semibold flex items-center space-x-2 hover:shadow-lg transform hover:scale-[1.02] transition-all"
-            >
-              <Play size={24} />
-              <span>Start</span>
-            </button>
-          ) : (
-            <button
-              onClick={pauseTimer}
-              className="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-700 text-white rounded-xl font-semibold flex items-center space-x-2 hover:shadow-lg transform hover:scale-[1.02] transition-all"
-            >
-              <Pause size={24} />
-              <span>Pause</span>
-            </button>
-          )}
-          
-          <button
-            onClick={resetTimer}
-            className="px-8 py-4 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-semibold flex items-center space-x-2 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-          >
-            <RotateCcw size={24} />
-            <span>Reset</span>
-          </button>
-        </div>
-
-        {/* Info */}
-        <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
-          <p>Rest between sets to maximize performance and prevent injury</p>
+      {/* Ring */}
+      <div className="relative flex items-center justify-center" style={{ height: 220 }}>
+        <svg width="220" height="220" style={{ transform: 'rotate(-90deg)', position: 'absolute' }}>
+          <circle cx="110" cy="110" r={R} fill="none" stroke="#F3F4F6" strokeWidth="8" />
+          <circle cx="110" cy="110" r={R} fill="none"
+            stroke={done ? '#10B981' : '#111827'}
+            strokeWidth="8"
+            strokeDasharray={circ}
+            strokeDashoffset={circ * (1 - pct / 100)}
+            strokeLinecap="round"
+            style={{ transition: 'stroke-dashoffset 1s linear, stroke 0.3s' }}
+          />
+        </svg>
+        <div className="relative z-10 text-center">
+          <p className={`text-[52px] font-black tabular-nums leading-none ${done ? 'text-emerald-500' : 'text-gray-900'}`}>
+            {fmt(timeLeft)}
+          </p>
+          <p className="text-[12px] font-semibold text-gray-400 mt-1">
+            {done ? '✓ Rest complete' : active ? 'Resting…' : 'Ready'}
+          </p>
         </div>
       </div>
+
+      {/* Presets */}
+      <div className="grid grid-cols-4 gap-2">
+        {PRESETS.map(s => (
+          <button key={s} onClick={() => pick(s)}
+            className={`py-2 rounded-xl text-[12px] font-black transition-all ${
+              restTime === s && !active
+                ? 'bg-gray-900 text-white'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}>
+            {s}s
+          </button>
+        ))}
+      </div>
+
+      {/* Adjust */}
+      {!active && !done && (
+        <div className="flex items-center justify-center gap-4">
+          <button onClick={() => adjust(-10)}
+            className="w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
+            <Minus size={16} className="text-gray-600" />
+          </button>
+          <span className="text-[15px] font-black text-gray-700 w-16 text-center">{restTime}s</span>
+          <button onClick={() => adjust(10)}
+            className="w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
+            <Plus size={16} className="text-gray-600" />
+          </button>
+        </div>
+      )}
+
+      {/* Controls */}
+      <div className="flex items-center justify-center gap-3">
+        {!active ? (
+          <button onClick={start}
+            className="flex items-center gap-2 px-8 py-3 bg-gray-900 hover:bg-gray-800 text-white rounded-xl text-[13px] font-black transition-all active:scale-[0.97]">
+            <Play size={15} fill="currentColor" /> Start
+          </button>
+        ) : (
+          <button onClick={pause}
+            className="flex items-center gap-2 px-8 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-[13px] font-black transition-all active:scale-[0.97]">
+            <Pause size={15} /> Pause
+          </button>
+        )}
+        <button onClick={reset}
+          className="w-11 h-11 rounded-xl bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
+          <RotateCcw size={16} className="text-gray-600" />
+        </button>
+      </div>
+
+      <p className="text-center text-[11px] text-gray-400">
+        Rest between sets to maximise performance and prevent injury
+      </p>
     </div>
   );
 }
