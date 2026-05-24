@@ -44,7 +44,7 @@ const ACHIEVEMENTS = [
 function DrinkIcon({ type, size = 20 }: { type: string; size?: number }) {
   if (type === 'tea') return <Coffee size={size} className="text-red-400" />;
   if (type === 'juice') return <Waves size={size} className="text-yellow-400" />;
-  return <Droplet size={size} className="text-blue-400" />;
+  return <Droplet size={size} className="text-orange-400" />;
 }
 
 function CircularProgress({ percentage, current, target }: { percentage: number; current: number; target: number }) {
@@ -159,7 +159,7 @@ export default function HydrationPage() {
           </div>
           <div className="flex items-center gap-3">
             {success && (
-              <span className="text-xs bg-blue-50 text-blue-600 border border-blue-200 px-3 py-1.5 rounded-full font-bold">
+              <span className="text-xs bg-orange-50 text-orange-500 border border-orange-200 px-3 py-1.5 rounded-full font-bold">
                 Saved
               </span>
             )}
@@ -238,7 +238,7 @@ export default function HydrationPage() {
             <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex-1">
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2">
-                  <TrendingUp size={16} className="text-blue-500" />
+                  <TrendingUp size={16} className="text-orange-500" />
                   <h3 className="font-black text-gray-900">Drink Completion</h3>
                 </div>
                 <div className="flex gap-1 bg-gray-100 rounded-xl p-1">
@@ -280,20 +280,20 @@ export default function HydrationPage() {
                         }}
                       />
                     </div>
-                    <span className={`text-xs font-bold ${i === 4 ? 'text-blue-500' : 'text-gray-400'}`}>{d.day}</span>
+                    <span className={`text-xs font-bold ${i === 4 ? 'text-orange-500' : 'text-gray-400'}`}>{d.day}</span>
                   </div>
                 ))}
               </div>
 
               <div className="grid grid-cols-3 gap-3">
                 {[
-                  { label: 'Avg Daily', value: '1,820 ml', color: 'text-blue-400' },
+                  { label: 'Avg Daily', value: '1,820 ml', color: 'text-orange-400' },
                   { label: 'Best Day', value: '2,400 ml', color: 'text-yellow-500' },
-                  { label: 'Goal Hit', value: '5 / 7 days', color: 'text-green-500' },
+                  { label: 'Goal Hit', value: '5 / 7 days', color: 'text-orange-500' },
                 ].map(s => (
-                  <div key={s.label} className="bg-blue-50 rounded-2xl p-4">
+                  <div key={s.label} className="bg-orange-50 rounded-2xl p-4">
                     <p className="text-xs text-gray-400 font-semibold mb-1">{s.label}</p>
-                    <p className="text-base font-black text-blue-700">{s.value}</p>
+                    <p className="text-base font-black text-orange-600">{s.value}</p>
                   </div>
                 ))}
               </div>
@@ -303,7 +303,7 @@ export default function HydrationPage() {
             <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2">
-                  <Award size={16} className="text-blue-500" />
+                  <Award size={16} className="text-orange-500" />
                   <h3 className="font-black text-gray-900">Achievements</h3>
                 </div>
                 <div
@@ -341,11 +341,11 @@ export default function HydrationPage() {
         <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-50">
             <div className="flex items-center gap-2">
-              <Clock size={16} className="text-blue-500" />
+              <Clock size={16} className="text-orange-500" />
               <h3 className="font-black text-gray-900">Today's History</h3>
-              <span className="text-xs bg-blue-50 text-blue-600 font-black px-2 py-0.5 rounded-full">{history.length} drinks</span>
+              <span className="text-xs bg-orange-50 text-orange-500 font-black px-2 py-0.5 rounded-full">{history.length} drinks</span>
             </div>
-            <button className="flex items-center gap-1 text-xs font-bold text-blue-500 hover:text-blue-700 transition-colors">
+            <button className="flex items-center gap-1 text-xs font-bold text-orange-500 hover:text-orange-600 transition-colors">
               View All <ChevronRight size={14} />
             </button>
           </div>
@@ -386,7 +386,7 @@ export default function HydrationPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-black text-blue-500">{entry.amount} ml</span>
+                    <span className="text-sm font-black text-orange-500">{entry.amount} ml</span>
                     <button
                       onClick={() => removeEntry(entry.id)}
                       className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-xl hover:bg-red-50 text-gray-300 hover:text-red-400"
@@ -423,7 +423,7 @@ export default function HydrationPage() {
                 <button
                   key={i}
                   onClick={() => addDrink(opt.label, opt.amount, opt.icon)}
-                  className="flex flex-col items-center gap-2 p-4 rounded-2xl border-2 border-transparent hover:border-blue-200 transition-all active:scale-95"
+                  className="flex flex-col items-center gap-2 p-4 rounded-2xl border-2 border-transparent hover:border-orange-200 transition-all active:scale-95"
                   style={{ background: `${opt.color}15` }}
                 >
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${opt.color}25` }}>
@@ -449,7 +449,7 @@ export default function HydrationPage() {
                   key={t}
                   onClick={() => setCustomType(t)}
                   className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold capitalize transition-all border-2 ${
-                    customType === t ? 'border-blue-400 bg-blue-50 text-blue-600' : 'border-gray-100 text-gray-400 hover:border-gray-200'
+                    customType === t ? 'border-blue-400 bg-orange-50 text-orange-500' : 'border-gray-100 text-gray-400 hover:border-gray-200'
                   }`}
                 >
                   <DrinkIcon type={t} size={14} />

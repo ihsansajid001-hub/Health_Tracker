@@ -79,7 +79,7 @@ function StatCard({
           <span
             className={`text-xs font-bold px-2 py-0.5 rounded-full flex items-center gap-0.5 ${
               badgeUp
-                ? 'bg-green-100 text-green-700'
+                ? 'bg-orange-100 text-orange-600'
                 : 'bg-red-100 text-red-600'
             }`}
           >
@@ -93,7 +93,7 @@ function StatCard({
         <ul className="space-y-1">
           {items.map((item, i) => (
             <li key={i} className="flex items-center gap-2 text-xs text-gray-500">
-              <span className="w-4 h-4 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+              <span className="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
                 <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
                   <path d="M1.5 4L3.5 6L6.5 2" stroke="#3b82f6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -107,7 +107,7 @@ function StatCard({
         <div className="mt-auto">
           <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-blue-400 to-blue-600 transition-all"
+              className="h-full rounded-full bg-gradient-to-r from-blue-400 to-orange-500 transition-all"
               style={{ width: `${Math.min(progress, 100)}%` }}
             />
           </div>
@@ -209,7 +209,7 @@ function UrgentSupportCard() {
 
       <div className="relative z-10">
         <p className="font-bold text-blue-900 text-base">Urgent Support</p>
-        <p className="text-xs text-blue-700 mt-1 leading-snug max-w-[160px]">
+        <p className="text-xs text-orange-600 mt-1 leading-snug max-w-[160px]">
           Quick access to crisis hotlines when you need immediate help
         </p>
       </div>
@@ -250,7 +250,7 @@ function UpcomingPanel({ username }: { username: string }) {
               key={i}
               className={`text-center text-xs font-bold py-1 rounded-lg transition-all ${
                 date === today
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-orange-500 text-white'
                   : 'text-gray-600 hover:bg-gray-100'
               }`}
             >
@@ -264,7 +264,7 @@ function UpcomingPanel({ username }: { username: string }) {
       <div className="space-y-3">
         {appointments.map((apt, i) => (
           <div key={i} className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center text-lg flex-shrink-0">
+            <div className="w-9 h-9 rounded-full bg-orange-50 flex items-center justify-center text-lg flex-shrink-0">
               {apt.avatar}
             </div>
             <div className="flex-1 min-w-0">
@@ -306,7 +306,7 @@ function RecentSessionsPanel() {
       <div className="space-y-3">
         {sessions.map((s, i) => (
           <div key={i} className="flex items-center gap-3">
-            <button className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0 hover:bg-blue-700 transition-colors shadow-sm">
+            <button className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 hover:bg-orange-600 transition-colors shadow-sm">
               <Play size={12} className="text-white ml-0.5" />
             </button>
             <div className="flex-1 min-w-0">
@@ -345,16 +345,16 @@ function ExerciseRow({
       className="flex items-center gap-4 py-3 px-1 cursor-pointer hover:bg-gray-50 rounded-xl transition-colors group"
       onClick={onClick}
     >
-      <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center text-lg flex-shrink-0">
+      <div className="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center text-lg flex-shrink-0">
         {icon}
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-3 mb-1">
           <p className="text-sm font-semibold text-gray-900 truncate">{name}</p>
-          <span className="text-xs font-bold text-blue-600">{progress}%</span>
+          <span className="text-xs font-bold text-orange-500">{progress}%</span>
           <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden max-w-[80px]">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-blue-400 to-blue-600"
+              className="h-full rounded-full bg-gradient-to-r from-blue-400 to-orange-500"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -450,7 +450,7 @@ export default function MindPage() {
           {/* Back button */}
           <button
             onClick={() => setDetailView(null)}
-            className="flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+            className="flex items-center gap-2 text-sm font-semibold text-orange-500 hover:text-orange-600 transition-colors"
           >
             <ArrowLeft size={16} />
             Back to Mind Dashboard
@@ -586,7 +586,7 @@ export default function MindPage() {
                   <button
                     key={item.view}
                     onClick={() => setDetailView(item.view)}
-                    className="flex items-center gap-2 px-3 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl bg-orange-50 hover:bg-orange-100 text-orange-600 text-xs font-semibold transition-colors"
                   >
                     <span>{item.icon}</span>
                     {item.label}

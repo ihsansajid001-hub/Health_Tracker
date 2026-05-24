@@ -15,7 +15,7 @@ export default function PhysicalStatsStep({ data, setData, onNext, onBack }: Pro
   const bmi = calculateBMI();
 
   const getBMICategory = (bmi: number) => {
-    if (bmi < 18.5) return { label: 'Underweight', color: 'text-blue-600' };
+    if (bmi < 18.5) return { label: 'Underweight', color: 'text-orange-500' };
     if (bmi < 25) return { label: 'Normal', color: 'text-green-600' };
     if (bmi < 30) return { label: 'Overweight', color: 'text-yellow-600' };
     return { label: 'Obese', color: 'text-red-600' };
@@ -48,7 +48,7 @@ export default function PhysicalStatsStep({ data, setData, onNext, onBack }: Pro
             type="number"
             value={data.height || ''}
             onChange={(e) => setData({ ...data, height: parseInt(e.target.value) || 0 })}
-            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             placeholder="170"
             min="100"
             max="250"
@@ -63,7 +63,7 @@ export default function PhysicalStatsStep({ data, setData, onNext, onBack }: Pro
             type="number"
             value={data.weight || ''}
             onChange={(e) => setData({ ...data, weight: parseInt(e.target.value) || 0 })}
-            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             placeholder="70"
             min="30"
             max="300"
@@ -72,7 +72,7 @@ export default function PhysicalStatsStep({ data, setData, onNext, onBack }: Pro
       </div>
 
       {bmi && (
-        <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+        <div className="p-4 bg-orange-50 dark:bg-blue-900/20 rounded-lg border border-orange-200 dark:border-blue-800">
           <div className="text-center">
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Your BMI</p>
             <p className="text-3xl font-bold text-gray-900 dark:text-white">{bmi}</p>
@@ -91,7 +91,7 @@ export default function PhysicalStatsStep({ data, setData, onNext, onBack }: Pro
           type="number"
           value={data.target_weight || ''}
           onChange={(e) => setData({ ...data, target_weight: parseInt(e.target.value) || undefined })}
-          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
           placeholder="65"
           min="30"
           max="300"
@@ -110,7 +110,7 @@ export default function PhysicalStatsStep({ data, setData, onNext, onBack }: Pro
         </button>
         <button
           onClick={handleNext}
-          className="flex-1 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-[1.02] transition-all"
+          className="flex-1 py-3 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-[1.02] transition-all"
         >
           Next →
         </button>

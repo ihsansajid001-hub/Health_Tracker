@@ -365,7 +365,7 @@ export default function SnoringDetection({ onRecordingComplete }: Props) {
       {snoringEvents.length > 0 && (
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <BarChart3 size={24} className="text-blue-600 dark:text-blue-400" />
+            <BarChart3 size={24} className="text-orange-500 dark:text-orange-400" />
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
               Snoring Analysis
             </h3>
@@ -438,7 +438,7 @@ export default function SnoringDetection({ onRecordingComplete }: Props) {
       )}
 
       {/* Tips */}
-      <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+      <div className="bg-orange-50 dark:bg-blue-900/20 rounded-lg p-6">
         <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-3">
           💡 Snoring Detection Tips:
         </h4>

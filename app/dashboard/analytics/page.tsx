@@ -64,10 +64,10 @@ export default function AnalyticsPage() {
   };
 
   const summaryCards = [
-    { label: 'Current Score', value: analyticsData?.summary.currentScore ?? 0, icon: Target, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', badge: analyticsData?.trend },
-    { label: 'Average Score', value: analyticsData?.summary.averageScore ?? 0, icon: TrendingUp, color: 'text-green-600', bg: 'bg-green-50 dark:bg-green-900/20' },
+    { label: 'Current Score', value: analyticsData?.summary.currentScore ?? 0, icon: Target, color: 'text-orange-500', bg: 'bg-orange-50 dark:bg-blue-900/20', badge: analyticsData?.trend },
+    { label: 'Average Score', value: analyticsData?.summary.averageScore ?? 0, icon: TrendingUp, color: 'text-orange-500', bg: 'bg-orange-50 dark:bg-orange-900/20' },
     { label: 'Best Score', value: analyticsData?.summary.bestScore ?? 0, icon: Award, color: 'text-amber-600', bg: 'bg-amber-50 dark:bg-amber-900/20' },
-    { label: 'Days Tracked', value: analyticsData?.summary.daysTracked ?? 0, icon: Calendar, color: 'text-purple-600', bg: 'bg-purple-50 dark:bg-purple-900/20' },
+    { label: 'Days Tracked', value: analyticsData?.summary.daysTracked ?? 0, icon: Calendar, color: 'text-orange-500', bg: 'bg-orange-50 dark:bg-orange-900/20' },
   ];
 
   if (loading) {
@@ -122,7 +122,7 @@ export default function AnalyticsPage() {
               <div className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wide">{s.label}</div>
               {s.badge && (
                 <span className={`mt-2 inline-block text-xs font-bold px-2 py-0.5 rounded-full capitalize ${
-                  s.badge === 'improving' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' :
+                  s.badge === 'improving' ? 'bg-orange-100 text-orange-600 dark:bg-green-900/30 dark:text-orange-400' :
                   s.badge === 'declining' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' :
                   'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
                 }`}>{s.badge}</span>
@@ -152,11 +152,11 @@ export default function AnalyticsPage() {
             <h3 className="text-xl font-black text-gray-900 dark:text-white mb-6">Weekly Highlights</h3>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
               {[
-                { icon: Clock, label: 'Avg Sleep', value: `${weeklyStats.sleep.average.toFixed(1)}h`, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20' },
+                { icon: Clock, label: 'Avg Sleep', value: `${weeklyStats.sleep.average.toFixed(1)}h`, color: 'text-orange-500', bg: 'bg-orange-50 dark:bg-blue-900/20' },
                 { icon: Target, label: 'Workouts', value: weeklyStats.fitness.workouts, color: 'text-red-600', bg: 'bg-red-50 dark:bg-red-900/20' },
-                { icon: Award, label: 'Meals Logged', value: weeklyStats.nutrition.mealsLogged, color: 'text-green-600', bg: 'bg-green-50 dark:bg-green-900/20' },
-                { icon: TrendingUp, label: 'Hydration Goals', value: `${weeklyStats.hydration.totalDays > 0 ? Math.round((weeklyStats.hydration.goalsMet / weeklyStats.hydration.totalDays) * 100) : 0}%`, color: 'text-cyan-600', bg: 'bg-cyan-50 dark:bg-cyan-900/20' },
-                { icon: BarChart3, label: 'Avg Mood', value: weeklyStats.mental.avgMood.toFixed(1), color: 'text-purple-600', bg: 'bg-purple-50 dark:bg-purple-900/20' },
+                { icon: Award, label: 'Meals Logged', value: weeklyStats.nutrition.mealsLogged, color: 'text-orange-500', bg: 'bg-orange-50 dark:bg-orange-900/20' },
+                { icon: TrendingUp, label: 'Hydration Goals', value: `${weeklyStats.hydration.totalDays > 0 ? Math.round((weeklyStats.hydration.goalsMet / weeklyStats.hydration.totalDays) * 100) : 0}%`, color: 'text-orange-500', bg: 'bg-orange-50 dark:bg-orange-900/20' },
+                { icon: BarChart3, label: 'Avg Mood', value: weeklyStats.mental.avgMood.toFixed(1), color: 'text-orange-500', bg: 'bg-orange-50 dark:bg-orange-900/20' },
               ].map((s, i) => (
                 <div key={i} className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-2xl">
                   <div className={`w-12 h-12 ${s.bg} rounded-xl flex items-center justify-center mx-auto mb-3`}>

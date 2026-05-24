@@ -210,7 +210,7 @@ export default function Journal() {
           </h3>
           <button
             onClick={() => setView('write')}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+            className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-medium transition-colors"
           >
             Write Entry
           </button>
@@ -264,7 +264,7 @@ export default function Journal() {
                   setIsEditing(true);
                   setView('write');
                 }}
-                className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                className="text-sm text-orange-500 dark:text-orange-400 hover:underline"
               >
                 Read & Edit
               </button>
@@ -322,7 +322,7 @@ export default function Journal() {
                   <button
                     key={index}
                     onClick={() => usePrompt(prompt)}
-                    className="block w-full text-left text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    className="block w-full text-left text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                   >
                     {prompt}
                   </button>
@@ -374,7 +374,7 @@ export default function Journal() {
           </h4>
           <button
             onClick={addGratitudeItem}
-            className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+            className="text-sm text-orange-500 dark:text-orange-400 hover:underline"
           >
             <Plus className="w-4 h-4 inline mr-1" />
             Add Item
@@ -400,12 +400,12 @@ export default function Journal() {
       <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between mb-4">
           <h4 className="font-medium text-gray-900 dark:text-white">
-            <Target className="w-4 h-4 inline mr-1 text-blue-500" />
+            <Target className="w-4 h-4 inline mr-1 text-orange-500" />
             Goals & Intentions
           </h4>
           <button
             onClick={addGoal}
-            className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+            className="text-sm text-orange-500 dark:text-orange-400 hover:underline"
           >
             <Plus className="w-4 h-4 inline mr-1" />
             Add Goal
@@ -414,7 +414,7 @@ export default function Journal() {
         <div className="space-y-2">
           {(currentEntry.goals || []).map((goal, index) => (
             <div key={index} className="flex items-center space-x-2">
-              <span className="text-blue-500">🎯</span>
+              <span className="text-orange-500">🎯</span>
               <input
                 type="text"
                 value={goal}
@@ -431,7 +431,7 @@ export default function Journal() {
       <button
         onClick={saveEntry}
         disabled={loading || (!currentEntry.content.trim() && !currentEntry.gratitude_items?.some(item => item.trim()))}
-        className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg font-semibold transition-colors flex items-center justify-center"
+        className="w-full py-3 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white rounded-lg font-semibold transition-colors flex items-center justify-center"
       >
         {loading ? (
           <>

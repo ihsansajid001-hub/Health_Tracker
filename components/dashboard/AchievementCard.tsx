@@ -46,11 +46,11 @@ export default function AchievementCard() {
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'sleep': return <Calendar size={16} className="text-blue-500" />;
+      case 'sleep': return <Calendar size={16} className="text-orange-500" />;
       case 'fitness': return <Zap size={16} className="text-red-500" />;
-      case 'nutrition': return <Target size={16} className="text-green-500" />;
-      case 'mental': return <Star size={16} className="text-purple-500" />;
-      case 'hydration': return <Award size={16} className="text-cyan-500" />;
+      case 'nutrition': return <Target size={16} className="text-orange-500" />;
+      case 'mental': return <Star size={16} className="text-orange-500" />;
+      case 'hydration': return <Award size={16} className="text-orange-500" />;
       default: return <Trophy size={16} className="text-yellow-500" />;
     }
   };

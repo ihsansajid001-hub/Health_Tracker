@@ -224,13 +224,13 @@ export default function TermsOfService() {
             <div className="bg-gray-50 rounded-lg p-6 space-y-2">
               <p className="text-gray-700">
                 <strong>Email:</strong>{' '}
-                <a href="mailto:legal@lifescore.com" className="text-blue-600 hover:text-blue-700">
+                <a href="mailto:legal@lifescore.com" className="text-orange-500 hover:text-orange-600">
                   legal@lifescore.com
                 </a>
               </p>
               <p className="text-gray-700">
                 <strong>Support:</strong>{' '}
-                <a href="mailto:support@lifescore.com" className="text-blue-600 hover:text-blue-700">
+                <a href="mailto:support@lifescore.com" className="text-orange-500 hover:text-orange-600">
                   support@lifescore.com
                 </a>
               </p>
@@ -242,7 +242,7 @@ export default function TermsOfService() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/"
-                className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors text-center"
+                className="px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-colors text-center"
               >
                 Back to Home
               </Link>

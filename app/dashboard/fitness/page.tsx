@@ -40,7 +40,7 @@ const CHART_DATA = [
 ];
 
 const TRAININGS = [
-  { id: 'cycle',    label: 'Cycle',    accent: '#7C3AED', bg: '#F5F3FF', duration: '17.5 min', kcal: '30.7 Kcal',  img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80' },
+  { id: 'cycle',    label: 'Cycle',    accent: '#F97316', bg: '#FFF7ED', duration: '17.5 min', kcal: '30.7 Kcal',  img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80' },
   { id: 'strength', label: 'Strength', accent: '#EF4444', bg: '#FEF2F2', duration: '18.5 min', kcal: '77.7 Kcal',  img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80' },
   { id: 'combat',   label: 'Combat',   accent: '#3B82F6', bg: '#EFF6FF', duration: '30.0 min', kcal: '292.8 Kcal', img: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=400&q=80' },
   { id: 'yoga',     label: 'Yoga',     accent: '#F59E0B', bg: '#FFFBEB', duration: '8.5 min',  kcal: '20.2 Kcal',  img: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&q=80' },
@@ -317,7 +317,7 @@ export default function FitnessPage() {
                 {TIPS.map((tip, i) => (
                   <div key={i} className="flex gap-4 p-4 rounded-xl bg-gray-50 border border-gray-100 hover:border-gray-200 hover:bg-gray-100/60 transition-all cursor-pointer group">
                     <div className="flex-1 min-w-0">
-                      <span className="inline-block text-[9px] font-black uppercase tracking-widest text-blue-500 bg-blue-50 px-2 py-0.5 rounded-full mb-2">{tip.tag}</span>
+                      <span className="inline-block text-[9px] font-black uppercase tracking-widest text-orange-500 bg-orange-50 px-2 py-0.5 rounded-full mb-2">{tip.tag}</span>
                       <h3 className="text-[13px] font-black text-gray-900 mb-1 leading-snug">{tip.title}</h3>
                       <p className="text-[11px] text-gray-500 leading-relaxed">{tip.desc}</p>
                     </div>

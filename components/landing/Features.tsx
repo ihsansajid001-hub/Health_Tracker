@@ -40,7 +40,7 @@ export default function Features() {
             </h2>
           </div>
           <Link href="/signup"
-            className="inline-flex items-center gap-3 px-7 py-4 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 transition-all shadow-lg hover:-translate-y-0.5 self-start md:self-auto whitespace-nowrap">
+            className="inline-flex items-center gap-3 px-7 py-4 bg-orange-500 text-white font-bold rounded-full hover:bg-orange-600 transition-all shadow-lg hover:-translate-y-0.5 self-start md:self-auto whitespace-nowrap">
             + Become a Member
           </Link>
         </div>
@@ -68,7 +68,7 @@ export default function Features() {
               </div>
 
               {/* Arrow badge top-right */}
-              <div className="absolute top-5 right-5 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:bg-blue-500">
+              <div className="absolute top-5 right-5 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:bg-orange-500">
                 <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>

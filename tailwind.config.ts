@@ -10,37 +10,31 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Brand palette: orange + black
+        brand: {
+          orange: '#F97316',  // orange-500
+          dark:   '#1A1A1A',
+          light:  '#F5F5F0',
+        },
         primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
+          50:  '#fff7ed',
+          100: '#ffedd5',
+          200: '#fed7aa',
+          300: '#fdba74',
+          400: '#fb923c',
+          500: '#f97316',  // main orange
+          600: '#ea580c',
+          700: '#c2410c',
+          800: '#9a3412',
+          900: '#7c2d12',
         },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
-      fontSize: {
-        'display-xl': ['5rem', { lineHeight: '1.1', fontWeight: '700' }],
-        'display-lg': ['4rem', { lineHeight: '1.1', fontWeight: '700' }],
-        'display-md': ['3rem', { lineHeight: '1.2', fontWeight: '700' }],
-      },
       borderRadius: {
         '4xl': '2rem',
         '5xl': '2.5rem',
-      },
-      spacing: {
-        '18': '4.5rem',
-        '88': '22rem',
-        '100': '25rem',
-        '112': '28rem',
-        '128': '32rem',
       },
     },
   },

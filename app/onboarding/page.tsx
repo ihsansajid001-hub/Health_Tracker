@@ -235,7 +235,7 @@ function OnboardingContent() {
                     </div>
                   ))}
                 </div>
-                <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-2xl border border-blue-200 dark:border-blue-800">
+                <div className="p-4 bg-orange-50 dark:bg-blue-900/20 rounded-2xl border border-orange-200 dark:border-blue-800">
                   <p className="text-sm font-bold text-blue-900 dark:text-blue-200">
                     Primary Goal: <span className="capitalize">{data.primary_goal.replace(/_/g, ' ')}</span>
                   </p>
@@ -269,7 +269,7 @@ export default function OnboardingPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+        <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
       </div>
     }>
       <OnboardingContent />

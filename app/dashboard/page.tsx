@@ -41,8 +41,8 @@ function SleepBars() {
             <div className="w-full flex flex-col gap-0.5 items-center" style={{ height: 96 }}>
               {active ? (
                 <div className="w-full rounded-full flex flex-col gap-0.5 overflow-hidden" style={{ height: h, marginTop: 96 - h }}>
-                  <div className="flex-1 bg-[#C8F135] rounded-full" style={{ flex: 0.6 }} />
-                  <div className="flex-1 bg-[#8B7CF6] rounded-full" style={{ flex: 0.4 }} />
+                  <div className="flex-1 bg-orange-500 rounded-full" style={{ flex: 0.6 }} />
+                  <div className="flex-1 bg-orange-500 rounded-full" style={{ flex: 0.4 }} />
                 </div>
               ) : (
                 <div
@@ -51,7 +51,7 @@ function SleepBars() {
                 />
               )}
             </div>
-            <span className={`text-[10px] font-bold ${active ? 'text-[#C8F135]' : 'text-gray-600'}`}>
+            <span className={`text-[10px] font-bold ${active ? 'text-orange-500' : 'text-gray-600'}`}>
               {active ? `${m} ↗` : m}
             </span>
           </div>
@@ -68,7 +68,7 @@ function WellnessDots({ value }: { value: number }) {
   return (
     <div className="grid gap-1" style={{ gridTemplateColumns: 'repeat(7, 1fr)' }}>
       {Array.from({ length: total }).map((_, i) => (
-        <div key={i} className={`w-2.5 h-2.5 rounded-full ${i < filled ? 'bg-[#8B7CF6]' : 'bg-gray-100'}`} />
+        <div key={i} className={`w-2.5 h-2.5 rounded-full ${i < filled ? 'bg-orange-500' : 'bg-gray-100'}`} />
       ))}
     </div>
   );
@@ -104,41 +104,50 @@ export default function DashboardPage() {
   useEffect(() => {
     const accepted = localStorage.getItem('medical_disclaimer_accepted');
     if (!accepted) setShowDisclaimer(true);
-    init();
+
+    // Hard timeout — show dashboard after 3s no matter what
+    const timeout = setTimeout(() => setLoading(false), 3000);
+
+    init().finally(() => clearTimeout(timeout));
   }, []);
 
   const init = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) { window.location.replace('/login'); return; }
+      // Use getSession() first — it's instant (reads from localStorage, no network call)
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session?.user) {
+        // No session in storage — redirect to login
+        window.location.replace('/login');
+        return;
+      }
+
+      const user = session.user;
       setUser(user);
 
-      const { data: p, error: pe } = await supabase
-        .from('user_profiles').select('*').eq('user_id', user.id).single();
-      if (pe || !p) { window.location.replace('/onboarding'); return; }
-      setProfile(p);
-
-      // Show the dashboard immediately — don't wait for score/streak
+      // Show dashboard immediately — don't wait for profile or APIs
       setLoading(false);
 
-      // Load score in background (non-blocking)
+      // Fetch profile in background
+      Promise.resolve(
+        supabase.from('user_profiles').select('*').eq('user_id', user.id).single()
+      ).then(({ data: p }) => { if (p) setProfile(p); }).catch(() => {});
+
+      // Fetch score in background
       fetch(`/api/score/current?userId=${user.id}`)
         .then(r => r.ok ? r.json() : null)
         .then(d => { if (d?.lifeScore) setLifeScore(d.lifeScore); })
         .catch(() => {});
 
-      // Load streak in background with auth token
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session?.access_token) {
-        fetch('/api/streak', {
-          headers: { authorization: `Bearer ${session.access_token}` },
-        })
+      // Fetch streak in background
+      if (session.access_token) {
+        fetch('/api/streak', { headers: { authorization: `Bearer ${session.access_token}` } })
           .then(r => r.ok ? r.json() : null)
           .then(d => { if (d) setStreak(d); })
           .catch(() => {});
       }
     } catch (e) {
-      console.error(e);
+      console.error('Dashboard init error:', e);
       setLoading(false);
     }
   };
@@ -147,7 +156,7 @@ export default function DashboardPage() {
     <DashboardLayout>
       <div className="flex items-center justify-center h-[60vh]">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 rounded-full border-[3px] border-[#C8F135] border-t-transparent animate-spin" />
+          <div className="w-10 h-10 rounded-full border-[3px] border-orange-500 border-t-transparent animate-spin" />
           <p className="text-sm font-semibold text-gray-400">Loading your dashboard…</p>
         </div>
       </div>
@@ -202,7 +211,7 @@ export default function DashboardPage() {
             <Card>
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <Zap size={16} className="text-[#C8F135]" />
+                  <Zap size={16} className="text-orange-500" />
                   <span className="text-sm font-black text-gray-700">Energy Used</span>
                 </div>
                 <MoreBtn />
@@ -210,15 +219,15 @@ export default function DashboardPage() {
               <div className="flex items-baseline gap-2 mb-1">
                 <span className="text-4xl font-black text-gray-900 tabular-nums">{(calories / 1000).toFixed(1)}k</span>
                 <span className="text-xs font-bold text-gray-400">kcal today</span>
-                <span className="ml-auto text-xs font-black text-[#C8F135] bg-[#C8F135]/15 px-2 py-0.5 rounded-full">+5%</span>
+                <span className="ml-auto text-xs font-black text-orange-500 bg-orange-500/15 px-2 py-0.5 rounded-full">+5%</span>
               </div>
 
               {/* Bubble chart */}
               <div className="relative flex items-center justify-center h-36 mt-2">
                 {/* Big purple bubble */}
-                <div className="absolute w-28 h-28 bg-[#8B7CF6]/20 rounded-full flex flex-col items-center justify-center left-4 top-2">
-                  <span className="text-2xl font-black text-[#8B7CF6]">{Math.round(calories * 0.55 / 100) / 10}k</span>
-                  <span className="text-[10px] text-[#8B7CF6]/70 font-bold">kcal</span>
+                <div className="absolute w-28 h-28 bg-orange-500/20 rounded-full flex flex-col items-center justify-center left-4 top-2">
+                  <span className="text-2xl font-black text-orange-500">{Math.round(calories * 0.55 / 100) / 10}k</span>
+                  <span className="text-[10px] text-orange-500/70 font-bold">kcal</span>
                 </div>
                 {/* Dark bubble */}
                 <div className="absolute w-24 h-24 bg-[#1A1A1A] rounded-full flex flex-col items-center justify-center right-4 top-2">
@@ -226,7 +235,7 @@ export default function DashboardPage() {
                   <span className="text-[10px] text-gray-400 font-bold">kcal</span>
                 </div>
                 {/* Lime small bubble */}
-                <div className="absolute w-16 h-16 bg-[#C8F135] rounded-full flex flex-col items-center justify-center bottom-0 left-1/2 -translate-x-1/2">
+                <div className="absolute w-16 h-16 bg-orange-500 rounded-full flex flex-col items-center justify-center bottom-0 left-1/2 -translate-x-1/2">
                   <span className="text-base font-black text-black">{Math.round(calories * 0.1 / 100) / 10}k</span>
                   <span className="text-[9px] text-black/60 font-bold">kcal</span>
                 </div>
@@ -234,9 +243,9 @@ export default function DashboardPage() {
 
               {/* Progress bars */}
               <div className="space-y-3 mt-4">
-                <ProgressBar label="Running"  value={Math.min(fitness, 45)}   color="#8B7CF6" dot="#8B7CF6" />
+                <ProgressBar label="Running"  value={Math.min(fitness, 45)}   color="#F97316" dot="#F97316" />
                 <ProgressBar label="Workouts" value={Math.min(fitness, 30)}   color="#1A1A1A" dot="#1A1A1A" />
-                <ProgressBar label="Walking"  value={Math.min(hydration, 25)} color="#C8F135" dot="#C8F135" />
+                <ProgressBar label="Walking"  value={Math.min(hydration, 25)} color="#F97316" dot="#F97316" />
               </div>
             </Card>
 
@@ -264,7 +273,7 @@ export default function DashboardPage() {
                 {/* Mini pulse line */}
                 <svg className="w-full h-10 mt-3" viewBox="0 0 120 40" fill="none">
                   <polyline points="0,20 15,20 25,5 35,35 45,20 60,20 70,10 80,30 90,20 105,20 120,20"
-                    stroke="#8B7CF6" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                    stroke="#F97316" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </Card>
 
@@ -272,7 +281,7 @@ export default function DashboardPage() {
               <Card className="flex-1">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <Activity size={16} className="text-[#C8F135]" />
+                    <Activity size={16} className="text-orange-500" />
                     <span className="text-sm font-black text-gray-700">Activity</span>
                   </div>
                   <MoreBtn />
@@ -294,7 +303,7 @@ export default function DashboardPage() {
             <Card>
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <Brain size={16} className="text-[#8B7CF6]" />
+                  <Brain size={16} className="text-orange-500" />
                   <span className="text-sm font-black text-gray-700">Wellness Index</span>
                 </div>
                 <MoreBtn />
@@ -302,7 +311,7 @@ export default function DashboardPage() {
               <div className="flex items-baseline gap-2 mb-4">
                 <span className="text-4xl font-black text-gray-900 tabular-nums">{wellnessIdx}</span>
                 <span className="text-sm text-gray-400 font-semibold">%</span>
-                <span className="ml-auto text-xs font-black text-[#C8F135] bg-[#C8F135]/15 px-2 py-0.5 rounded-full">+10%</span>
+                <span className="ml-auto text-xs font-black text-orange-500 bg-orange-500/15 px-2 py-0.5 rounded-full">+10%</span>
               </div>
               <WellnessDots value={wellnessIdx} />
             </Card>
@@ -316,7 +325,7 @@ export default function DashboardPage() {
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 bg-white/10 rounded-lg flex items-center justify-center">
-                    <Moon size={14} className="text-[#C8F135]" />
+                    <Moon size={14} className="text-orange-500" />
                   </div>
                   <span className="text-sm font-black text-white">Sleep Analysis</span>
                 </div>
@@ -332,14 +341,14 @@ export default function DashboardPage() {
               <div className="flex items-center gap-6 mb-2">
                 <div>
                   <div className="flex items-center gap-1.5 mb-0.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#C8F135]" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-orange-500" />
                     <span className="text-xs text-gray-500 font-semibold">Sleep Efficiency</span>
                   </div>
                   <span className="text-3xl font-black text-white tabular-nums">{sleepEff}<span className="text-lg text-gray-400"> %</span></span>
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5 mb-0.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#8B7CF6]" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-orange-500" />
                     <span className="text-xs text-gray-500 font-semibold">Sleep Duration</span>
                   </div>
                   <span className="text-3xl font-black text-white tabular-nums">{sleepHours}h {sleepMins > 0 ? `${sleepMins}m` : ''}</span>
@@ -356,7 +365,7 @@ export default function DashboardPage() {
               <Card className="flex-1">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-sm font-black text-gray-700">Life Score</span>
-                  <span className={`text-xs font-black px-2 py-0.5 rounded-full ${overall >= 70 ? 'bg-[#C8F135]/20 text-[#5a6e00]' : 'bg-red-100 text-red-600'}`}>
+                  <span className={`text-xs font-black px-2 py-0.5 rounded-full ${overall >= 70 ? 'bg-orange-500/20 text-orange-700' : 'bg-red-100 text-red-600'}`}>
                     {overall >= 90 ? 'Exceptional' : overall >= 80 ? 'Excellent' : overall >= 70 ? 'Good' : overall >= 60 ? 'Fair' : 'Needs Work'}
                   </span>
                 </div>
@@ -365,7 +374,7 @@ export default function DashboardPage() {
                   <div className="relative flex-shrink-0">
                     <svg width="90" height="90" className="-rotate-90">
                       <circle cx="45" cy="45" r="38" stroke="#f3f4f6" strokeWidth="7" fill="none" />
-                      <circle cx="45" cy="45" r="38" stroke="#C8F135" strokeWidth="7" fill="none"
+                      <circle cx="45" cy="45" r="38" stroke="#F97316" strokeWidth="7" fill="none"
                         strokeDasharray={`${(overall / 100) * 239} 239`} strokeLinecap="round" />
                     </svg>
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -375,11 +384,11 @@ export default function DashboardPage() {
                   {/* Category breakdown */}
                   <div className="flex-1 space-y-2">
                     {[
-                      { label: 'Sleep',     val: sleep,     color: '#8B7CF6' },
-                      { label: 'Fitness',   val: fitness,   color: '#C8F135' },
+                      { label: 'Sleep',     val: sleep,     color: '#F97316' },
+                      { label: 'Fitness',   val: fitness,   color: '#F97316' },
                       { label: 'Nutrition', val: nutrition, color: '#F97316' },
-                      { label: 'Mind',      val: mind,      color: '#3B82F6' },
-                      { label: 'Hydration', val: hydration, color: '#06B6D4' },
+                      { label: 'Mind',      val: mind,      color: '#F97316' },
+                      { label: 'Hydration', val: hydration, color: '#F97316' },
                     ].map(c => (
                       <div key={c.label} className="flex items-center gap-2">
                         <span className="text-xs text-gray-400 w-16 font-semibold">{c.label}</span>
@@ -395,7 +404,7 @@ export default function DashboardPage() {
 
               {/* Streak */}
               <Card className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-[#C8F135] rounded-2xl flex items-center justify-center flex-shrink-0">
+                <div className="w-14 h-14 bg-orange-500 rounded-2xl flex items-center justify-center flex-shrink-0">
                   <Flame size={26} className="text-black" />
                 </div>
                 <div className="flex-1">
@@ -418,11 +427,11 @@ export default function DashboardPage() {
               <p className="text-sm font-black text-gray-700 mb-4">Quick Log</p>
               <div className="grid grid-cols-2 gap-2">
                 {[
-                  { label: 'Sleep',     href: '/dashboard/sleep',     color: '#8B7CF6', icon: '😴' },
-                  { label: 'Workout',   href: '/dashboard/fitness',   color: '#C8F135', icon: '💪' },
+                  { label: 'Sleep',     href: '/dashboard/sleep',     color: '#F97316', icon: '😴' },
+                  { label: 'Workout',   href: '/dashboard/fitness',   color: '#F97316', icon: '💪' },
                   { label: 'Meal',      href: '/dashboard/nutrition', color: '#F97316', icon: '🥗' },
-                  { label: 'Mood',      href: '/dashboard/mind',      icon: '🧘', color: '#3B82F6' },
-                  { label: 'Water',     href: '/dashboard/hydration', icon: '💧', color: '#06B6D4' },
+                  { label: 'Mood',      href: '/dashboard/mind',      icon: '🧘', color: '#F97316' },
+                  { label: 'Water',     href: '/dashboard/hydration', icon: '💧', color: '#F97316' },
                   { label: 'Analytics', href: '/dashboard/analytics', icon: '📊', color: '#1A1A1A' },
                 ].map(a => (
                   <a key={a.label} href={a.href}
@@ -450,8 +459,8 @@ export default function DashboardPage() {
               <p className="text-xs text-gray-400 font-semibold mb-4">Nutrition score today</p>
               <div className="space-y-3">
                 <ProgressBar label="Protein"  value={Math.min(nutrition, 60)} color="#F97316" dot="#F97316" />
-                <ProgressBar label="Carbs"    value={Math.min(nutrition, 45)} color="#C8F135" dot="#C8F135" />
-                <ProgressBar label="Fats"     value={Math.min(nutrition, 30)} color="#8B7CF6" dot="#8B7CF6" />
+                <ProgressBar label="Carbs"    value={Math.min(nutrition, 45)} color="#F97316" dot="#F97316" />
+                <ProgressBar label="Fats"     value={Math.min(nutrition, 30)} color="#F97316" dot="#F97316" />
               </div>
               <a href="/dashboard/nutrition"
                 className="mt-4 block w-full py-2.5 bg-[#1A1A1A] text-white text-xs font-black rounded-2xl text-center hover:bg-gray-800 transition-colors">
@@ -463,7 +472,7 @@ export default function DashboardPage() {
             <Card>
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <Droplets size={16} className="text-cyan-500" />
+                  <Droplets size={16} className="text-orange-500" />
                   <span className="text-sm font-black text-gray-700">Hydration</span>
                 </div>
                 <MoreBtn />
@@ -474,13 +483,13 @@ export default function DashboardPage() {
               <p className="text-xs text-gray-400 font-semibold mb-4">of {profile?.daily_water_goal ?? 2500}ml goal</p>
 
               {/* Water fill visual */}
-              <div className="relative h-24 bg-cyan-50 rounded-2xl overflow-hidden mb-4">
+              <div className="relative h-24 bg-orange-50 rounded-2xl overflow-hidden mb-4">
                 <div
-                  className="absolute bottom-0 left-0 right-0 bg-cyan-400/30 transition-all duration-700"
+                  className="absolute bottom-0 left-0 right-0 bg-orange-400/30 transition-all duration-700"
                   style={{ height: `${hydration}%` }}
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-2xl font-black text-cyan-600 tabular-nums">{hydration}%</span>
+                  <span className="text-2xl font-black text-orange-500 tabular-nums">{hydration}%</span>
                 </div>
               </div>
 
@@ -488,7 +497,7 @@ export default function DashboardPage() {
               <div className="grid grid-cols-4 gap-1.5">
                 {[250, 500, 750, 1000].map(ml => (
                   <a key={ml} href="/dashboard/hydration"
-                    className="py-2 bg-cyan-50 hover:bg-cyan-100 rounded-xl text-center text-[10px] font-black text-cyan-700 transition-colors">
+                    className="py-2 bg-orange-50 hover:bg-orange-100 rounded-xl text-center text-[10px] font-black text-orange-600 transition-colors">
                     +{ml < 1000 ? ml : '1k'}
                   </a>
                 ))}

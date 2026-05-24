@@ -5,8 +5,8 @@
 @layer base {
   * { @apply border-gray-200 dark:border-gray-700; }
   body {
-    @apply bg-white dark:bg-gray-950 text-gray-900 dark:text-white;
-    font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    @apply bg-white text-gray-900;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
 }
 
@@ -14,36 +14,38 @@ html { scroll-behavior: smooth; }
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { @apply bg-gray-100 dark:bg-gray-900; }
-::-webkit-scrollbar-thumb { @apply bg-gray-300 dark:bg-gray-700 rounded-full; }
-::-webkit-scrollbar-thumb:hover { @apply bg-gray-400 dark:bg-gray-600; }
+::-webkit-scrollbar-track { @apply bg-gray-100; }
+::-webkit-scrollbar-thumb { @apply bg-gray-300 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-gray-400; }
 
-/* ── Section tag  (// Label) ── */
+/* ── Design tokens ── */
+
+/* Section tag  (// Label) */
 .section-tag {
   @apply inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-gray-400;
 }
 
-/* ── Orange pill button ── */
+/* Orange pill button */
 .btn-orange {
   @apply inline-flex items-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-full transition-colors shadow-md text-sm;
 }
 
-/* ── Dark pill button ── */
+/* Dark pill button */
 .btn-dark {
   @apply inline-flex items-center gap-2 px-6 py-3 bg-gray-900 hover:bg-gray-700 text-white font-bold rounded-full transition-colors shadow-md text-sm;
 }
 
-/* ── Ghost pill button ── */
+/* Ghost pill button */
 .btn-ghost {
-  @apply inline-flex items-center gap-2 px-6 py-3 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-bold rounded-full hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-sm;
+  @apply inline-flex items-center gap-2 px-6 py-3 border border-gray-200 text-gray-700 font-bold rounded-full hover:bg-gray-50 transition-colors text-sm;
 }
 
-/* ── Card ── */
+/* Card */
 .card {
-  @apply bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm;
+  @apply bg-white rounded-3xl border border-gray-100 shadow-sm;
 }
 
-/* ── Arrow badge ── */
+/* Arrow badge */
 .arrow-badge {
   @apply w-9 h-9 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0 shadow-md;
 }
@@ -73,5 +75,3 @@ html { scroll-behavior: smooth; }
   to   { opacity: 1; transform: translateY(0); }
 }
 .animate-slide-up { animation: slideUp 0.4s ease forwards; }
-
-@keyframes spin { to { transform: rotate(360deg); } }

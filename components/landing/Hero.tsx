@@ -176,7 +176,7 @@ function CardFan() {
 }
 
 /* ─── Navbar ─────────────────────────────────────────────────── */
-function TopNav({ user, username }: { user: any; username: string }) {
+function TopNav({ user, username, menuOpen, setMenuOpen }: { user: any; username: string; menuOpen: boolean; setMenuOpen: (v: boolean) => void }) {
   const links = [
     { label: 'Home',      href: '/' },
     { label: 'Articles',  href: '/articles' },
@@ -231,10 +231,36 @@ function TopNav({ user, username }: { user: any; username: string }) {
   );
 }
 
+/* ─── Animated count-up hook ─────────────────────────────────── */
+function useCountUp(target: number, duration = 1800, delay = 400) {
+  const [value, setValue] = useState(0);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const start = performance.now();
+      const tick = (now: number) => {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+        setValue(Math.round(eased * target));
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, delay);
+    return () => clearTimeout(timeout);
+  }, [target, duration, delay]);
+  return value;
+}
+
 /* ─── Hero ───────────────────────────────────────────────────── */
 export default function Hero() {
   const [user, setUser]         = useState<any>(null);
   const [username, setUsername] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Count-up numbers — start on mount with a short delay
+  const count500 = useCountUp(500, 1800, 500);
+  const count98  = useCountUp(98,  1400, 600);
+  const count5   = useCountUp(5,   900,  700);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -259,7 +285,7 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen bg-white overflow-hidden flex flex-col">
-      <TopNav user={user} username={username} />
+      <TopNav user={user} username={username} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
       <div className="flex-1 flex flex-col items-center justify-start pt-24 pb-10 px-4">
 
@@ -334,22 +360,26 @@ export default function Hero() {
             ))}
           </div>
           <div>
-            <span className="font-black text-gray-900 text-sm">Loved by 500+</span>
+            <span className="font-black text-gray-900 text-sm tabular-nums">
+              Loved by {count500}+
+            </span>
             <span className="text-gray-400 text-sm ml-1">wellness users</span>
           </div>
         </div>
 
         <div className="flex items-center gap-8 text-center">
-          {[
-            { value: '98%',  label: 'Satisfaction' },
-            { value: '5',    label: 'Health Pillars' },
-            { value: '24/7', label: 'AI Insights' },
-          ].map((s, i) => (
-            <div key={i}>
-              <div className="text-xl font-black text-gray-900">{s.value}</div>
-              <div className="text-xs text-gray-400 font-medium">{s.label}</div>
-            </div>
-          ))}
+          <div>
+            <div className="text-xl font-black text-gray-900 tabular-nums">{count98}%</div>
+            <div className="text-xs text-gray-400 font-medium">Satisfaction</div>
+          </div>
+          <div>
+            <div className="text-xl font-black text-gray-900 tabular-nums">{count5}</div>
+            <div className="text-xs text-gray-400 font-medium">Health Pillars</div>
+          </div>
+          <div>
+            <div className="text-xl font-black text-gray-900">24/7</div>
+            <div className="text-xs text-gray-400 font-medium">AI Insights</div>
+          </div>
         </div>
 
         <div className="hidden md:flex flex-col items-center gap-1 text-gray-400">

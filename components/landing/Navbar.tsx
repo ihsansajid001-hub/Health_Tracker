@@ -148,7 +148,7 @@ export default function Navbar() {
 
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
-              <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-violet-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/40 group-hover:scale-110 group-hover:shadow-blue-500/60 transition-all duration-300">
+              <div className="w-9 h-9 bg-gradient-to-br from-orange-500 to-violet-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/40 group-hover:scale-110 group-hover:shadow-blue-500/60 transition-all duration-300">
                 <span className="text-white font-black text-base">L</span>
               </div>
               <span className="text-xl font-black text-white tracking-tight group-hover:text-blue-200 transition-colors duration-300">
@@ -205,7 +205,7 @@ export default function Navbar() {
                     href="/signup"
                     className="relative px-5 py-2.5 bg-white text-gray-900 text-sm font-bold rounded-full overflow-hidden group transition-all duration-300 hover:shadow-xl hover:shadow-white/25 hover:scale-105"
                   >
-                    <span className="relative z-10 group-hover:text-blue-700 transition-colors duration-300">
+                    <span className="relative z-10 group-hover:text-orange-600 transition-colors duration-300">
                       Get Started
                     </span>
                     <span className="absolute inset-0 bg-gradient-to-r from-blue-50 via-white to-violet-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

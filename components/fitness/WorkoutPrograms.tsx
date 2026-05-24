@@ -273,7 +273,7 @@ export default function WorkoutPrograms() {
         {/* Stats */}
         <div className="grid grid-cols-4 gap-2">
           {[
-            { label: 'Done', value: progress.completed_workouts, color: 'text-blue-600' },
+            { label: 'Done', value: progress.completed_workouts, color: 'text-orange-500' },
             { label: 'Week', value: progress.current_week, color: 'text-emerald-600' },
             { label: 'Weeks', value: selected.duration_weeks, color: 'text-purple-600' },
             { label: '/Week', value: selected.workouts_per_week, color: 'text-orange-600' },
@@ -363,11 +363,11 @@ export default function WorkoutPrograms() {
         })}
       </div>
 
-      <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4">
-        <p className="text-[11px] font-black text-blue-700 mb-2">💡 Tips for success</p>
+      <div className="bg-orange-50 border border-orange-100 rounded-2xl p-4">
+        <p className="text-[11px] font-black text-orange-600 mb-2">💡 Tips for success</p>
         <ul className="space-y-1">
           {['Choose a program matching your fitness level', 'Consistency beats intensity every time', 'Rest days are essential for muscle recovery'].map((t, i) => (
-            <li key={i} className="text-[11px] text-blue-600 flex items-center gap-1.5">
+            <li key={i} className="text-[11px] text-orange-500 flex items-center gap-1.5">
               <span className="w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />{t}
             </li>
           ))}

@@ -46,7 +46,7 @@ export default function SleepAnalytics() {
       </div>
 
       {/* Sleep Score Card */}
-      <div className="bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl p-8 text-white">
+      <div className="bg-gradient-to-br from-purple-500 to-orange-600 rounded-2xl p-8 text-white">
         <div className="text-center">
           <p className="text-purple-100 mb-2">Your Sleep Score</p>
           <div className="text-7xl font-bold mb-2">{weeklyData.sleepScore}</div>
@@ -81,7 +81,7 @@ export default function SleepAnalytics() {
 
         <div className="bg-white dark:bg-gray-800 rounded-xl p-6">
           <div className="flex items-center space-x-3 mb-2">
-            <Moon size={24} className="text-blue-500" />
+            <Moon size={24} className="text-orange-500" />
             <span className="text-sm text-gray-600 dark:text-gray-400">Consistency</span>
           </div>
           <div className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -111,7 +111,7 @@ export default function SleepAnalytics() {
               <span className="w-12 text-sm text-gray-600 dark:text-gray-400">{day.day}</span>
               <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-8 relative overflow-hidden">
                 <div
-                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-end pr-3"
+                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-500 to-orange-600 rounded-full flex items-center justify-end pr-3"
                   style={{ width: `${(day.hours / 12) * 100}%` }}
                 >
                   <span className="text-white text-sm font-semibold">{day.hours}h</span>
@@ -127,8 +127,8 @@ export default function SleepAnalytics() {
       </div>
 
       {/* Sleep Insights */}
-      <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6">
-        <h3 className="font-bold text-blue-900 dark:text-blue-400 mb-3">
+      <div className="bg-orange-50 dark:bg-blue-900/20 rounded-xl p-6">
+        <h3 className="font-bold text-blue-900 dark:text-orange-400 mb-3">
           💡 Sleep Insights
         </h3>
         <ul className="space-y-2 text-sm text-blue-800 dark:text-blue-300">
@@ -161,7 +161,7 @@ export default function SleepAnalytics() {
               <span className="font-semibold text-gray-900 dark:text-white">25%</span>
             </div>
             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
-              <div className="bg-indigo-600 h-3 rounded-full" style={{ width: '25%' }} />
+              <div className="bg-orange-500 h-3 rounded-full" style={{ width: '25%' }} />
             </div>
           </div>
 

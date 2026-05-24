@@ -124,7 +124,7 @@ export default function MedicalDisclaimer({ onAccept, onDecline }: MedicalDiscla
             </div>
           </div>
 
-          <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 rounded">
+          <div className="bg-orange-50 dark:bg-blue-900/20 border-l-4 border-orange-500 p-4 rounded">
             <p className="text-sm">
               <strong>Crisis Resources:</strong> If you're experiencing a mental health crisis:
               <br />
@@ -148,7 +148,7 @@ export default function MedicalDisclaimer({ onAccept, onDecline }: MedicalDiscla
             </button>
             <button
               onClick={handleAccept}
-              className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-[1.02] transition-all"
+              className="flex-1 px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-[1.02] transition-all"
             >
               I Understand and Accept
             </button>

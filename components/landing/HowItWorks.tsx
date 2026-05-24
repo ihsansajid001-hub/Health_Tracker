@@ -48,11 +48,11 @@ export default function HowItWorks() {
           <div className="space-y-6">
             {steps.map((step, index) => (
               <div key={index}
-                className="flex gap-5 p-6 rounded-2xl bg-gray-50 dark:bg-gray-900 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors group">
+                className="flex gap-5 p-6 rounded-2xl bg-gray-50 dark:bg-gray-900 hover:bg-orange-50 dark:hover:bg-blue-900/20 transition-colors group">
                 <div className={`w-12 h-12 flex-shrink-0 rounded-full flex items-center justify-center font-black text-lg shadow-lg transition-all
                   ${index === 3
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 group-hover:bg-blue-600 group-hover:text-white'
+                    ? 'bg-orange-500 text-white'
+                    : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 group-hover:bg-orange-500 group-hover:text-white'
                   }`}>
                   {step.number}
                 </div>

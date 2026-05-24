@@ -276,7 +276,7 @@ export default function MeditationCourses() {
         <div className="flex items-center justify-between">
           <button
             onClick={() => setCurrentLesson(null)}
-            className="text-blue-600 hover:text-blue-700 font-medium"
+            className="text-orange-500 hover:text-orange-600 font-medium"
           >
             ← Back to Course
           </button>
@@ -302,7 +302,7 @@ export default function MeditationCourses() {
           </div>
 
           <div className="mb-8">
-            <div className="w-32 h-32 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-32 h-32 bg-gradient-to-br from-purple-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
               <Play size={48} className="text-white ml-2" />
             </div>
             <div className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -315,7 +315,7 @@ export default function MeditationCourses() {
               // In a real app, this would start audio playback
               console.log('Starting meditation:', currentLesson.title);
             }}
-            className="px-8 py-4 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-105 transition-all"
+            className="px-8 py-4 bg-gradient-to-r from-purple-500 to-orange-500 text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-105 transition-all"
           >
             Start Meditation
           </button>
@@ -333,14 +333,14 @@ export default function MeditationCourses() {
         <div className="flex items-center justify-between">
           <button
             onClick={() => setSelectedCourse(null)}
-            className="text-blue-600 hover:text-blue-700 font-medium"
+            className="text-orange-500 hover:text-orange-600 font-medium"
           >
             ← Back to Courses
           </button>
           {!selectedCourse.isEnrolled && (
             <button
               onClick={() => enrollInCourse(selectedCourse.id)}
-              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
+              className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-colors"
             >
               Enroll in Course
             </button>
@@ -349,7 +349,7 @@ export default function MeditationCourses() {
 
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
           <div className="flex items-start space-x-6 mb-6">
-            <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center text-3xl">
+            <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-orange-500 rounded-xl flex items-center justify-center text-3xl">
               {getCategoryIcon(selectedCourse.category)}
             </div>
             <div className="flex-1">
@@ -386,7 +386,7 @@ export default function MeditationCourses() {
               </div>
               <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                 <div 
-                  className="bg-gradient-to-r from-purple-500 to-blue-600 h-3 rounded-full transition-all duration-500"
+                  className="bg-gradient-to-r from-purple-500 to-orange-500 h-3 rounded-full transition-all duration-500"
                   style={{ width: `${progress}%` }}
                 />
               </div>
@@ -458,7 +458,7 @@ export default function MeditationCourses() {
                       lesson.isCompleted
                         ? 'bg-green-600 text-white'
                         : lesson.isUnlocked
-                        ? 'bg-blue-600 text-white'
+                        ? 'bg-orange-500 text-white'
                         : 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400'
                     }`}>
                       {lesson.isCompleted ? (
@@ -570,7 +570,7 @@ export default function MeditationCourses() {
                 </div>
                 <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                   <div 
-                    className="bg-gradient-to-r from-purple-500 to-blue-600 h-2 rounded-full"
+                    className="bg-gradient-to-r from-purple-500 to-orange-500 h-2 rounded-full"
                     style={{ width: `${(course.currentDay / course.totalDays) * 100}%` }}
                   />
                 </div>

@@ -76,8 +76,8 @@ export default function SleepCycleTracker({ totalSleepHours, sleepQuality, onCyc
   const getPhaseIcon = (phase: SleepCycle['phase']) => {
     switch (phase) {
       case 'awake': return <Sun size={16} className="text-yellow-500" />;
-      case 'light': return <Moon size={16} className="text-blue-400" />;
-      case 'deep': return <Activity size={16} className="text-indigo-600" />;
+      case 'light': return <Moon size={16} className="text-orange-400" />;
+      case 'deep': return <Activity size={16} className="text-orange-500" />;
       case 'rem': return <Brain size={16} className="text-purple-600" />;
     }
   };
@@ -85,7 +85,7 @@ export default function SleepCycleTracker({ totalSleepHours, sleepQuality, onCyc
   const getPhaseColor = (phase: SleepCycle['phase']) => {
     switch (phase) {
       case 'awake': return 'bg-yellow-100 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800';
-      case 'light': return 'bg-blue-100 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800';
+      case 'light': return 'bg-orange-100 dark:bg-blue-900/20 border-orange-200 dark:border-blue-800';
       case 'deep': return 'bg-indigo-100 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-800';
       case 'rem': return 'bg-purple-100 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800';
     }

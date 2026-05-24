@@ -144,13 +144,13 @@ export default function SleepBasicsStep({ data, setData, onNext, onBack }: Sleep
             <span className="text-sm text-gray-500">Excellent</span>
           </div>
           <div className="text-center mt-2">
-            <span className="text-lg font-semibold text-blue-600 dark:text-blue-400">
+            <span className="text-lg font-semibold text-orange-500 dark:text-orange-400">
               {data.sleep_quality || 7}/10
             </span>
           </div>
         </div>
 
-        <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+        <div className="bg-orange-50 dark:bg-blue-900/20 p-4 rounded-lg">
           <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">Sleep Insights</h4>
           <div className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
             <p>• Recommended sleep: 7-9 hours for adults</p>
@@ -169,7 +169,7 @@ export default function SleepBasicsStep({ data, setData, onNext, onBack }: Sleep
         </button>
         <button
           onClick={handleNext}
-          className="flex-1 py-3 px-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-colors"
+          className="flex-1 py-3 px-6 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-lg font-semibold hover:from-orange-500 hover:to-purple-700 transition-colors"
         >
           Next →
         </button>

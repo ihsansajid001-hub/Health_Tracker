@@ -81,7 +81,7 @@ export default function BreathingExercise() {
 
   const getPhaseColor = () => {
     switch (phase) {
-      case 'inhale': return 'from-blue-500 to-cyan-500';
+      case 'inhale': return 'from-orange-500 to-cyan-500';
       case 'hold1': return 'from-purple-500 to-pink-500';
       case 'exhale': return 'from-green-500 to-teal-500';
       case 'hold2': return 'from-orange-500 to-red-500';
@@ -101,8 +101,8 @@ export default function BreathingExercise() {
             }}
             className={`p-4 rounded-lg text-left transition-all ${
               selectedExercise.id === exercise.id
-                ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-lg'
-                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20'
+                ? 'bg-gradient-to-br from-orange-500 to-purple-600 text-white shadow-lg'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-blue-900/20'
             }`}
           >
             <h3 className="font-bold">{exercise.name}</h3>
@@ -110,7 +110,7 @@ export default function BreathingExercise() {
             <span className={`inline-block px-2 py-1 rounded text-xs mt-2 ${
               selectedExercise.id === exercise.id
                 ? 'bg-white/20'
-                : 'bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400'
+                : 'bg-orange-100 dark:bg-blue-900/20 text-orange-600 dark:text-orange-400'
             }`}>
               {exercise.difficulty}
             </span>
@@ -176,7 +176,7 @@ export default function BreathingExercise() {
       </div>
 
       {/* Exercise Info */}
-      <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+      <div className="bg-orange-50 dark:bg-blue-900/20 rounded-lg p-6">
         <h3 className="font-bold text-gray-900 dark:text-white mb-2">
           {selectedExercise.name}
         </h3>
@@ -191,7 +191,7 @@ export default function BreathingExercise() {
               {selectedExercise.benefits.map((benefit, idx) => (
                 <span
                   key={idx}
-                  className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-sm rounded-full"
+                  className="px-3 py-1 bg-orange-100 dark:bg-blue-900/30 text-orange-600 dark:text-orange-400 text-sm rounded-full"
                 >
                   {benefit}
                 </span>

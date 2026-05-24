@@ -32,8 +32,8 @@ export default function ActivityLevelStep({ data, setData, onNext, onBack }: Pro
             onClick={() => setData({ ...data, activity_level: activity.value })}
             className={`w-full p-4 border-2 rounded-lg transition-all text-left flex items-center space-x-4 ${
               data.activity_level === activity.value
-                ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                : 'border-gray-300 dark:border-gray-600 hover:border-blue-300'
+                ? 'border-orange-500 bg-orange-50 dark:bg-blue-900/20'
+                : 'border-gray-300 dark:border-gray-600 hover:border-orange-300'
             }`}
           >
             <div className="text-4xl">{activity.icon}</div>
@@ -49,7 +49,7 @@ export default function ActivityLevelStep({ data, setData, onNext, onBack }: Pro
         <button onClick={onBack} className="flex-1 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
           ← Back
         </button>
-        <button onClick={onNext} disabled={!data.activity_level} className="flex-1 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-[1.02] transition-all disabled:opacity-50">
+        <button onClick={onNext} disabled={!data.activity_level} className="flex-1 py-3 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-[1.02] transition-all disabled:opacity-50">
           Next →
         </button>
       </div>

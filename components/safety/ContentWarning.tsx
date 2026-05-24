@@ -28,7 +28,7 @@ export default function ContentWarning({ type, message, onProceed, onGoBack }: C
         return {
           title: 'Anxiety-Related Content',
           description: 'This content may discuss anxiety, stress, or worry. Take breaks if needed.',
-          color: 'from-blue-500 to-indigo-500',
+          color: 'from-orange-500 to-indigo-500',
         };
       default:
         return {
@@ -60,8 +60,8 @@ export default function ContentWarning({ type, message, onProceed, onGoBack }: C
             {message || content.description}
           </p>
 
-          <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 rounded">
-            <p className="text-sm text-blue-700 dark:text-blue-400">
+          <div className="bg-orange-50 dark:bg-blue-900/20 border-l-4 border-orange-500 p-4 rounded">
+            <p className="text-sm text-orange-600 dark:text-orange-400">
               <strong>Your wellbeing matters.</strong> You can always skip this content and return when you're ready.
             </p>
           </div>
@@ -80,7 +80,7 @@ export default function ContentWarning({ type, message, onProceed, onGoBack }: C
         <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-b-2xl space-y-3">
           <button
             onClick={onProceed}
-            className="w-full py-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-[1.02] transition-all"
+            className="w-full py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-[1.02] transition-all"
           >
             I Understand, Continue
           </button>

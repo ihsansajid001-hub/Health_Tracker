@@ -57,7 +57,7 @@ export default function SettingsPage() {
     finally { setSaving(false); }
   };
 
-  const inputClass = "w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-white outline-none text-sm";
+  const inputClass = "w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-gray-900 dark:text-white outline-none text-sm";
 
   if (loading) {
     return (
@@ -91,9 +91,9 @@ export default function SettingsPage() {
 
         {/* Success message */}
         {message && (
-          <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-2xl flex items-center gap-3">
-            <CheckCircle size={18} className="text-green-600 flex-shrink-0" />
-            <span className="text-sm font-bold text-green-700 dark:text-green-400">{message}</span>
+          <div className="p-4 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-2xl flex items-center gap-3">
+            <CheckCircle size={18} className="text-orange-500 flex-shrink-0" />
+            <span className="text-sm font-bold text-orange-600 dark:text-orange-400">{message}</span>
           </div>
         )}
 
@@ -104,7 +104,7 @@ export default function SettingsPage() {
               <button key={t.id} onClick={() => setActiveTab(t.id)}
                 className={`flex items-center gap-2 px-6 py-4 text-sm font-bold whitespace-nowrap border-b-2 transition-all ${
                   activeTab === t.id
-                    ? 'border-blue-600 text-blue-600 dark:text-blue-400'
+                    ? 'border-orange-500 text-orange-500 dark:text-orange-400'
                     : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
                 }`}>
                 <t.icon size={16} />
@@ -153,7 +153,7 @@ export default function SettingsPage() {
                 </div>
                 <div className="flex justify-end pt-2">
                   <button type="submit" disabled={saving}
-                    className="flex items-center gap-2 px-7 py-3 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-2xl transition-all shadow-lg shadow-blue-600/25 hover:-translate-y-0.5 disabled:opacity-50">
+                    className="flex items-center gap-2 px-7 py-3 bg-orange-500 hover:bg-orange-600 text-white font-black rounded-2xl transition-all shadow-lg shadow-orange-500/25 hover:-translate-y-0.5 disabled:opacity-50">
                     <Save size={16} />
                     {saving ? 'Saving…' : 'Save Changes'}
                   </button>
@@ -171,7 +171,7 @@ export default function SettingsPage() {
                       <p className="text-xs text-gray-500 dark:text-gray-400">Receive reminders for {key.replace('_reminders', '').replace(/_/g, ' ')}</p>
                     </div>
                     <button onClick={() => setNotifications(n => ({ ...n, [key]: !value }))}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${value ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'}`}>
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${value ? 'bg-orange-500' : 'bg-gray-200 dark:bg-gray-700'}`}>
                       <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${value ? 'translate-x-6' : 'translate-x-1'}`} />
                     </button>
                   </div>

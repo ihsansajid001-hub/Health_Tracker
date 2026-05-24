@@ -149,7 +149,7 @@ export default function PrivacyPolicy() {
             </ul>
             <p className="text-gray-700 leading-relaxed mt-4">
               To exercise these rights, please contact us at{' '}
-              <a href="mailto:privacy@lifescore.com" className="text-blue-600 hover:text-blue-700 font-medium">
+              <a href="mailto:privacy@lifescore.com" className="text-orange-500 hover:text-orange-600 font-medium">
                 privacy@lifescore.com
               </a>
             </p>
@@ -218,19 +218,19 @@ export default function PrivacyPolicy() {
             <div className="bg-gray-50 rounded-lg p-6 space-y-2">
               <p className="text-gray-700">
                 <strong>Email:</strong>{' '}
-                <a href="mailto:privacy@lifescore.com" className="text-blue-600 hover:text-blue-700">
+                <a href="mailto:privacy@lifescore.com" className="text-orange-500 hover:text-orange-600">
                   privacy@lifescore.com
                 </a>
               </p>
               <p className="text-gray-700">
                 <strong>Email:</strong>{' '}
-                <a href="mailto:support@lifescore.com" className="text-blue-600 hover:text-blue-700">
+                <a href="mailto:support@lifescore.com" className="text-orange-500 hover:text-orange-600">
                   support@lifescore.com
                 </a>
               </p>
               <p className="text-gray-700">
                 <strong>Website:</strong>{' '}
-                <a href="/" className="text-blue-600 hover:text-blue-700">
+                <a href="/" className="text-orange-500 hover:text-orange-600">
                   www.lifescore.com
                 </a>
               </p>
@@ -267,7 +267,7 @@ export default function PrivacyPolicy() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/"
-                className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors text-center"
+                className="px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-colors text-center"
               >
                 Back to Home
               </Link>

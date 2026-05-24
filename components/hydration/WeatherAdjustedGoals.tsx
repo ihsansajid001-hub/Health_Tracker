@@ -119,7 +119,7 @@ export default function WeatherAdjustedGoals({ baseWaterGoal, onAdjustedGoalChan
     switch (condition) {
       case 'sunny': return <Sun size={24} className="text-yellow-500" />;
       case 'cloudy': return <Cloud size={24} className="text-gray-500" />;
-      case 'rainy': return <CloudRain size={24} className="text-blue-500" />;
+      case 'rainy': return <CloudRain size={24} className="text-orange-500" />;
       case 'hot': return <Thermometer size={24} className="text-red-500" />;
       default: return <Sun size={24} className="text-yellow-500" />;
     }
@@ -169,7 +169,7 @@ export default function WeatherAdjustedGoals({ baseWaterGoal, onAdjustedGoalChan
     return (
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto mb-4"></div>
           <p className="text-gray-600 dark:text-gray-400">Loading weather data...</p>
         </div>
       </div>
@@ -198,8 +198,8 @@ export default function WeatherAdjustedGoals({ baseWaterGoal, onAdjustedGoalChan
           disabled={loading}
           className={`px-4 py-2 rounded-lg font-medium transition-colors ${
             !useManual
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900/20'
+              ? 'bg-orange-500 text-white'
+              : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-orange-100 dark:hover:bg-blue-900/20'
           }`}
         >
           Auto Weather
@@ -208,8 +208,8 @@ export default function WeatherAdjustedGoals({ baseWaterGoal, onAdjustedGoalChan
           onClick={() => setUseManual(true)}
           className={`px-4 py-2 rounded-lg font-medium transition-colors ${
             useManual
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900/20'
+              ? 'bg-orange-500 text-white'
+              : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-orange-100 dark:hover:bg-blue-900/20'
           }`}
         >
           Manual Input
@@ -234,7 +234,7 @@ export default function WeatherAdjustedGoals({ baseWaterGoal, onAdjustedGoalChan
                   ...manualWeather,
                   temperature: parseInt(e.target.value) || 0
                 })}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 dark:text-white"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-gray-600 dark:text-white"
               />
             </div>
             <div>
@@ -250,7 +250,7 @@ export default function WeatherAdjustedGoals({ baseWaterGoal, onAdjustedGoalChan
                   ...manualWeather,
                   humidity: parseInt(e.target.value) || 0
                 })}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 dark:text-white"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-gray-600 dark:text-white"
               />
             </div>
             <div>
@@ -263,7 +263,7 @@ export default function WeatherAdjustedGoals({ baseWaterGoal, onAdjustedGoalChan
                   ...manualWeather,
                   condition: e.target.value as WeatherData['condition']
                 })}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 dark:text-white"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-gray-600 dark:text-white"
               >
                 <option value="sunny">☀️ Sunny</option>
                 <option value="cloudy">☁️ Cloudy</option>
@@ -284,7 +284,7 @@ export default function WeatherAdjustedGoals({ baseWaterGoal, onAdjustedGoalChan
                   ...manualWeather,
                   windSpeed: parseInt(e.target.value) || 0
                 })}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-600 dark:text-white"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-gray-600 dark:text-white"
               />
             </div>
           </div>
@@ -301,7 +301,7 @@ export default function WeatherAdjustedGoals({ baseWaterGoal, onAdjustedGoalChan
             <button
               onClick={fetchWeatherData}
               disabled={loading}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors"
+              className="px-4 py-2 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors"
             >
               {loading ? 'Updating...' : 'Refresh'}
             </button>
@@ -329,7 +329,7 @@ export default function WeatherAdjustedGoals({ baseWaterGoal, onAdjustedGoalChan
           </div>
           <div className="text-center">
             <div className="flex items-center justify-center mb-2">
-              <Droplets size={24} className="text-blue-500" />
+              <Droplets size={24} className="text-orange-500" />
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">Humidity</div>
             <div className="font-semibold text-gray-900 dark:text-white">
@@ -361,12 +361,12 @@ export default function WeatherAdjustedGoals({ baseWaterGoal, onAdjustedGoalChan
                 <div className="text-sm text-gray-500 da
 rk:text-gray-500">Base Goal</div>
               </div>
-              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">→</div>
+              <div className="text-2xl font-bold text-orange-500 dark:text-orange-400">→</div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+                <div className="text-3xl font-bold text-orange-500 dark:text-orange-400">
                   {adjustedGoal}ml
                 </div>
-                <div className="text-sm text-blue-600 dark:text-blue-400">
+                <div className="text-sm text-orange-500 dark:text-orange-400">
                   {adjustmentPercentage > 0 ? '+' : ''}{adjustmentPercentage}%
                 </div>
               </div>
@@ -382,7 +382,7 @@ rk:text-gray-500">Base Goal</div>
               <ul className="space-y-1">
                 {adjustmentExplanations.map((explanation, index) => (
                   <li key={index} className="text-sm text-gray-700 dark:text-gray-300 flex items-center space-x-2">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                    <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
                     <span>{explanation}</span>
                   </li>
                 ))}

@@ -167,7 +167,7 @@ export default function CBTTechniques() {
               setSelectedTechnique(null);
               resetProgress();
             }}
-            className="text-blue-600 hover:text-blue-700 font-medium"
+            className="text-orange-500 hover:text-orange-600 font-medium"
           >
             ← Back to Techniques
           </button>
@@ -252,9 +252,9 @@ export default function CBTTechniques() {
 
           {/* Example */}
           {selectedTechnique.example && (
-            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6 mb-8">
+            <div className="bg-orange-50 dark:bg-blue-900/20 rounded-lg p-6 mb-8">
               <div className="flex items-center space-x-2 mb-3">
-                <Lightbulb size={20} className="text-blue-600 dark:text-blue-400" />
+                <Lightbulb size={20} className="text-orange-500 dark:text-orange-400" />
                 <h4 className="font-semibold text-blue-900 dark:text-blue-100">Example:</h4>
               </div>
               <p className="text-blue-800 dark:text-blue-200">{selectedTechnique.example}</p>

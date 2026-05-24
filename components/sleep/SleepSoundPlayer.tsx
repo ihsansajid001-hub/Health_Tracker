@@ -92,9 +92,9 @@ export default function SleepSoundPlayer() {
 
       {/* Timer */}
       {selectedSounds.length > 0 && (
-        <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
+        <div className="bg-orange-50 dark:bg-blue-900/20 rounded-lg p-4">
           <div className="flex items-center space-x-3 mb-3">
-            <Clock size={20} className="text-blue-600 dark:text-blue-400" />
+            <Clock size={20} className="text-orange-500 dark:text-orange-400" />
             <span className="font-semibold text-gray-900 dark:text-white">
               Sleep Timer
             </span>
@@ -106,8 +106,8 @@ export default function SleepSoundPlayer() {
                 onClick={() => setTimerDuration(minutes)}
                 className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
                   timer === minutes
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900/30'
+                    ? 'bg-orange-500 text-white'
+                    : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-orange-100 dark:hover:bg-blue-900/30'
                 }`}
               >
                 {minutes}min
@@ -115,7 +115,7 @@ export default function SleepSoundPlayer() {
             ))}
           </div>
           {timer && (
-            <p className="text-sm text-blue-600 dark:text-blue-400 mt-2">
+            <p className="text-sm text-orange-500 dark:text-orange-400 mt-2">
               Sounds will stop in {timer} minutes
             </p>
           )}

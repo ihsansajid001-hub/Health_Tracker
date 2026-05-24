@@ -52,7 +52,7 @@ export default function BasicProfileStep({ data, setData, onNext, onBack }: Prop
           type="text"
           value={data.full_name || ''}
           onChange={(e) => setData({ ...data, full_name: e.target.value })}
-          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
           placeholder="John Doe"
         />
       </div>
@@ -66,7 +66,7 @@ export default function BasicProfileStep({ data, setData, onNext, onBack }: Prop
           value={data.date_of_birth || ''}
           onChange={(e) => handleDOBChange(e.target.value)}
           max={new Date().toISOString().split('T')[0]}
-          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
           required
         />
         {data.age && (
@@ -92,8 +92,8 @@ export default function BasicProfileStep({ data, setData, onNext, onBack }: Prop
               onClick={() => setData({ ...data, gender: option.value })}
               className={`p-4 border-2 rounded-lg transition-all ${
                 data.gender === option.value
-                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                  : 'border-gray-300 dark:border-gray-600 hover:border-blue-300'
+                  ? 'border-orange-500 bg-orange-50 dark:bg-blue-900/20'
+                  : 'border-gray-300 dark:border-gray-600 hover:border-orange-300'
               }`}
             >
               <div className="text-3xl mb-2">{option.icon}</div>
@@ -112,7 +112,7 @@ export default function BasicProfileStep({ data, setData, onNext, onBack }: Prop
         </button>
         <button
           onClick={handleNext}
-          className="flex-1 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-[1.02] transition-all"
+          className="flex-1 py-3 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-[1.02] transition-all"
         >
           Next →
         </button>

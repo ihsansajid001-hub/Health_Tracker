@@ -22,7 +22,7 @@ interface Props { onMealSelect?: (meal: MealPlan) => void; }
 const MEAL_COLORS: Record<string, { bg: string; text: string; dot: string }> = {
   breakfast: { bg: 'bg-amber-50',  text: 'text-amber-700',  dot: 'bg-amber-400' },
   lunch:     { bg: 'bg-green-50',  text: 'text-green-700',  dot: 'bg-green-400' },
-  dinner:    { bg: 'bg-blue-50',   text: 'text-blue-700',   dot: 'bg-blue-400' },
+  dinner:    { bg: 'bg-orange-50',   text: 'text-orange-600',   dot: 'bg-blue-400' },
   snack:     { bg: 'bg-orange-50', text: 'text-orange-700', dot: 'bg-orange-400' },
 };
 

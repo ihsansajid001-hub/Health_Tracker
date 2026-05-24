@@ -140,9 +140,9 @@ export default function NutritionPage() {
               {(['breakfast', 'lunch', 'dinner', 'snack'] as const).map((meal) => {
                 const colors: Record<string, string> = {
                   breakfast: 'bg-amber-500 text-white',
-                  lunch: 'bg-green-500 text-white',
+                  lunch: 'bg-orange-500 text-white',
                   dinner: 'bg-orange-500 text-white',
-                  snack: 'bg-purple-500 text-white',
+                  snack: 'bg-orange-500 text-white',
                 };
                 const icons: Record<string, string> = { breakfast: '🍳', lunch: '🥗', dinner: '🍽️', snack: '🍎' };
                 return (
@@ -219,7 +219,7 @@ export default function NutritionPage() {
         </div>
 
         {success && (
-          <div className="mb-5 px-4 py-3 bg-green-50 border border-green-200 rounded-2xl text-green-700 font-semibold text-sm animate-fade-in">
+          <div className="mb-5 px-4 py-3 bg-orange-50 border border-orange-200 rounded-2xl text-orange-600 font-semibold text-sm animate-fade-in">
             ✅ Food logged successfully!
           </div>
         )}
@@ -250,8 +250,8 @@ export default function NutritionPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
                 { label: 'Calories Eaten', value: dailyTotals.calories, unit: 'kcal', color: 'text-orange-500', bg: 'bg-orange-50', icon: Flame },
-                { label: 'Calories Left', value: caloriesLeft, unit: 'kcal', color: 'text-green-500', bg: 'bg-green-50', icon: Zap },
-                { label: 'Protein', value: dailyTotals.protein, unit: 'g', color: 'text-blue-500', bg: 'bg-blue-50', icon: null },
+                { label: 'Calories Left', value: caloriesLeft, unit: 'kcal', color: 'text-orange-500', bg: 'bg-orange-50', icon: Zap },
+                { label: 'Protein', value: dailyTotals.protein, unit: 'g', color: 'text-orange-500', bg: 'bg-orange-50', icon: null },
                 { label: 'Burned', value: burnedCalories, unit: 'kcal', color: 'text-amber-500', bg: 'bg-amber-50', icon: null },
               ].map((s, i) => (
                 <div key={i} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
@@ -363,7 +363,7 @@ export default function NutritionPage() {
                 <div className="h-full bg-blue-400 rounded-full transition-all duration-700" style={{ width: '65%' }} />
               </div>
               <div className="flex justify-between text-xs font-semibold">
-                <span className="text-blue-500">1.3L consumed</span>
+                <span className="text-orange-500">1.3L consumed</span>
                 <span className="text-gray-400">0.7L left</span>
               </div>
             </div>
@@ -387,9 +387,9 @@ function MealAccordion({ mealsByType, onAddToMeal }: { mealsByType: Record<strin
 
   const meals = [
     { key: 'breakfast', label: 'Breakfast', color: 'bg-amber-500', textColor: 'text-amber-600', lightBg: 'bg-amber-50' },
-    { key: 'lunch', label: 'Lunch', color: 'bg-green-500', textColor: 'text-green-600', lightBg: 'bg-green-50' },
+    { key: 'lunch', label: 'Lunch', color: 'bg-orange-500', textColor: 'text-orange-500', lightBg: 'bg-orange-50' },
     { key: 'snack', label: 'Snack', color: 'bg-orange-400', textColor: 'text-orange-600', lightBg: 'bg-orange-50' },
-    { key: 'dinner', label: 'Dinner', color: 'bg-blue-500', textColor: 'text-blue-600', lightBg: 'bg-blue-50' },
+    { key: 'dinner', label: 'Dinner', color: 'bg-orange-500', textColor: 'text-orange-500', lightBg: 'bg-orange-50' },
   ];
 
   return (

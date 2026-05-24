@@ -11,21 +11,24 @@ export default function StreakCard() {
   }, []);
 
   return (
-    <div className="bg-gray-900 dark:bg-black rounded-3xl p-7 text-white h-full flex flex-col relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-40 h-40 bg-orange-500/15 rounded-full blur-2xl translate-x-1/3 -translate-y-1/3 pointer-events-none" />
+    <div className="relative bg-gray-900 rounded-3xl p-7 text-white h-full flex flex-col overflow-hidden">
+      {/* Ambient glow */}
+      <div className="absolute top-0 right-0 w-40 h-40 bg-orange-500/20 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-32 h-32 bg-orange-600/10 rounded-full blur-2xl -translate-x-1/3 translate-y-1/3 pointer-events-none" />
+
       <div className="relative z-10 flex flex-col h-full">
         <div className="flex items-center justify-between mb-6">
           <div>
             <p className="section-tag text-white/30 mb-1">// Streak</p>
             <h3 className="text-xl font-black">Your Streak</h3>
           </div>
-          <div className="w-11 h-11 bg-orange-500/20 rounded-2xl flex items-center justify-center">
+          <div className="w-11 h-11 bg-orange-500/20 border border-orange-500/30 rounded-2xl flex items-center justify-center">
             <Flame size={22} className="text-orange-400" />
           </div>
         </div>
 
         <div className="flex-1 flex flex-col items-center justify-center text-center py-4">
-          <div className="text-8xl font-black leading-none tabular-nums mb-2">{streak.current}</div>
+          <div className="text-8xl font-black leading-none tabular-nums mb-2 text-orange-400">{streak.current}</div>
           <div className="text-white/40 font-semibold text-sm">Days in a row</div>
         </div>
 

@@ -39,7 +39,7 @@ export default function CommunityPage() {
       <div className="max-w-6xl mx-auto space-y-6 animate-fade-in">
 
         {/* Page header */}
-        <div className="bg-pink-600 rounded-3xl p-8 text-white relative overflow-hidden">
+        <div className="bg-orange-500 rounded-3xl p-8 text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-pink-500 rounded-full blur-3xl opacity-40 translate-x-1/3 -translate-y-1/3 pointer-events-none" />
           <div className="relative z-10 flex items-center gap-5">
             <div className="w-14 h-14 bg-white/15 rounded-2xl flex items-center justify-center">
@@ -59,7 +59,7 @@ export default function CommunityPage() {
             <button key={t.id} onClick={() => setActiveTab(t.id)}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm whitespace-nowrap transition-all ${
                 activeTab === t.id
-                  ? 'bg-pink-600 text-white shadow-lg shadow-pink-600/25'
+                  ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/25'
                   : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 hover:border-pink-300 dark:hover:border-pink-700'
               }`}>
               <t.icon size={16} />
@@ -97,10 +97,10 @@ export default function CommunityPage() {
                         <Heart size={15} fill={likedPosts.has(post.id) ? 'currentColor' : 'none'} />
                         <span>{post.likes + (likedPosts.has(post.id) ? 1 : 0)}</span>
                       </button>
-                      <button className="flex items-center gap-1.5 hover:text-blue-500 transition-colors">
+                      <button className="flex items-center gap-1.5 hover:text-orange-500 transition-colors">
                         <MessageCircle size={15} /><span>{post.comments}</span>
                       </button>
-                      <button className="flex items-center gap-1.5 hover:text-green-500 transition-colors">
+                      <button className="flex items-center gap-1.5 hover:text-orange-500 transition-colors">
                         <Share2 size={15} /><span>Share</span>
                       </button>
                     </div>
@@ -143,8 +143,8 @@ export default function CommunityPage() {
                 <div className="space-y-4">
                   {[
                     { title: '30-Day Fitness Challenge', participants: 156, daysLeft: 12, color: 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800' },
-                    { title: 'Mindful March', participants: 89, daysLeft: 8, color: 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800' },
-                    { title: 'Hydration Hero', participants: 203, daysLeft: 20, color: 'bg-cyan-50 dark:bg-cyan-900/20 border-cyan-200 dark:border-cyan-800' },
+                    { title: 'Mindful March', participants: 89, daysLeft: 8, color: 'bg-orange-50 dark:bg-blue-900/20 border-orange-200 dark:border-blue-800' },
+                    { title: 'Hydration Hero', participants: 203, daysLeft: 20, color: 'bg-orange-50 dark:bg-orange-900/20 border-cyan-200 dark:border-cyan-800' },
                   ].map((c, i) => (
                     <div key={i} className={`p-5 rounded-2xl border ${c.color}`}>
                       <div className="flex items-center justify-between mb-2">
@@ -152,7 +152,7 @@ export default function CommunityPage() {
                         <span className="text-xs font-bold text-gray-500 dark:text-gray-400">{c.daysLeft} days left</span>
                       </div>
                       <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{c.participants} participants</p>
-                      <button className="w-full py-2.5 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-xl transition-colors text-sm">
+                      <button className="w-full py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl transition-colors text-sm">
                         Join Challenge
                       </button>
                     </div>
@@ -185,7 +185,7 @@ export default function CommunityPage() {
               <div className="space-y-3">
                 {['#30DayChallenge', '#MindfulMoments', '#HealthyMeals', '#WorkoutMotivation', '#SleepBetter'].map((tag, i) => (
                   <div key={i} className="flex items-center justify-between">
-                    <span className="text-sm font-bold text-pink-600 dark:text-pink-400">{tag}</span>
+                    <span className="text-sm font-bold text-orange-500 dark:text-pink-400">{tag}</span>
                     <span className="text-xs text-gray-400">{Math.floor(Math.random() * 50) + 10} posts</span>
                   </div>
                 ))}

@@ -315,7 +315,7 @@ export default function SmartReminders() {
                 onChange={(e) => setSettings({ ...settings, reminder_enabled: e.target.checked })}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-orange-500"></div>
             </label>
           </div>
 
@@ -335,7 +335,7 @@ export default function SmartReminders() {
                       type="checkbox"
                       checked={settings.wake_up_reminder}
                       onChange={(e) => setSettings({ ...settings, wake_up_reminder: e.target.checked })}
-                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      className="rounded border-gray-300 text-orange-500 focus:ring-orange-500"
                     />
                   </div>
 
@@ -350,7 +350,7 @@ export default function SmartReminders() {
                       type="checkbox"
                       checked={settings.meal_reminders}
                       onChange={(e) => setSettings({ ...settings, meal_reminders: e.target.checked })}
-                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      className="rounded border-gray-300 text-orange-500 focus:ring-orange-500"
                     />
                   </div>
 
@@ -365,7 +365,7 @@ export default function SmartReminders() {
                       type="checkbox"
                       checked={settings.bedtime_reminder}
                       onChange={(e) => setSettings({ ...settings, bedtime_reminder: e.target.checked })}
-                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      className="rounded border-gray-300 text-orange-500 focus:ring-orange-500"
                     />
                   </div>
                 </div>
@@ -382,13 +382,13 @@ export default function SmartReminders() {
                       type="checkbox"
                       checked={settings.workout_reminders}
                       onChange={(e) => setSettings({ ...settings, workout_reminders: e.target.checked })}
-                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      className="rounded border-gray-300 text-orange-500 focus:ring-orange-500"
                     />
                   </div>
 
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <Clock className="w-4 h-4 text-blue-500" />
+                      <Clock className="w-4 h-4 text-orange-500" />
                       <span className="text-sm font-medium text-gray-900 dark:text-white">
                         Regular intervals
                       </span>
@@ -400,7 +400,7 @@ export default function SmartReminders() {
                         ...settings, 
                         reminder_interval_minutes: e.target.checked ? 120 : 0 
                       })}
-                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      className="rounded border-gray-300 text-orange-500 focus:ring-orange-500"
                     />
                   </div>
                 </div>
@@ -529,7 +529,7 @@ export default function SmartReminders() {
         <button
           onClick={saveSettings}
           disabled={loading}
-          className="mt-6 w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg font-semibold transition-colors flex items-center justify-center"
+          className="mt-6 w-full py-3 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white rounded-lg font-semibold transition-colors flex items-center justify-center"
         >
           {loading ? (
             <>

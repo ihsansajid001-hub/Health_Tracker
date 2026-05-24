@@ -36,16 +36,16 @@ export default function DashboardPreview() {
             <Link
               key={i}
               href={s.href}
-              className="group flex items-center gap-6 py-7 border-b border-gray-200 dark:border-gray-700 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-colors px-4 -mx-4 rounded-2xl"
+              className="group flex items-center gap-6 py-7 border-b border-gray-200 dark:border-gray-700 hover:bg-orange-50 dark:hover:bg-blue-900/10 transition-colors px-4 -mx-4 rounded-2xl"
             >
               <span className="text-sm font-bold text-gray-400 dark:text-gray-500 w-8 flex-shrink-0">{s.num}</span>
               <div className="flex-1">
-                <h3 className="text-xl font-black text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h3 className="text-xl font-black text-gray-900 dark:text-white group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors">
                   {s.title}
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{s.desc}</p>
               </div>
-              <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 group-hover:bg-blue-600 rounded-full flex items-center justify-center transition-all duration-300 flex-shrink-0">
+              <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 group-hover:bg-orange-500 rounded-full flex items-center justify-center transition-all duration-300 flex-shrink-0">
                 <svg className="w-4 h-4 text-gray-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
@@ -57,7 +57,7 @@ export default function DashboardPreview() {
         {/* CTA */}
         <div className="mt-12 text-center">
           <Link href="/dashboard"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/25 hover:-translate-y-0.5">
+            className="inline-flex items-center gap-3 px-8 py-4 bg-orange-500 text-white font-bold rounded-full hover:bg-orange-600 transition-all shadow-xl shadow-orange-500/25 hover:-translate-y-0.5">
             View Live Dashboard
             <span className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -84,7 +84,7 @@ export default function UsernameStep({ data, setData, onNext, onBack }: Props) {
             type="text"
             value={data.username || ''}
             onChange={(e) => setData({ ...data, username: e.target.value.toLowerCase() })}
-            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white pr-12"
+            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white pr-12"
             placeholder="johndoe"
             autoFocus
           />
@@ -118,7 +118,7 @@ export default function UsernameStep({ data, setData, onNext, onBack }: Props) {
         <button
           onClick={handleNext}
           disabled={!available || checking}
-          className="flex-1 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex-1 py-3 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Next →
         </button>

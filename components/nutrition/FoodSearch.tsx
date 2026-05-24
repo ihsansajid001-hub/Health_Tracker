@@ -169,7 +169,7 @@ export default function FoodSearch({ onSelectFood, userAllergies = [] }: FoodSea
           <div className="grid grid-cols-2 gap-x-6 gap-y-2">
             {[
               { label: 'Calories', value: `${nutrition.calories}`, color: 'text-orange-500' },
-              { label: 'Protein', value: `${nutrition.protein}g`, color: 'text-blue-500' },
+              { label: 'Protein', value: `${nutrition.protein}g`, color: 'text-orange-500' },
               { label: 'Carbs', value: `${nutrition.carbs}g`, color: 'text-amber-500' },
               { label: 'Fat', value: `${nutrition.fat}g`, color: 'text-purple-500' },
               { label: 'Fiber', value: `${nutrition.fiber}g`, color: 'text-green-500' },

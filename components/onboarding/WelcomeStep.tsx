@@ -25,7 +25,7 @@ export default function WelcomeStep({ onNext }: { onNext: () => void }) {
       </div>
       <button
         onClick={onNext}
-        className="w-full py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transform hover:scale-[1.02] transition-all"
+        className="w-full py-4 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transform hover:scale-[1.02] transition-all"
       >
         Let's Get Started →
       </button>

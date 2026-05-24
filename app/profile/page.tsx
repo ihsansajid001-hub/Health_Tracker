@@ -80,7 +80,7 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
       </div>
     );
   }
@@ -100,7 +100,7 @@ export default function ProfilePage() {
           <div className="flex gap-3">
             <Link
               href="/dashboard"
-              className="px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-all shadow-lg"
+              className="px-6 py-3 bg-orange-500 text-white rounded-xl font-semibold hover:bg-orange-600 transition-all shadow-lg"
             >
               Dashboard
             </Link>
@@ -123,7 +123,7 @@ export default function ProfilePage() {
           {!editing ? (
             <button
               onClick={() => setEditing(true)}
-              className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-all shadow-lg"
+              className="flex items-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-xl font-semibold hover:bg-orange-600 transition-all shadow-lg"
             >
               <Edit2 size={18} />
               Edit Profile
@@ -151,7 +151,7 @@ export default function ProfilePage() {
         {/* Profile Card */}
         <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10">
           <div className="flex items-center gap-6 mb-8 pb-8 border-b border-gray-200">
-            <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-xl">
+            <div className="w-24 h-24 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center shadow-xl">
               <span className="text-white text-4xl font-bold">
                 {profile?.username?.charAt(0).toUpperCase() || 'U'}
               </span>
@@ -183,7 +183,7 @@ export default function ProfilePage() {
                     type="number"
                     value={editedProfile?.age || ''}
                     onChange={(e) => setEditedProfile({ ...editedProfile, age: parseInt(e.target.value) })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 bg-gray-50 text-gray-900"
                   />
                 ) : (
                   <p className="text-lg font-semibold text-gray-900 bg-gray-50 px-4 py-3 rounded-xl">{profile?.age} years</p>
@@ -196,7 +196,7 @@ export default function ProfilePage() {
                   <select
                     value={editedProfile?.gender || ''}
                     onChange={(e) => setEditedProfile({ ...editedProfile, gender: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 bg-gray-50 text-gray-900"
                   >
                     <option value="male">Male</option>
                     <option value="female">Female</option>
@@ -214,7 +214,7 @@ export default function ProfilePage() {
                     type="number"
                     value={editedProfile?.height || ''}
                     onChange={(e) => setEditedProfile({ ...editedProfile, height: parseFloat(e.target.value) })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 bg-gray-50 text-gray-900"
                   />
                 ) : (
                   <p className="text-lg font-semibold text-gray-900 bg-gray-50 px-4 py-3 rounded-xl">{profile?.height} cm</p>
@@ -228,7 +228,7 @@ export default function ProfilePage() {
                     type="number"
                     value={editedProfile?.weight || ''}
                     onChange={(e) => setEditedProfile({ ...editedProfile, weight: parseFloat(e.target.value) })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 bg-gray-50 text-gray-900"
                   />
                 ) : (
                   <p className="text-lg font-semibold text-gray-900 bg-gray-50 px-4 py-3 rounded-xl">{profile?.weight} kg</p>
@@ -245,7 +245,7 @@ export default function ProfilePage() {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 shadow-md">
-                <p className="text-sm text-blue-600 font-medium mb-2">BMI</p>
+                <p className="text-sm text-orange-500 font-medium mb-2">BMI</p>
                 <p className="text-3xl font-bold text-blue-900">{profile?.bmi}</p>
               </div>
               <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 shadow-md">
@@ -275,7 +275,7 @@ export default function ProfilePage() {
                   <select
                     value={editedProfile?.activity_level || ''}
                     onChange={(e) => setEditedProfile({ ...editedProfile, activity_level: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 bg-gray-50 text-gray-900"
                   >
                     <option value="sedentary">Sedentary</option>
                     <option value="light">Light</option>
@@ -299,7 +299,7 @@ export default function ProfilePage() {
                     step="0.5"
                     value={editedProfile?.sleep_hours_avg || ''}
                     onChange={(e) => setEditedProfile({ ...editedProfile, sleep_hours_avg: parseFloat(e.target.value) })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 bg-gray-50 text-gray-900"
                   />
                 ) : (
                   <p className="text-lg font-semibold text-gray-900 bg-gray-50 px-4 py-3 rounded-xl">{profile?.sleep_hours_avg} hours</p>
@@ -316,7 +316,7 @@ export default function ProfilePage() {
                       max="10"
                       value={editedProfile?.stress_level || 5}
                       onChange={(e) => setEditedProfile({ ...editedProfile, stress_level: parseInt(e.target.value) })}
-                      className="w-full accent-blue-600"
+                      className="w-full accent-orange-500"
                     />
                     <p className="text-center text-sm text-gray-600 mt-1">{editedProfile?.stress_level}/10</p>
                   </div>
@@ -331,7 +331,7 @@ export default function ProfilePage() {
                   <select
                     value={editedProfile?.primary_goal || ''}
                     onChange={(e) => setEditedProfile({ ...editedProfile, primary_goal: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 bg-gray-50 text-gray-900"
                   >
                     <option value="fat_loss">Fat Loss</option>
                     <option value="muscle_gain">Muscle Gain</option>

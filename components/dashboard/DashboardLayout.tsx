@@ -47,7 +47,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* Logo */}
         <div className="flex items-center justify-between px-5 pt-6 pb-5">
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 bg-[#C8F135] rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
+            <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
               <span className="text-black font-black text-sm">L</span>
             </div>
             <span className="text-lg font-black text-white tracking-tight">LifeScore</span>
@@ -79,7 +79,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {profile && (
           <Link href="/profile"
             className="mx-3 mb-4 flex items-center gap-3 p-3 bg-white/8 rounded-2xl hover:bg-white/12 transition-colors">
-            <div className="w-9 h-9 bg-[#C8F135] rounded-xl flex items-center justify-center flex-shrink-0">
+            <div className="w-9 h-9 bg-orange-500 rounded-xl flex items-center justify-center flex-shrink-0">
               <span className="text-black font-black text-sm">{profile.username?.charAt(0).toUpperCase()}</span>
             </div>
             <div className="min-w-0">
@@ -103,7 +103,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
             {/* User info */}
             <Link href="/profile" className="hidden md:flex items-center gap-3 bg-white rounded-2xl px-4 py-2.5 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-9 h-9 bg-[#C8F135] rounded-xl flex items-center justify-center flex-shrink-0">
+              <div className="w-9 h-9 bg-orange-500 rounded-xl flex items-center justify-center flex-shrink-0">
                 <span className="text-black font-black text-sm">{profile?.username?.charAt(0).toUpperCase() || 'U'}</span>
               </div>
               <div className="text-left">
@@ -122,7 +122,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="w-full pl-9 pr-4 py-2.5 bg-white rounded-2xl text-sm text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#C8F135] font-medium"
+                  className="w-full pl-9 pr-4 py-2.5 bg-white rounded-2xl text-sm text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#F97316] font-medium"
                 />
               </div>
             </div>
@@ -130,7 +130,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             {/* Notification */}
             <button className="relative w-10 h-10 bg-white rounded-2xl flex items-center justify-center shadow-sm hover:shadow-md transition-shadow text-gray-600">
               <Bell size={18} />
-              <span className="absolute top-2 right-2 w-4 h-4 bg-[#C8F135] rounded-full text-[9px] font-black text-black flex items-center justify-center">2</span>
+              <span className="absolute top-2 right-2 w-4 h-4 bg-orange-500 rounded-full text-[9px] font-black text-black flex items-center justify-center">2</span>
             </button>
           </div>
         </header>

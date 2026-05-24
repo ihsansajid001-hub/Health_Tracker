@@ -68,7 +68,7 @@ export default function ContactPage() {
                 {[
                   { icon: Mail,         label: 'Email',     value: 'support@lifescore.app',              accent: 'bg-orange-50 text-orange-500' },
                   { icon: MessageSquare, label: 'Live Chat', value: 'Available Mon-Fri, 9am-5pm EST',    accent: 'bg-green-50 text-green-500' },
-                  { icon: Phone,        label: 'Phone',     value: '+1 (555) 123-4567',                  accent: 'bg-blue-50 text-blue-500' },
+                  { icon: Phone,        label: 'Phone',     value: '+1 (555) 123-4567',                  accent: 'bg-orange-50 text-orange-500' },
                   { icon: MapPin,       label: 'Office',    value: '123 Wellness Street, San Francisco', accent: 'bg-purple-50 text-purple-500' },
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-4">

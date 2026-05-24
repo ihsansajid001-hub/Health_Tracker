@@ -16,7 +16,7 @@ export default function MeditationLibrary({ onStartMeditation }: MeditationLibra
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'beginner': return 'bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400';
-      case 'intermediate': return 'bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400';
+      case 'intermediate': return 'bg-orange-100 text-orange-600 dark:bg-blue-900/20 dark:text-orange-400';
       case 'advanced': return 'bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400';
       default: return 'bg-gray-100 text-gray-700 dark:bg-gray-900/20 dark:text-gray-400';
     }
@@ -32,8 +32,8 @@ export default function MeditationLibrary({ onStartMeditation }: MeditationLibra
             onClick={() => setSelectedCategory(category.id)}
             className={`px-4 py-2 rounded-lg font-semibold whitespace-nowrap transition-colors ${
               selectedCategory === category.id
-                ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
-                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20'
+                ? 'bg-gradient-to-r from-orange-500 to-purple-600 text-white'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-blue-900/20'
             }`}
           >
             {category.icon} {category.name}
@@ -49,7 +49,7 @@ export default function MeditationLibrary({ onStartMeditation }: MeditationLibra
             className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
           >
             {/* Session Header */}
-            <div className="p-4 bg-gradient-to-r from-blue-500 to-purple-600">
+            <div className="p-4 bg-gradient-to-r from-orange-500 to-purple-600">
               <h3 className="text-lg font-bold text-white">{session.name}</h3>
               <div className="flex items-center space-x-2 mt-2">
                 <Clock size={16} className="text-white/80" />
@@ -89,7 +89,7 @@ export default function MeditationLibrary({ onStartMeditation }: MeditationLibra
               {/* Start Button */}
               <button
                 onClick={() => onStartMeditation?.(session.id)}
-                className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold flex items-center justify-center space-x-2 hover:shadow-lg transform hover:scale-[1.02] transition-all"
+                className="w-full py-3 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-lg font-semibold flex items-center justify-center space-x-2 hover:shadow-lg transform hover:scale-[1.02] transition-all"
               >
                 <Play size={20} />
                 <span>Start Meditation</span>

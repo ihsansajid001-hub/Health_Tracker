@@ -195,7 +195,7 @@ export default function CommunityPage() {
                   <div className="space-y-4">
                     {[
                       { title: '30-Day Fitness Challenge', participants: 156, daysLeft: 12, accent: 'bg-red-50 border-red-100' },
-                      { title: 'Mindful March',            participants: 89,  daysLeft: 8,  accent: 'bg-blue-50 border-blue-100' },
+                      { title: 'Mindful March',            participants: 89,  daysLeft: 8,  accent: 'bg-orange-50 border-orange-100' },
                       { title: 'Hydration Hero',           participants: 203, daysLeft: 20, accent: 'bg-cyan-50 border-cyan-100' },
                     ].map((c, i) => (
                       <div key={i} className={`p-5 rounded-2xl border ${c.accent}`}>

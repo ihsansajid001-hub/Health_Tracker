@@ -104,7 +104,7 @@ export default function MedicalConditionsStep({ data, setData, onNext, onBack }:
             </label>
             <button
               onClick={() => setShowMedications(!showMedications)}
-              className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+              className="text-sm text-orange-500 dark:text-orange-400 hover:underline"
             >
               {showMedications ? 'Hide' : 'Add medications'}
             </button>
@@ -140,7 +140,7 @@ export default function MedicalConditionsStep({ data, setData, onNext, onBack }:
                   name="pregnancy_status"
                   checked={data.pregnancy_status === option.value}
                   onChange={() => setData({ ...data, pregnancy_status: option.value })}
-                  className="w-4 h-4 text-blue-600"
+                  className="w-4 h-4 text-orange-500"
                 />
                 <label htmlFor={option.value} className="text-gray-900 dark:text-white">
                   {option.label}
@@ -150,7 +150,7 @@ export default function MedicalConditionsStep({ data, setData, onNext, onBack }:
           </div>
         </div>
 
-        <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+        <div className="bg-orange-50 dark:bg-blue-900/20 p-4 rounded-lg">
           <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">How This Helps</h4>
           <div className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
             <p>• Exercise safety: Blocks contraindicated exercises</p>
@@ -190,7 +190,7 @@ export default function MedicalConditionsStep({ data, setData, onNext, onBack }:
         </button>
         <button
           onClick={handleNext}
-          className="flex-1 py-3 px-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-colors"
+          className="flex-1 py-3 px-6 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-lg font-semibold hover:from-orange-500 hover:to-purple-700 transition-colors"
         >
           Complete Setup →
         </button>

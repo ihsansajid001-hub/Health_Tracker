@@ -20,7 +20,7 @@ export default function SmartAlarm() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl p-6 text-white">
+      <div className="bg-gradient-to-br from-purple-500 to-orange-600 rounded-2xl p-6 text-white">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
             <AlarmClock size={32} />
@@ -104,7 +104,7 @@ export default function SmartAlarm() {
               onClick={() => setAlarmSound(sound.id)}
               className={`p-4 rounded-lg transition-all ${
                 alarmSound === sound.id
-                  ? 'bg-gradient-to-br from-purple-500 to-indigo-600 text-white shadow-lg'
+                  ? 'bg-gradient-to-br from-purple-500 to-orange-600 text-white shadow-lg'
                   : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-purple-50 dark:hover:bg-purple-900/20'
               }`}
             >
@@ -143,8 +143,8 @@ export default function SmartAlarm() {
       </div>
 
       {/* Info */}
-      <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6">
-        <h3 className="font-bold text-blue-900 dark:text-blue-400 mb-2">
+      <div className="bg-orange-50 dark:bg-blue-900/20 rounded-xl p-6">
+        <h3 className="font-bold text-blue-900 dark:text-orange-400 mb-2">
           How Smart Alarm Works
         </h3>
         <ul className="space-y-2 text-sm text-blue-800 dark:text-blue-300">

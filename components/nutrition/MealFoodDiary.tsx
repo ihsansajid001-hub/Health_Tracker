@@ -20,7 +20,7 @@ interface Props {
 const MEAL_CONFIG = [
   { key: 'breakfast', label: 'Breakfast', emoji: '🍳', color: 'bg-amber-500', lightBg: 'bg-amber-50', textColor: 'text-amber-600', border: 'border-amber-200' },
   { key: 'lunch',     label: 'Lunch',     emoji: '🥗', color: 'bg-green-500',  lightBg: 'bg-green-50',  textColor: 'text-green-600',  border: 'border-green-200' },
-  { key: 'dinner',    label: 'Dinner',    emoji: '🍽️', color: 'bg-blue-500',   lightBg: 'bg-blue-50',   textColor: 'text-blue-600',   border: 'border-blue-200' },
+  { key: 'dinner',    label: 'Dinner',    emoji: '🍽️', color: 'bg-orange-500',   lightBg: 'bg-orange-50',   textColor: 'text-orange-500',   border: 'border-orange-200' },
   { key: 'snack',     label: 'Snack',     emoji: '🍎', color: 'bg-orange-400', lightBg: 'bg-orange-50', textColor: 'text-orange-600', border: 'border-orange-200' },
 ];
 

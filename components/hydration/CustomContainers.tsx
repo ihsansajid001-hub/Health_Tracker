@@ -13,7 +13,7 @@ interface Container {
 }
 
 const defaultContainers: Container[] = [
-  { id: 'glass', name: 'Glass', volume: 250, icon: '🥛', color: 'bg-blue-100 dark:bg-blue-900/20 border-blue-300 dark:border-blue-700', isDefault: true },
+  { id: 'glass', name: 'Glass', volume: 250, icon: '🥛', color: 'bg-orange-100 dark:bg-blue-900/20 border-blue-300 dark:border-blue-700', isDefault: true },
   { id: 'bottle', name: 'Water Bottle', volume: 500, icon: '🍼', color: 'bg-green-100 dark:bg-green-900/20 border-green-300 dark:border-green-700', isDefault: true },
   { id: 'large-bottle', name: 'Large Bottle', volume: 750, icon: '🍾', color: 'bg-purple-100 dark:bg-purple-900/20 border-purple-300 dark:border-purple-700', isDefault: true },
   { id: 'liter', name: '1 Liter', volume: 1000, icon: '🧴', color: 'bg-orange-100 dark:bg-orange-900/20 border-orange-300 dark:border-orange-700', isDefault: true },
@@ -32,12 +32,12 @@ export default function CustomContainers({ onContainerSelect, selectedContainer 
     name: '',
     volume: 250,
     icon: '🥤',
-    color: 'bg-blue-100 dark:bg-blue-900/20 border-blue-300 dark:border-blue-700'
+    color: 'bg-orange-100 dark:bg-blue-900/20 border-blue-300 dark:border-blue-700'
   });
 
   const iconOptions = ['🥛', '🍼', '🍾', '🧴', '🥤', '☕', '🍵', '🧋', '🥃', '🍷', '🍺', '💧'];
   const colorOptions = [
-    { name: 'Blue', value: 'bg-blue-100 dark:bg-blue-900/20 border-blue-300 dark:border-blue-700' },
+    { name: 'Blue', value: 'bg-orange-100 dark:bg-blue-900/20 border-blue-300 dark:border-blue-700' },
     { name: 'Green', value: 'bg-green-100 dark:bg-green-900/20 border-green-300 dark:border-green-700' },
     { name: 'Purple', value: 'bg-purple-100 dark:bg-purple-900/20 border-purple-300 dark:border-purple-700' },
     { name: 'Orange', value: 'bg-orange-100 dark:bg-orange-900/20 border-orange-300 dark:border-orange-700' },
@@ -148,7 +148,7 @@ export default function CustomContainers({ onContainerSelect, selectedContainer 
         </div>
         <button
           onClick={() => setShowAddForm(true)}
-          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors flex items-center space-x-2"
+          className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-medium transition-colors flex items-center space-x-2"
         >
           <Plus size={16} />
           <span>Add Container</span>
@@ -165,7 +165,7 @@ export default function CustomContainers({ onContainerSelect, selectedContainer 
               container.color
             } ${
               selectedContainer?.id === container.id 
-                ? 'ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-gray-800' 
+                ? 'ring-2 ring-orange-500 ring-offset-2 dark:ring-offset-gray-800' 
                 : ''
             }`}
           >
@@ -187,7 +187,7 @@ export default function CustomContainers({ onContainerSelect, selectedContainer 
                     e.stopPropagation();
                     handleEditContainer(container);
                   }}
-                  className="p-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs"
+                  className="p-1 bg-orange-500 hover:bg-orange-600 text-white rounded text-xs"
                 >
                   <Edit size={12} />
                 </button>
@@ -235,7 +235,7 @@ export default function CustomContainers({ onContainerSelect, selectedContainer 
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
                   placeholder="e.g., My Water Bottle"
                 />
               </div>
@@ -250,7 +250,7 @@ export default function CustomContainers({ onContainerSelect, selectedContainer 
                   max="5000"
                   value={formData.volume}
                   onChange={(e) => setFormData({ ...formData, volume: parseInt(e.target.value) || 0 })}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
                 />
               </div>
 
@@ -265,8 +265,8 @@ export default function CustomContainers({ onContainerSelect, selectedContainer 
                       onClick={() => setFormData({ ...formData, icon })}
                       className={`p-3 text-2xl rounded-lg border-2 transition-colors ${
                         formData.icon === icon
-                          ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                          : 'border-gray-200 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-600'
+                          ? 'border-orange-500 bg-orange-50 dark:bg-blue-900/20'
+                          : 'border-gray-200 dark:border-gray-600 hover:border-orange-300 dark:hover:border-orange-500'
                       }`}
                     >
                       {icon}
@@ -288,7 +288,7 @@ export default function CustomContainers({ onContainerSelect, selectedContainer 
                         color.value
                       } ${
                         formData.color === color.value
-                          ? 'ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-gray-800'
+                          ? 'ring-2 ring-orange-500 ring-offset-2 dark:ring-offset-gray-800'
                           : ''
                       }`}
                     >
@@ -330,7 +330,7 @@ export default function CustomContainers({ onContainerSelect, selectedContainer 
                 <button
                   onClick={editingContainer ? handleUpdateContainer : handleAddContainer}
                   disabled={!formData.name.trim() || formData.volume <= 0}
-                  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors"
+                  className="px-6 py-3 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors"
                 >
                   {editingContainer ? 'Update Container' : 'Add Container'}
                 </button>
@@ -343,14 +343,14 @@ export default function CustomContainers({ onContainerSelect, selectedContainer 
       {/* Quick Stats */}
       <div className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-lg p-6">
         <div className="flex items-center space-x-3 mb-4">
-          <Droplets size={24} className="text-blue-600 dark:text-blue-400" />
+          <Droplets size={24} className="text-orange-500 dark:text-orange-400" />
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
             Container Stats
           </h3>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+            <div className="text-2xl font-bold text-orange-500 dark:text-orange-400">
               {containers.length}
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">Total Containers</div>

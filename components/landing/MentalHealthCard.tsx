@@ -52,7 +52,7 @@ export default function MentalHealthCard() {
               <br />
               Complete
               <br />
-              <span className="text-blue-600">Life Score</span>
+              <span className="text-orange-500">Life Score</span>
             </h2>
 
             <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-md">
@@ -62,7 +62,7 @@ export default function MentalHealthCard() {
             <Link href="/dashboard"
               className="inline-flex items-center gap-3 px-7 py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold rounded-full hover:bg-gray-800 dark:hover:bg-gray-100 transition-all shadow-lg hover:-translate-y-0.5">
               Explore Features
-              <span className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+              <span className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
                 <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
@@ -77,7 +77,7 @@ export default function MentalHealthCard() {
                 { icon: '🔥', title: 'Streaks', desc: 'Build habits with streak tracking.' },
               ].map((f, i) => (
                 <div key={i} className="text-center">
-                  <div className="w-14 h-14 bg-blue-50 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl">
+                  <div className="w-14 h-14 bg-orange-50 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl">
                     {f.icon}
                   </div>
                   <h3 className="font-bold text-gray-900 dark:text-white text-sm mb-1">{f.title}</h3>

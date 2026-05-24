@@ -92,7 +92,7 @@ function CollapsibleCard({
           {icon}
           <h3 className="font-black text-gray-900">{title}</h3>
           {badge && (
-            <span className="text-xs bg-purple-50 text-purple-600 font-black px-2 py-0.5 rounded-full">{badge}</span>
+            <span className="text-xs bg-orange-50 text-orange-500 font-black px-2 py-0.5 rounded-full">{badge}</span>
           )}
         </div>
         <ChevronDown
@@ -179,7 +179,7 @@ export default function SleepPage() {
   }
 
   const qualityColor = (q: number) =>
-    q >= 8 ? 'text-green-500' : q >= 5 ? 'text-yellow-500' : 'text-red-400';
+    q >= 8 ? 'text-orange-500' : q >= 5 ? 'text-yellow-500' : 'text-red-400';
 
   return (
     <DashboardLayout>
@@ -193,14 +193,14 @@ export default function SleepPage() {
           </div>
           <div className="flex items-center gap-3">
             {success && (
-              <span className="text-xs bg-purple-50 text-purple-600 border border-purple-200 px-3 py-1.5 rounded-full font-bold">
+              <span className="text-xs bg-orange-50 text-orange-500 border border-orange-200 px-3 py-1.5 rounded-full font-bold">
                 Saved
               </span>
             )}
             <button
               onClick={() => setShowAddModal(true)}
               className="flex items-center gap-2 px-5 py-2.5 rounded-2xl font-black text-sm text-white transition-all hover:-translate-y-0.5 active:scale-95"
-              style={{ background: 'linear-gradient(135deg, #7C3AED, #A78BFA)', boxShadow: '0 4px 20px rgba(124,58,237,0.35)' }}
+              style={{ background: 'linear-gradient(135deg, #F97316, #FB923C)', boxShadow: '0 4px 20px rgba(249,115,22,0.35)' }}
             >
               <Plus size={16} />
               Log Sleep
@@ -214,7 +214,7 @@ export default function SleepPage() {
           {/* LEFT: Circular gauge */}
           <div
             className="lg:col-span-1 rounded-3xl overflow-hidden relative flex flex-col"
-            style={{ background: 'linear-gradient(160deg, #3B0764 0%, #7C3AED 45%, #A78BFA 100%)', minHeight: '500px' }}
+            style={{ background: 'linear-gradient(160deg, #1A1A1A 0%, #F97316 45%, #FB923C 100%)', minHeight: '500px' }}
           >
             <div className="absolute top-[-50px] right-[-50px] w-44 h-44 rounded-full opacity-20 pointer-events-none"
               style={{ background: 'radial-gradient(circle, #fff 0%, transparent 70%)' }} />
@@ -272,7 +272,7 @@ export default function SleepPage() {
             <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 flex-1">
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2">
-                  <TrendingUp size={16} className="text-purple-500" />
+                  <TrendingUp size={16} className="text-orange-500" />
                   <h3 className="font-black text-gray-900">Sleep Duration</h3>
                 </div>
                 <div className="flex gap-1 bg-gray-100 rounded-xl p-1">
@@ -283,7 +283,7 @@ export default function SleepPage() {
                       className={`px-3 py-1 rounded-lg text-xs font-bold capitalize transition-all ${
                         statsView === v ? 'text-white shadow-sm' : 'text-gray-400'
                       }`}
-                      style={statsView === v ? { background: 'linear-gradient(135deg, #7C3AED, #A78BFA)' } : {}}
+                      style={statsView === v ? { background: 'linear-gradient(135deg, #F97316, #FB923C)' } : {}}
                     >
                       {v}
                     </button>
@@ -298,7 +298,7 @@ export default function SleepPage() {
                       {i === 4 && (
                         <div
                           className="absolute -top-7 left-1/2 -translate-x-1/2 px-2 py-1 rounded-lg text-white text-[10px] font-black whitespace-nowrap"
-                          style={{ background: 'linear-gradient(135deg, #7C3AED, #A78BFA)' }}
+                          style={{ background: 'linear-gradient(135deg, #F97316, #FB923C)' }}
                         >
                           {d.hours}h
                         </div>
@@ -308,26 +308,26 @@ export default function SleepPage() {
                         style={{
                           height: `${d.value}%`,
                           background: i === 4
-                            ? 'linear-gradient(180deg, #A78BFA 0%, #7C3AED 100%)'
-                            : 'linear-gradient(180deg, #EDE9FE 0%, #DDD6FE 100%)',
+                            ? 'linear-gradient(180deg, #FB923C 0%, #F97316 100%)'
+                            : 'linear-gradient(180deg, #FFF7ED 0%, #FFEDD5 100%)',
                           minHeight: '8px',
                         }}
                       />
                     </div>
-                    <span className={`text-xs font-bold ${i === 4 ? 'text-purple-500' : 'text-gray-400'}`}>{d.day}</span>
+                    <span className={`text-xs font-bold ${i === 4 ? 'text-orange-500' : 'text-gray-400'}`}>{d.day}</span>
                   </div>
                 ))}
               </div>
 
               <div className="grid grid-cols-3 gap-3">
                 {[
-                  { label: 'Avg Sleep', value: '7.1 hrs', color: 'text-purple-400' },
+                  { label: 'Avg Sleep', value: '7.1 hrs', color: 'text-orange-400' },
                   { label: 'Best Night', value: '9.0 hrs', color: 'text-yellow-500' },
-                  { label: 'Goal Hit', value: '5 / 7 days', color: 'text-green-500' },
+                  { label: 'Goal Hit', value: '5 / 7 days', color: 'text-orange-500' },
                 ].map(s => (
-                  <div key={s.label} className="bg-purple-50 rounded-2xl p-4">
+                  <div key={s.label} className="bg-orange-50 rounded-2xl p-4">
                     <p className="text-xs text-gray-400 font-semibold mb-1">{s.label}</p>
-                    <p className="text-base font-black text-purple-700">{s.value}</p>
+                    <p className="text-base font-black text-orange-600">{s.value}</p>
                   </div>
                 ))}
               </div>
@@ -337,12 +337,12 @@ export default function SleepPage() {
             <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2">
-                  <Award size={16} className="text-purple-500" />
+                  <Award size={16} className="text-orange-500" />
                   <h3 className="font-black text-gray-900">Achievements</h3>
                 </div>
                 <div
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black text-white"
-                  style={{ background: 'linear-gradient(135deg, #7C3AED, #A78BFA)' }}
+                  style={{ background: 'linear-gradient(135deg, #F97316, #FB923C)' }}
                 >
                   <Trophy size={12} />
                   Level 3
@@ -353,12 +353,12 @@ export default function SleepPage() {
                   <div
                     key={a.level}
                     className={`rounded-2xl p-3 text-center transition-all ${a.unlocked ? '' : 'opacity-40'}`}
-                    style={{ background: a.unlocked ? 'linear-gradient(135deg, #F5F3FF, #EDE9FE)' : '#F9FAFB' }}
+                    style={{ background: a.unlocked ? 'linear-gradient(135deg, #FFF7ED, #FFF7ED)' : '#F9FAFB' }}
                     title={a.desc}
                   >
                     <div
                       className="w-10 h-10 rounded-full mx-auto mb-2 flex items-center justify-center"
-                      style={{ background: a.unlocked ? 'linear-gradient(135deg, #7C3AED, #A78BFA)' : '#D1D5DB' }}
+                      style={{ background: a.unlocked ? 'linear-gradient(135deg, #F97316, #FB923C)' : '#D1D5DB' }}
                     >
                       <Trophy size={16} className="text-white" />
                     </div>
@@ -375,11 +375,11 @@ export default function SleepPage() {
         <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-50">
             <div className="flex items-center gap-2">
-              <Clock size={16} className="text-purple-500" />
+              <Clock size={16} className="text-orange-500" />
               <h3 className="font-black text-gray-900">Sleep History</h3>
-              <span className="text-xs bg-purple-50 text-purple-600 font-black px-2 py-0.5 rounded-full">{history.length} entries</span>
+              <span className="text-xs bg-orange-50 text-orange-500 font-black px-2 py-0.5 rounded-full">{history.length} entries</span>
             </div>
-            <button className="flex items-center gap-1 text-xs font-bold text-purple-500 hover:text-purple-700 transition-colors">
+            <button className="flex items-center gap-1 text-xs font-bold text-orange-500 hover:text-orange-600 transition-colors">
               View All <ChevronRight size={14} />
             </button>
           </div>
@@ -391,7 +391,7 @@ export default function SleepPage() {
               <button
                 onClick={() => setShowAddModal(true)}
                 className="mt-4 px-5 py-2 rounded-xl text-sm font-black text-white"
-                style={{ background: 'linear-gradient(135deg, #7C3AED, #A78BFA)' }}
+                style={{ background: 'linear-gradient(135deg, #F97316, #FB923C)' }}
               >
                 Log your first night
               </button>
@@ -402,9 +402,9 @@ export default function SleepPage() {
                 <div key={entry.id} className="flex items-center gap-4 px-6 py-4 hover:bg-gray-50/60 transition-colors group">
                   <div
                     className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: 'linear-gradient(135deg, #EDE9FE, #DDD6FE)' }}
+                    style={{ background: 'linear-gradient(135deg, #FFF7ED, #FFEDD5)' }}
                   >
-                    <Moon size={22} className="text-purple-500" />
+                    <Moon size={22} className="text-orange-500" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-black text-gray-900 text-sm">{entry.total_hours}h sleep</p>
@@ -440,7 +440,7 @@ export default function SleepPage() {
 
         {/* Sleep Analytics */}
         <CollapsibleCard
-          icon={<BarChart3 size={16} className="text-purple-500" />}
+          icon={<BarChart3 size={16} className="text-orange-500" />}
           title="Sleep Analytics"
           badge="Insights"
           defaultOpen
@@ -450,7 +450,7 @@ export default function SleepPage() {
 
         {/* Sleep Cycle Tracker */}
         <CollapsibleCard
-          icon={<Moon size={16} className="text-purple-500" />}
+          icon={<Moon size={16} className="text-orange-500" />}
           title="Sleep Cycle Analysis"
           badge={`${formData.total_hours}h logged`}
         >
@@ -463,7 +463,7 @@ export default function SleepPage() {
 
         {/* Sleep Sounds */}
         <CollapsibleCard
-          icon={<Music size={16} className="text-purple-500" />}
+          icon={<Music size={16} className="text-orange-500" />}
           title="Sleep Sounds"
           badge="Ambient"
         >
@@ -472,7 +472,7 @@ export default function SleepPage() {
 
         {/* Smart Alarm */}
         <CollapsibleCard
-          icon={<AlarmClock size={16} className="text-purple-500" />}
+          icon={<AlarmClock size={16} className="text-orange-500" />}
           title="Smart Alarm"
           badge="Wake gently"
         >
@@ -481,7 +481,7 @@ export default function SleepPage() {
 
         {/* Snoring Detection */}
         <CollapsibleCard
-          icon={<Mic size={16} className="text-purple-500" />}
+          icon={<Mic size={16} className="text-orange-500" />}
           title="Snoring Detection"
           badge="Microphone"
         >
@@ -512,7 +512,7 @@ export default function SleepPage() {
                   type="date"
                   value={formData.date}
                   onChange={e => setFormData({ ...formData, date: e.target.value })}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-400"
                 />
               </div>
 
@@ -523,7 +523,7 @@ export default function SleepPage() {
                     type="time"
                     value={formData.bedtime}
                     onChange={e => setFormData({ ...formData, bedtime: e.target.value })}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-400"
                   />
                 </div>
                 <div>
@@ -532,33 +532,33 @@ export default function SleepPage() {
                     type="time"
                     value={formData.wake_time}
                     onChange={e => setFormData({ ...formData, wake_time: e.target.value })}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-400"
                   />
                 </div>
               </div>
 
               <div>
                 <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-2">
-                  Hours Slept: <span className="text-purple-600">{formData.total_hours}h</span>
+                  Hours Slept: <span className="text-orange-500">{formData.total_hours}h</span>
                 </label>
                 <input
                   type="range" min="0" max="12" step="0.5"
                   value={formData.total_hours}
                   onChange={e => setFormData({ ...formData, total_hours: parseFloat(e.target.value) })}
-                  className="w-full accent-purple-600"
+                  className="w-full accent-orange-500"
                 />
                 <div className="flex justify-between text-xs text-gray-400 mt-1"><span>0h</span><span>12h</span></div>
               </div>
 
               <div>
                 <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-2">
-                  Sleep Quality: <span className="text-purple-600">{formData.sleep_quality}/10</span>
+                  Sleep Quality: <span className="text-orange-500">{formData.sleep_quality}/10</span>
                 </label>
                 <input
                   type="range" min="1" max="10"
                   value={formData.sleep_quality}
                   onChange={e => setFormData({ ...formData, sleep_quality: parseInt(e.target.value) })}
-                  className="w-full accent-purple-600"
+                  className="w-full accent-orange-500"
                 />
                 <div className="flex justify-between text-xs text-gray-400 mt-1"><span>Poor</span><span>Excellent</span></div>
               </div>
@@ -570,7 +570,7 @@ export default function SleepPage() {
                   onChange={e => setFormData({ ...formData, notes: e.target.value })}
                   rows={2}
                   placeholder="How did you sleep? Any dreams?"
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-semibold text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none"
                 />
               </div>
 
@@ -578,7 +578,7 @@ export default function SleepPage() {
                 onClick={addSleep}
                 disabled={loading}
                 className="w-full py-3.5 rounded-2xl font-black text-white text-sm disabled:opacity-40 transition-all active:scale-95 hover:-translate-y-0.5"
-                style={{ background: 'linear-gradient(135deg, #7C3AED, #A78BFA)', boxShadow: '0 4px 20px rgba(124,58,237,0.35)' }}
+                style={{ background: 'linear-gradient(135deg, #F97316, #FB923C)', boxShadow: '0 4px 20px rgba(249,115,22,0.35)' }}
               >
                 {loading ? 'Saving…' : 'Log Sleep'}
               </button>

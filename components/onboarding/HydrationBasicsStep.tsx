@@ -82,11 +82,11 @@ export default function HydrationBasicsStep({ data, setData, onNext, onBack }: H
       </div>
 
       <div className="space-y-6">
-        <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+        <div className="bg-orange-50 dark:bg-blue-900/20 p-4 rounded-lg">
           <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">
             Your Personalized Water Goal
           </h4>
-          <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+          <div className="text-2xl font-bold text-orange-500 dark:text-orange-400">
             {waterGoal.toLocaleString()} ml/day
           </div>
           <div className="text-sm text-blue-800 dark:text-blue-200 mt-1">
@@ -141,7 +141,7 @@ export default function HydrationBasicsStep({ data, setData, onNext, onBack }: H
                 onClick={() => setData({ ...data, reminder_interval_minutes: interval.value })}
                 className={`p-3 border-2 rounded-lg text-left transition-colors ${
                   data.reminder_interval_minutes === interval.value
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                    ? 'border-orange-500 bg-orange-50 dark:bg-blue-900/20'
                     : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
                 }`}
               >
@@ -167,7 +167,7 @@ export default function HydrationBasicsStep({ data, setData, onNext, onBack }: H
                 onClick={() => setData({ ...data, preferred_container_size: container.value })}
                 className={`p-3 border-2 rounded-lg text-center transition-colors ${
                   data.preferred_container_size === container.value
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                    ? 'border-orange-500 bg-orange-50 dark:bg-blue-900/20'
                     : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
                 }`}
               >
@@ -214,7 +214,7 @@ export default function HydrationBasicsStep({ data, setData, onNext, onBack }: H
         </button>
         <button
           onClick={handleNext}
-          className="flex-1 py-3 px-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-colors"
+          className="flex-1 py-3 px-6 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-lg font-semibold hover:from-orange-500 hover:to-purple-700 transition-colors"
         >
           Next →
         </button>

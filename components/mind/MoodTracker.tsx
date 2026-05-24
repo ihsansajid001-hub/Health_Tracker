@@ -194,7 +194,7 @@ export default function MoodTracker() {
                 onClick={() => setCurrentEntry({ ...currentEntry, mood_score: mood.value })}
                 className={`p-3 rounded-lg border-2 transition-colors text-center ${
                   currentEntry.mood_score === mood.value
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                    ? 'border-orange-500 bg-orange-50 dark:bg-blue-900/20'
                     : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
                 }`}
               >
@@ -310,7 +310,7 @@ export default function MoodTracker() {
         <button
           onClick={saveMoodEntry}
           disabled={loading}
-          className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg font-semibold transition-colors flex items-center justify-center"
+          className="w-full py-3 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white rounded-lg font-semibold transition-colors flex items-center justify-center"
         >
           {loading ? (
             <>

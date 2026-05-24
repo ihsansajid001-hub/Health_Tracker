@@ -93,7 +93,7 @@ export default function NutritionBasicsStep({ data, setData, onNext, onBack }: N
                 onClick={() => setData({ ...data, dietary_restriction: diet.value })}
                 className={`p-3 border-2 rounded-lg text-center transition-colors ${
                   data.dietary_restriction === diet.value
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                    ? 'border-orange-500 bg-orange-50 dark:bg-blue-900/20'
                     : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
                 }`}
               >
@@ -171,7 +171,7 @@ export default function NutritionBasicsStep({ data, setData, onNext, onBack }: N
                 name="fasting"
                 checked={!data.intermittent_fasting}
                 onChange={() => setData({ ...data, intermittent_fasting: false, fasting_schedule: null })}
-                className="w-4 h-4 text-blue-600"
+                className="w-4 h-4 text-orange-500"
               />
               <label htmlFor="no-fasting" className="text-gray-900 dark:text-white">
                 No, I eat throughout the day
@@ -184,7 +184,7 @@ export default function NutritionBasicsStep({ data, setData, onNext, onBack }: N
                 name="fasting"
                 checked={data.intermittent_fasting}
                 onChange={() => setData({ ...data, intermittent_fasting: true })}
-                className="w-4 h-4 text-blue-600"
+                className="w-4 h-4 text-orange-500"
               />
               <label htmlFor="yes-fasting" className="text-gray-900 dark:text-white">
                 Yes, I practice intermittent fasting
@@ -205,7 +205,7 @@ export default function NutritionBasicsStep({ data, setData, onNext, onBack }: N
                     name="fasting-schedule"
                     checked={data.fasting_schedule === schedule.value}
                     onChange={() => setData({ ...data, fasting_schedule: schedule.value })}
-                    className="w-4 h-4 text-blue-600"
+                    className="w-4 h-4 text-orange-500"
                   />
                   <label htmlFor={schedule.value} className="flex-1">
                     <div className="text-gray-900 dark:text-white font-medium">
@@ -241,7 +241,7 @@ export default function NutritionBasicsStep({ data, setData, onNext, onBack }: N
         </button>
         <button
           onClick={handleNext}
-          className="flex-1 py-3 px-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-colors"
+          className="flex-1 py-3 px-6 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-lg font-semibold hover:from-orange-500 hover:to-purple-700 transition-colors"
         >
           Next →
         </button>

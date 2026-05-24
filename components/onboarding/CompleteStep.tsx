@@ -49,7 +49,7 @@ export default function CompleteStep({ data, onComplete, loading }: Props) {
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-white dark:bg-gray-800 p-4 rounded-lg">
             <div className="flex items-center space-x-2 mb-2">
-              <TrendingUp size={20} className="text-blue-500" />
+              <TrendingUp size={20} className="text-orange-500" />
               <span className="text-sm text-gray-600 dark:text-gray-400">BMI</span>
             </div>
             <p className="text-2xl font-bold text-gray-900 dark:text-white">{bmi}</p>

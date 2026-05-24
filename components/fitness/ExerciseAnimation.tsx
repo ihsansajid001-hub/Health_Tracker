@@ -20,7 +20,7 @@ const ICONS: Record<string, string> = {
 const PHASE_CONFIG = {
   prepare:  { label: 'Get Ready!',   color: 'text-amber-500',   bg: 'bg-amber-50 border-amber-100' },
   exercise: { label: 'Keep Going!',  color: 'text-emerald-500', bg: 'bg-emerald-50 border-emerald-100' },
-  rest:     { label: 'Rest…',        color: 'text-blue-500',    bg: 'bg-blue-50 border-blue-100' },
+  rest:     { label: 'Rest…',        color: 'text-orange-500',    bg: 'bg-orange-50 border-orange-100' },
   complete: { label: 'Complete! 🎉', color: 'text-purple-500',  bg: 'bg-purple-50 border-purple-100' },
 };
 

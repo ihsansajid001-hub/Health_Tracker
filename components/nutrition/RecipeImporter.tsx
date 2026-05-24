@@ -191,7 +191,7 @@ export default function RecipeImporter({ onRecipeImported, onClose }: Props) {
               <div className="grid grid-cols-4 gap-3 mb-3">
                 {[
                   { label: 'Calories', value: Math.round(recipe.totalNutrition.calories / recipe.servings), unit: '', color: 'text-orange-500' },
-                  { label: 'Protein',  value: Math.round(recipe.totalNutrition.protein / recipe.servings),  unit: 'g', color: 'text-blue-500' },
+                  { label: 'Protein',  value: Math.round(recipe.totalNutrition.protein / recipe.servings),  unit: 'g', color: 'text-orange-500' },
                   { label: 'Carbs',    value: Math.round(recipe.totalNutrition.carbs / recipe.servings),    unit: 'g', color: 'text-amber-500' },
                   { label: 'Fat',      value: Math.round(recipe.totalNutrition.fat / recipe.servings),      unit: 'g', color: 'text-purple-500' },
                 ].map(({ label, value, unit, color }) => (

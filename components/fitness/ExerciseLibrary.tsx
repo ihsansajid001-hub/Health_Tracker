@@ -117,7 +117,7 @@ export default function ExerciseLibrary({ userConditions = [], onStartExercise }
                 {/* Muscles */}
                 <div className="flex flex-wrap gap-1">
                   {ex.targetMuscles.map(m => (
-                    <span key={m} className="px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] font-bold rounded-lg border border-blue-100">
+                    <span key={m} className="px-2 py-0.5 bg-orange-50 text-orange-500 text-[10px] font-bold rounded-lg border border-orange-100">
                       {m.replace('_', ' ')}
                     </span>
                   ))}

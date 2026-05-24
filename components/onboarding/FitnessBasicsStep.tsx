@@ -87,7 +87,7 @@ export default function FitnessBasicsStep({ data, setData, onNext, onBack }: Fit
                 onClick={() => setData({ ...data, fitness_level: level.value })}
                 className={`p-4 border-2 rounded-lg text-left transition-colors ${
                   data.fitness_level === level.value
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                    ? 'border-orange-500 bg-orange-50 dark:bg-blue-900/20'
                     : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
                 }`}
               >
@@ -143,7 +143,7 @@ export default function FitnessBasicsStep({ data, setData, onNext, onBack }: Fit
                 onClick={() => setData({ ...data, preferred_workout_time: time.value })}
                 className={`p-3 border-2 rounded-lg text-left transition-colors ${
                   data.preferred_workout_time === time.value
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                    ? 'border-orange-500 bg-orange-50 dark:bg-blue-900/20'
                     : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
                 }`}
               >
@@ -197,7 +197,7 @@ export default function FitnessBasicsStep({ data, setData, onNext, onBack }: Fit
         </button>
         <button
           onClick={handleNext}
-          className="flex-1 py-3 px-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-colors"
+          className="flex-1 py-3 px-6 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-lg font-semibold hover:from-orange-500 hover:to-purple-700 transition-colors"
         >
           Next →
         </button>
