@@ -29,7 +29,7 @@ export default function LoginPage() {
       if (data.user) {
         await new Promise(r => setTimeout(r, 500));
         const { data: profile, error: pe } = await supabase.from('user_profiles').select('id').eq('user_id', data.user.id).single();
-        window.location.replace(!profile || pe ? '/onboarding' : '/');
+        window.location.replace(!profile || pe ? '/onboarding' : '/dashboard');
       }
     } catch (err: any) { setError(err.message || 'Failed to login'); setLoading(false); }
   };

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard, Moon as SleepIcon, Dumbbell, Apple, Brain,
-  Droplet, BarChart3, Menu, X, Home, Search, Bell,
+  Droplet, BarChart3, Settings, LogOut, Menu, X, Home, Search, Bell,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase/client';
 
@@ -17,6 +17,7 @@ const NAV = [
   { name: 'Mind',       href: '/dashboard/mind',        icon: Brain },
   { name: 'Hydration',  href: '/dashboard/hydration',   icon: Droplet },
   { name: 'Analytics',  href: '/dashboard/analytics',   icon: BarChart3 },
+  { name: 'Settings',   href: '/dashboard/settings',    icon: Settings },
   { name: 'Home',       href: '/',                      icon: Home },
 ];
 

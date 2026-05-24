@@ -46,6 +46,7 @@ const stats = [
 ];
 
 const trending = ['#30DayChallenge', '#MindfulMoments', '#HealthyMeals', '#WorkoutMotivation', '#SleepBetter'];
+const trendingCounts = [47, 32, 28, 41, 19];
 
 export default function CommunityPage() {
   const [activeTab, setActiveTab]   = useState('feed');
@@ -238,7 +239,7 @@ export default function CommunityPage() {
                   {trending.map((tag, i) => (
                     <div key={i} className="flex items-center justify-between">
                       <span className="text-sm font-black text-orange-500">{tag}</span>
-                      <span className="text-xs font-bold text-gray-300">{Math.floor(Math.random() * 50) + 10} posts</span>
+                      <span className="text-xs font-bold text-gray-300">{trendingCounts[i]} posts</span>
                     </div>
                   ))}
                 </div>

@@ -240,7 +240,7 @@ export default function CompleteOnboarding() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-orange-50 dark:from-gray-900 dark:to-gray-800 py-8 px-4">
       <div className="max-w-2xl mx-auto">
         {currentStep !== 'welcome' && (
           <div className="mb-8">
@@ -250,7 +250,7 @@ export default function CompleteOnboarding() {
             </div>
             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
               <div
-                className="bg-gradient-to-r from-orange-500 to-purple-600 h-3 rounded-full transition-all duration-300"
+                className="bg-orange-500 h-3 rounded-full transition-all duration-300"
                 style={{ width: `${progress}%` }}
               />
             </div>

@@ -258,7 +258,7 @@ export default function Hero() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Count-up numbers — start on mount with a short delay
-  const count500 = useCountUp(500, 1800, 500);
+  const count1k  = useCountUp(1000, 1800, 500);
   const count98  = useCountUp(98,  1400, 600);
   const count5   = useCountUp(5,   900,  700);
 
@@ -361,7 +361,7 @@ export default function Hero() {
           </div>
           <div>
             <span className="font-black text-gray-900 text-sm tabular-nums">
-              Loved by {count500}+
+              Loved by {count1k >= 1000 ? '1K' : count1k}+
             </span>
             <span className="text-gray-400 text-sm ml-1">wellness users</span>
           </div>

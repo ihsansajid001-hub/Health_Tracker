@@ -8,19 +8,19 @@ const features = [
     title: 'Mental Health',
     tag: 'Mind',
     image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80',
-    href: '/dashboard/mind',
+    href: '/signup',
   },
   {
     title: 'Physical Fitness',
     tag: 'Fitness',
     image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80',
-    href: '/dashboard/fitness',
+    href: '/signup',
   },
   {
     title: 'Nutrition & Sleep',
     tag: 'Nutrition',
     image: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&q=80',
-    href: '/dashboard/nutrition',
+    href: '/signup',
   },
 ];
 
@@ -32,11 +32,11 @@ export default function Features() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
           <div>
-            <p className="section-tag mb-5">// Featured Work</p>
+            <p className="section-tag mb-5">// Health Tracking</p>
             <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black text-gray-900 dark:text-white leading-[1.05]">
-              Every Type of
+              Every Aspect of
               <br />
-              Health Tracking
+              Your Wellness
             </h2>
           </div>
           <Link href="/signup"

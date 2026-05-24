@@ -20,7 +20,7 @@ export default function CTA() {
           Your Wellness?
         </h2>
 
-        <p className="text-lg text-blue-100 mb-12 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-lg text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
           Join thousands of users already tracking their wellness with LifeScore. Start your journey today and discover insights that will help you live your best life.
         </p>
 

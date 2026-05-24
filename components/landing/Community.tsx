@@ -75,9 +75,9 @@ function StatCard({
 
 /* ─── Stats config ───────────────────────────────────────────── */
 const STATS = [
-  { target: 10,  suffix: 'K+', label: 'Active Members',  icon: Users,         delay: 0 },
-  { target: 50,  suffix: 'K+', label: 'Goals Achieved',  icon: Award,         delay: 1 },
-  { target: 100, suffix: 'K+', label: 'Messages Shared', icon: MessageCircle, delay: 2 },
+  { target: 1,   suffix: 'K+', label: 'Active Members',  icon: Users,         delay: 0 },
+  { target: 5,   suffix: 'K+', label: 'Goals Achieved',  icon: Award,         delay: 1 },
+  { target: 10,  suffix: 'K+', label: 'Messages Shared', icon: MessageCircle, delay: 2 },
   { target: 98,  suffix: '%',  label: 'Feel Supported',  icon: Heart,         delay: 3 },
 ];
 
@@ -126,7 +126,7 @@ export default function Community() {
         </div>
 
         <div className="text-center">
-          <Link href="/dashboard/community"
+          <Link href="/community"
             className="inline-flex items-center gap-3 px-8 py-4 bg-orange-500 text-white font-bold rounded-full hover:bg-orange-600 transition-all shadow-xl shadow-orange-500/25 hover:-translate-y-0.5">
             Join the Community
             <span className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">

@@ -1,10 +1,22 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Footer() {
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim()) {
+      setSubscribed(true);
+      setEmail('');
+    }
+  };
+
   return (
-    <footer className="bg-gray-900 dark:bg-black text-gray-300 py-16 px-8 sm:px-12 lg:px-16 rounded-[40px] md:rounded-[56px] shadow-xl">
+    <footer className="bg-gray-900 text-gray-300 py-16 px-8 sm:px-12 lg:px-16 rounded-[40px] md:rounded-[56px] shadow-xl">
       <div className="max-w-7xl mx-auto">
 
         {/* Top row */}
@@ -22,16 +34,25 @@ export default function Footer() {
               Your comprehensive wellness companion. Track mental health, fitness, nutrition, sleep, and hydration all in one place with AI-powered insights.
             </p>
             {/* Email subscribe */}
-            <div className="flex gap-2 max-w-sm">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 bg-gray-800 text-white rounded-xl border border-gray-700 focus:outline-none focus:border-orange-500 text-sm"
-              />
-              <button className="px-5 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl transition-colors text-sm">
-                Subscribe
-              </button>
-            </div>
+            {subscribed ? (
+              <div className="flex items-center gap-2 text-orange-400 font-bold text-sm">
+                <span>✓</span> Thanks for subscribing!
+              </div>
+            ) : (
+              <form onSubmit={handleSubscribe} className="flex gap-2 max-w-sm">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  required
+                  className="flex-1 px-4 py-3 bg-gray-800 text-white rounded-xl border border-gray-700 focus:outline-none focus:border-orange-500 text-sm"
+                />
+                <button type="submit" className="px-5 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl transition-colors text-sm">
+                  Subscribe
+                </button>
+              </form>
+            )}
           </div>
 
           {/* Pages */}
@@ -39,11 +60,12 @@ export default function Footer() {
             <h3 className="text-white font-black text-sm uppercase tracking-widest mb-6">Pages</h3>
             <ul className="space-y-3 text-sm">
               {[
-                { label: 'Home', href: '/' },
-                { label: 'Dashboard', href: '/dashboard' },
-                { label: 'Articles', href: '/articles' },
-                { label: 'Plans', href: '/plans' },
-                { label: 'About', href: '/about' },
+                { label: 'Home',      href: '/' },
+                { label: 'Articles',  href: '/articles' },
+                { label: 'Plans',     href: '/plans' },
+                { label: 'Community', href: '/community' },
+                { label: 'About',     href: '/about' },
+                { label: 'Contact',   href: '/contact' },
               ].map(l => (
                 <li key={l.href}>
                   <Link href={l.href} className="hover:text-white transition-colors">{l.label}</Link>
@@ -52,23 +74,25 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Follow */}
+          {/* Contact */}
           <div>
-            <h3 className="text-white font-black text-sm uppercase tracking-widest mb-6">Follow Us</h3>
-            <ul className="space-y-3 text-sm">
-              {[
-                { label: 'Twitter / X', href: '#' },
-                { label: 'Instagram', href: '#' },
-                { label: 'Facebook', href: '#' },
-                { label: 'YouTube', href: '#' },
-              ].map(l => (
-                <li key={l.label}>
-                  <Link href={l.href} className="hover:text-white transition-colors">{l.label}</Link>
-                </li>
-              ))}
+            <h3 className="text-white font-black text-sm uppercase tracking-widest mb-6">Contact</h3>
+            <ul className="space-y-3 text-sm text-gray-400">
+              <li>
+                <a href="mailto:support@lifescore.app" className="hover:text-white transition-colors">
+                  support@lifescore.app
+                </a>
+              </li>
+              <li className="text-gray-500 text-xs leading-relaxed">
+                We typically respond within 24 hours on business days.
+              </li>
             </ul>
-            <div className="mt-6 text-sm text-gray-500">
-              <p>contact@lifescore.app</p>
+            <div className="mt-6">
+              <h4 className="text-white font-black text-xs uppercase tracking-widest mb-3">Legal</h4>
+              <ul className="space-y-2 text-sm">
+                <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
+              </ul>
             </div>
           </div>
         </div>

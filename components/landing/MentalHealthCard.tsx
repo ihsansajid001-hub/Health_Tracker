@@ -32,13 +32,13 @@ export default function MentalHealthCard() {
 
             {/* Floating CTA pills */}
             <div className="absolute bottom-6 left-6 flex gap-3">
-              <Link href="/dashboard"
+              <Link href="/signup"
                 className="px-5 py-2.5 bg-white text-gray-900 rounded-full font-bold shadow-lg hover:bg-gray-50 transition-colors text-sm">
-                View Dashboard
+                Get Started
               </Link>
-              <Link href="/onboarding"
+              <Link href="/signup"
                 className="px-5 py-2.5 bg-orange-500 text-white rounded-full font-bold shadow-lg hover:bg-orange-600 transition-colors text-sm">
-                Start Now
+                Start Free
               </Link>
             </div>
           </div>
@@ -59,7 +59,7 @@ export default function MentalHealthCard() {
               LifeScore is your comprehensive wellness companion. Monitor mental health, physical fitness, nutrition, sleep quality, and hydration — all in one place with AI-powered insights.
             </p>
 
-            <Link href="/dashboard"
+            <Link href="/signup"
               className="inline-flex items-center gap-3 px-7 py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold rounded-full hover:bg-gray-800 dark:hover:bg-gray-100 transition-all shadow-lg hover:-translate-y-0.5">
               Explore Features
               <span className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0">

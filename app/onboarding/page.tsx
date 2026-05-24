@@ -235,8 +235,8 @@ function OnboardingContent() {
                     </div>
                   ))}
                 </div>
-                <div className="p-4 bg-orange-50 dark:bg-blue-900/20 rounded-2xl border border-orange-200 dark:border-blue-800">
-                  <p className="text-sm font-bold text-blue-900 dark:text-blue-200">
+                <div className="p-4 bg-orange-50 dark:bg-orange-900/20 rounded-2xl border border-orange-200 dark:border-orange-800">
+                  <p className="text-sm font-bold text-gray-900 dark:text-orange-200">
                     Primary Goal: <span className="capitalize">{data.primary_goal.replace(/_/g, ' ')}</span>
                   </p>
                 </div>

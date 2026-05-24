@@ -4,23 +4,23 @@ export default function HowItWorks() {
   const steps = [
     {
       number: '1',
-      title: 'Discovery',
+      title: 'Create Your Profile',
       description: 'Sign up and complete your wellness profile. Tell us about your goals, current habits, and what areas you want to improve.',
     },
     {
       number: '2',
-      title: 'Strategy & Tracking',
+      title: 'Track Daily',
       description: 'Log your mental health check-ins, workouts, meals, sleep, and hydration. Our intuitive interface makes tracking effortless.',
     },
     {
       number: '3',
-      title: 'Build & Launch',
+      title: 'Get AI Insights',
       description: 'Receive personalized AI recommendations. Watch your Life Score improve as you build healthier habits day by day.',
     },
     {
       number: '4',
-      title: 'Optimize & Scale',
-      description: 'Measure performance, refine continuously, and help your wellness journey reach new heights with data-driven insights.',
+      title: 'Grow & Improve',
+      description: 'Measure your progress, refine your habits, and reach new wellness heights with data-driven insights over time.',
     },
   ];
 
@@ -36,11 +36,11 @@ export default function HowItWorks() {
 
           {/* Left */}
           <div>
-            <p className="section-tag mb-6">// Working Process</p>
+            <p className="section-tag mb-6">// How It Works</p>
             <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black text-gray-900 dark:text-white leading-[1.05]">
-              Let's See Our
+              Your Path to
               <br />
-              Work Process
+              Better Health
             </h2>
           </div>
 
